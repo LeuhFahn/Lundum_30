@@ -18,7 +18,7 @@ public class CGame : MonoBehaviour {
 	int[,] graphePlanete;
 	int[,] hainePlanete;
 	bool[,] routePossible;
-	int m_score;
+	GameObject m_score;
 	int Score=1000;
 	int deltascore;
 	float m_fTimeOfScore;
@@ -126,12 +126,15 @@ public class CGame : MonoBehaviour {
 		}
 
 		//score
-		//
+
 		deltascore = 0;
 		m_fdeltatime = 1.0f;
 		m_fTimeOfScore = 300.0f;
 		m_fTime = 0.0f;
-
+		//tets
+		m_score = ((GameObject) GameObject.Instantiate(CConstantes.Game.m_prefab3DText));
+		m_score.transform.position = new Vector3 (0, 0, 0);
+		m_score.GetComponent<TextMesh> ().text = Score.ToString();
 	}
 	
 	//-------------------------------------------------------------------------------
@@ -144,6 +147,8 @@ public class CGame : MonoBehaviour {
 			//score
 			Score -= deltascore;
 			print ("score " + Score);
+			m_score.GetComponent<TextMesh> ().text = Score.ToString();
+			
 			} 
 		else 
 			{
