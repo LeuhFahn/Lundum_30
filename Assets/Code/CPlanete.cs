@@ -11,6 +11,7 @@ public class CPlanete : MonoBehaviour {
 	bool m_bIsDrawInfos;
 	Color m_HaloColor;
 	float m_fSize;
+	float m_fAngluarVelocity;
 	public int m_nId;/// <summary>
 	/// ///////////WARNING
 	/// </summary>
@@ -43,12 +44,15 @@ public class CPlanete : MonoBehaviour {
 		m_Text.transform.position = transform.position;
 		m_Text.transform.Translate(0,m_fSize - m_fSize/4.0f - m_nNbWorkers/2.0f, 0);
 		SetText();
+
+		m_fAngluarVelocity = Random.Range(0.1f, 0.5f);
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
-
+		gameObject.transform.RotateAround(transform.position, transform.up, m_fAngluarVelocity);
+		m_Text.transform.RotateAround(transform.position, transform.up, -m_fAngluarVelocity);
 	}
 
 	public void Init()
