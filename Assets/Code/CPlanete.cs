@@ -94,9 +94,14 @@ public class CPlanete : MonoBehaviour {
 	//-------------------------------------------------------------------------------
 	public void SelectForDrawInfo()
 	{
+		for(int i = 0 ; i < CConstantes.nNbPlanetes ; ++i)
+		{
+			CConstantes.Planetes[i].GetComponent<CPlanete>().StopDrawInfo();
+		}
 		m_bIsDrawInfos = true;
 		m_Halo.SetActive(true);
 		m_Halo.GetComponent<Light>().color = Color.yellow;
+
 	}
 
 	//-------------------------------------------------------------------------------
