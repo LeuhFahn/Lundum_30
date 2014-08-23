@@ -3,14 +3,24 @@ using System.Collections;
 
 public class CPlanete : MonoBehaviour {
 
+	public GameObject m_Halo;
+	
 	bool m_bIsOverlapByMouse;
 	bool m_bIsOrigin;
-	public GameObject m_Halo;
 	Color m_HaloColor;
+	float m_fSize;
 
+	public float fSize
+	{
+		get {return m_fSize; }
+		set {m_fSize = value; }
+	}
+	
 	// Use this for initialization
 	void Start () {
 		Reset ();
+		m_fSize = 5.0f;
+		gameObject.transform.localScale = new Vector3(m_fSize, m_fSize, m_fSize);
 	}
 	
 	// Update is called once per frame

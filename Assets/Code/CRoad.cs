@@ -3,21 +3,59 @@ using System.Collections;
 
 public class CRoad : MonoBehaviour {
 
+	public GameObject m_MeshRoad;
+
 	GameObject m_PlanetOrigin;
 	GameObject m_PlanetDestination;
+
 	float m_fTimeOfConstruction;
+	float m_fTime;
+	float m_fDistanceBetweenConnectedWorlds;
+	bool m_bConstructionIsOver;
+
+	void Awake()
+	{
+		m_fTime = 0.0f;
+		SetSizeOfMesh(0.0f);
+		m_bConstructionIsOver = false;
+	}
 
 	public void Init()
 	{
-		gameObject.transform.position = m_PlanetOrigin.transform.position;
+		float fSizeOrigin = m_PlanetOrigin.GetComponent<CPlanete>().fSize;
+		float fSizeDestination = m_PlanetDestination.GetComponent<CPlanete>().fSize;
+		Vector3 posOrigin = m_PlanetOrigin.transform.position + new Vector3(fSizeOrigin, 0, 0);
+		Vector3 posDestination = m_PlanetDestination.transform.position - new Vector3(fSizeDestination, 0, 0);
+		gameObject.transform.position = posOrigin  + (posDestination - posOrigin)/2.0f;
 		m_fTimeOfConstruction = 5.0f;
+		m_fDistanceBetweenConnectedWorlds = (m_PlanetDestination.transform.position - m_PlanetOrigin.transform.position).magnitude;
+		m_fDistanceBetweenConnectedWorlds -= (fSizeOrigin + fSizeDestination)/2.0f;
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
+		if(m_fTime <= m_fTimeOfConstruction)
+		{
+			float fProgression = CApoilMath.InterpolationLinear(m_fTime, 0.0f, m_fTimeOfConstruction, 0, m_fDistanceBetweenConnectedWorlds);
+			fProgression /= 2.0f;
+			SetSizeOfMesh(fProgression);
+			m_fTime += Time.deltaTime;
+		}
+		if(!m_bConstructionIsOver && m_fTime > m_fTimeOfConstruction)
+		{
+			m_bConstructionIsOver = true;
 
+		}
 		Debug.DrawLine(m_PlanetOrigin.transform.position, m_PlanetDestination.transform.position);
+
+	}
+
+	void SetSizeOfMesh(float fSize)
+	{
+		Vector3 scale = m_MeshRoad.transform.localScale;
+		scale.y = fSize;
+		m_MeshRoad.transform.localScale = scale;
 	}
 
 	public void SetPlanets(CPlanete origin, CPlanete destination)
