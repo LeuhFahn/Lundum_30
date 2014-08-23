@@ -13,12 +13,14 @@ public class CGame : MonoBehaviour {
 
 	//
 	int[,] graphePlanete;
+	int[,] hainePlanete;
 
 	//-------------------------------------------------------------------------------
 	/// Unity
 	//-------------------------------------------------------------------------------
 	void Start () 
 	{
+
 		//initialise graphePlanete a 0
 		graphePlanete=new int[8,8];
 		for(int i=0;i<8;i++)
@@ -33,6 +35,22 @@ public class CGame : MonoBehaviour {
 		CApoilInput.Init();
 
 		CConstantes.Game = this;
+
+		//initialise randomly haine planete symetrique
+		//Haine max totale 400, max totale un couple 30
+		 hainePlanete = new int[8, 8];
+		int haineMax = 400;
+		for (int i=0; i<8; i++)
+		{
+			for (int j=0;j<i;j++)
+			{
+				int haine= Random.Range(0,Mathf.Min (30,haineMax));
+				haineMax=haineMax-haine;
+				hainePlanete[i,j]=haine;
+				hainePlanete[j,i]=haine;
+				//print ("haine "+i+" "+ "j" +" " +haine);
+			}
+		}
 	}
 	
 	//-------------------------------------------------------------------------------
@@ -177,14 +195,12 @@ public class CGame : MonoBehaviour {
 	//-------------------------------------------------------------------------------
 	///
 	//-------------------------------------------------------------------------------
-	public void MaJ( GameObject planet1, GameObject planet2)
+	public void MaJ( int id1, int id2)
 	{
-		Debug.Log("ninin suce des queues!");
-		int id1=int.Parse (planet1.name);
-		int id2=int.Parse (planet2.name);
+		Debug.Log("ninin suce des queues!"+id1+id2);
 		//route entre planete id 1 et id 2
-		//graphePlanete[id1,id2]++;
-		//graphePlanete[id2,id1]++;
+		graphePlanete[id1,id2]++;
+		graphePlanete[id2,id1]++;
 	}
 
 
