@@ -57,7 +57,8 @@ public class CGameCreator : MonoBehaviour {
 		for(int id = 0; id< 8 ; ++id)
 		{
 			planet = ((GameObject) GameObject.Instantiate (m_prefabPlanets[id]));
-			planet.name = "P"+(id+1).ToString();
+			planet.name = m_prefabPlanets[id].name;
+			planet.GetComponent<CPlanete>().nID = id;
 			planet.transform.position = positions[id];
 		}
 

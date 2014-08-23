@@ -10,11 +10,18 @@ public class CPlanete : MonoBehaviour {
 	bool m_bIsOrigin;
 	Color m_HaloColor;
 	float m_fSize;
+	int m_nId;
 
 	public float fSize
 	{
 		get {return m_fSize; }
 		set {m_fSize = value; }
+	}
+
+	public int nID
+	{
+		get {return m_nId; }
+		set {m_nId = value; }
 	}
 	
 	// Use this for initialization
