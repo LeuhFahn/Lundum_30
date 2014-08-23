@@ -11,9 +11,11 @@ public class CGame : MonoBehaviour {
 	CPlanete m_PlaneteOverlap;
 	CPlanete m_PlaneteDestination;
 
-	//
+	//Truc de score
 	int[,] graphePlanete;
 	int[,] hainePlanete;
+	int Score=100;
+	int deltascore;
 
 	//-------------------------------------------------------------------------------
 	/// Unity
@@ -51,6 +53,8 @@ public class CGame : MonoBehaviour {
 				//print ("haine "+i+" "+ "j" +" " +haine);
 			}
 		}
+
+		deltascore = 0;
 	}
 	
 	//-------------------------------------------------------------------------------
@@ -202,6 +206,8 @@ public class CGame : MonoBehaviour {
 		graphePlanete[id1,id2]++;
 		graphePlanete[id2,id1]++;
 	}
-
+	//updateDeltaScore();
 
 }
+
+
