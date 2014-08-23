@@ -8,6 +8,8 @@ public class CApoilInput
 	public static bool LeftClickDown; 
 	public static bool LeftClick; 
 	public static bool LeftClickUp; 
+	public static bool RightClick; 
+	public static bool RightClickDown;
 
 	//Debug
 	public static bool DebugF9;
@@ -18,6 +20,7 @@ public class CApoilInput
 	public static void Init()
 	{
 	}
+
 	//-------------------------------------------------------------------------------
 	///
 	//-------------------------------------------------------------------------------
@@ -27,6 +30,8 @@ public class CApoilInput
 		LeftClickDown = Input.GetMouseButtonDown(0);
 		LeftClick = Input.GetMouseButton(0);
 		LeftClickUp = Input.GetMouseButtonUp(0);
+		RightClick = Input.GetMouseButton(1);
+		RightClickDown = Input.GetMouseButtonDown(1);
 		DebugF9 = Input.GetKeyDown(KeyCode.F9);
 		DebugF10 = Input.GetKeyDown(KeyCode.F10);
 		DebugF11 = Input.GetKeyDown(KeyCode.F11);

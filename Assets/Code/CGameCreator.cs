@@ -62,7 +62,10 @@ public class CGameCreator : MonoBehaviour {
 			planet.name = m_prefabPlanets[id].name;
 			planet.GetComponent<CPlanete>().nID = id;
 			planet.transform.position = positions[id];
+			planet.GetComponent<CPlanete> ().nNbWorkers = 1; // TODO
+			planet.GetComponent<CPlanete> ().Init ();
 			CConstantes.Planetes[id] = planet;
+
 		}
 
 

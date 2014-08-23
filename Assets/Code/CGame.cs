@@ -6,6 +6,7 @@ public class CGame : MonoBehaviour {
 	public GameObject m_Camera;
 	public LayerMask m_Mask;
 	public GameObject m_prefabRoad;
+	public GameObject m_prefab3DText;
 
 	CPlanete m_PlaneteOrigin;
 	CPlanete m_PlaneteOverlap;

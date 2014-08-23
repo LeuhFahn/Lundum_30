@@ -5,18 +5,25 @@ public class CPlanete : MonoBehaviour {
 
 	public GameObject m_Halo;
 
-	public int m_nNbWorkers = 0;
+	int m_nNbWorkers;
 	bool m_bIsOverlapByMouse;
 	bool m_bIsOrigin;
 	bool m_bIsDrawInfos;
 	Color m_HaloColor;
 	float m_fSize;
 	int m_nId;
+	GameObject m_Text;
 
 	public float fSize
 	{
 		get {return m_fSize; }
 		set {m_fSize = value; }
+	}
+
+	public int nNbWorkers
+	{
+		get {return m_nNbWorkers; }
+		set {m_nNbWorkers = value; }
 	}
 
 	public int nID
@@ -26,15 +33,27 @@ public class CPlanete : MonoBehaviour {
 	}
 	
 	// Use this for initialization
-	void Start () {
+	void Start () 
+	{
 		Reset ();
-		m_fSize = 5.0f + 2.5f*m_nNbWorkers;
-		gameObject.transform.localScale = new Vector3(m_fSize, m_fSize, m_fSize);
+		m_Text = ((GameObject) GameObject.Instantiate(CConstantes.Game.m_prefab3DText));
+		m_Text.transform.parent = transform;
+		m_Text.transform.position = transform.position;
+		m_Text.transform.Translate(0,m_fSize - m_fSize/4.0f - m_nNbWorkers/2.0f, 0);
+		SetText();
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
+
+	}
+
+	public void Init()
+	{
+		m_fSize = 5.0f + 2.5f*m_nNbWorkers;
+		gameObject.transform.localScale = new Vector3(m_fSize, m_fSize, m_fSize);
+
 
 	}
 
@@ -121,4 +140,13 @@ public class CPlanete : MonoBehaviour {
 	{
 		return this.gameObject;
 	}
+
+	//-------------------------------------------------------------------------------
+	///
+	//-------------------------------------------------------------------------------
+	void SetText()
+	{
+		m_Text.GetComponent<TextMesh>().text = m_nNbWorkers.ToString();
+	}
+
 }
