@@ -77,7 +77,7 @@ public class CGame : MonoBehaviour {
 						
 						float xA=CConstantes.Planetes[k].GetComponent<CPlanete>().transform.position.x;
 						float yA=CConstantes.Planetes[k].GetComponent<CPlanete>().transform.position.y;
-						print(i+","+j+","+k+","+x1);
+
 
 						if (x1!=x2){
 							float D=Mathf.Sqrt((x2-x1)*(x2-x1)+(y2-y1)*(y2-y1));
@@ -90,7 +90,7 @@ public class CGame : MonoBehaviour {
 							float H1=Mathf.Sqrt (D1*D1-d*d);
 							float H2=Mathf.Sqrt (D2*D2-d*d);
 							if(H1<D & H2<D)//on est entre les deux mais d peut etre grand
-							{
+							{print(i+","+j+","+k+","+x1+" d "+d);
 								if (d<m_EpaisseurRectangle)
 								{
 									possible=false;
