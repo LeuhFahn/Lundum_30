@@ -38,16 +38,16 @@ public class CGameCreator : MonoBehaviour {
 			int i = 0;	
 			while (i < CConstantes.nNbPlanetes) {
 				//print("Creating positions: "+i);
-				positions [i] = new Vector3 (Random.Range (-200, 200) / 10, Random.Range (-200, 200) / 10, 0);
+				positions [i] = new Vector3 (Random.Range (-m_nMapSize, m_nMapSize), Random.Range (-m_nMapSize, m_nMapSize), 0);
 				//test si colision avec précédent
 				bool colision = false;
 				for (int j=0; j<i; j++) {
-						colision = colision || (Choc (positions [j], positions [i]));
-						//print("test "+i+j+" "+colision+ "  "+Choc(positions[j],positions[i])+" "+positions[i]+" " +positions[j]);
+					colision = colision || (Choc (positions [j], positions [i]));
+					//print("test "+i+j+" "+colision+ "  "+Choc(positions[j],positions[i])+" "+positions[i]+" " +positions[j]);
 				}
 
 				if (!colision) {
-						i++;
+					i++;
 				}
 
 			}
@@ -55,13 +55,13 @@ public class CGameCreator : MonoBehaviour {
 
 			GameObject planet;
 			for (int id = 0; id< CConstantes.nNbPlanetes; ++id) {
-					planet = ((GameObject)GameObject.Instantiate (m_prefabPlanets [id]));
-					planet.name = m_prefabPlanets [id].name;
-					planet.GetComponent<CPlanete> ().nID = id;
-					planet.transform.position = positions [id];
-					planet.GetComponent<CPlanete> ().nNbWorkers = 1; // TODO
-					planet.GetComponent<CPlanete> ().Init ();
-					CConstantes.Planetes [id] = planet;
+				planet = ((GameObject)GameObject.Instantiate (m_prefabPlanets [id]));
+				planet.name = m_prefabPlanets [id].name;
+				planet.GetComponent<CPlanete> ().nID = id;
+				planet.transform.position = positions [id];
+				planet.GetComponent<CPlanete> ().nNbWorkers = Random.Range(1,4);
+				planet.GetComponent<CPlanete> ().Init ();
+				CConstantes.Planetes [id] = planet;
 			}
 			//tableau bool de trajet entre deux planete 8x8
 		}

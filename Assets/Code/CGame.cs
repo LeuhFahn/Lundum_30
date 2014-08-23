@@ -214,38 +214,46 @@ public class CGame : MonoBehaviour {
 	//-------------------------------------------------------------------------------
 	void RoadConstruction()
 	{
-		//verifier qu'il y a pas déjà une route
-		int id1=m_PlaneteOrigin.GetComponent<CPlanete> ().nID;
-		int id2=m_PlaneteDestination.GetComponent<CPlanete> ().nID;
+		if (m_PlaneteOrigin != null) {
+			if (m_PlaneteDestination != null) {
+				//verifier qu'il y a pas déjà une route
+				int id1=m_PlaneteOrigin.GetComponent<CPlanete> ().nID;
+				int id2=m_PlaneteDestination.GetComponent<CPlanete> ().nID;
 
-		if (graphePlanete [id1, id2] != 0 || graphePlanete [id2, id1] != 0) {
-						print ("route déjà existante"+id1+id2);
-				} else {
+				if (graphePlanete [id1, id2] != 0 || graphePlanete [id2, id1] != 0) 
+				{
+					print ("route déjà existante"+id1+id2);
+				} 
+				else 
+				{
 
-						if (routePossible [id1, id2]) 
-						{
-								if (m_PlaneteOrigin != null) {
-										if (m_PlaneteDestination != null) {
-												graphePlanete [id2, id1] = -1;
+					if (routePossible [id1, id2]) 
+					{
+				//if (m_PlaneteOrigin != null) {
+					//if (m_PlaneteDestination != null) {
+						graphePlanete [id2, id1] = -1;
 
-												CreateNewRoad (m_PlaneteOrigin, m_PlaneteDestination);
+						CreateNewRoad (m_PlaneteOrigin, m_PlaneteDestination);
+					}
+					else
+					{
+						print ("route pas possible"+id1+id2);
+					}
 
-												m_PlaneteDestination.StopSelection ();
-												m_PlaneteDestination = null;
-										}
-										m_PlaneteOrigin.StopSelection ();
-										m_PlaneteOrigin = null;
-
-								}
-								if (m_PlaneteOverlap != null) {
-										m_PlaneteOverlap.StopSelection ();
-										m_PlaneteOverlap = null;
-								}
-						}
-			else
-			{print ("route pas possible"+id1+id2);
-			}
 				}
+
+				if (m_PlaneteOverlap != null) {
+					m_PlaneteOverlap.StopSelection ();
+					m_PlaneteOverlap = null;
+				}
+				m_PlaneteDestination.StopSelection ();
+				m_PlaneteDestination = null;
+			}
+			m_PlaneteOrigin.StopSelection ();
+			m_PlaneteOrigin = null;
+		}
+
+
 	}
 
 	//-------------------------------------------------------------------------------
