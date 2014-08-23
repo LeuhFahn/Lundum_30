@@ -8,13 +8,18 @@ public class CGame : MonoBehaviour {
 	public GameObject m_prefabRoad;
 	public GameObject m_prefab3DText;
 
+	public int m_EpaisseurRectangle;
+
 	CPlanete m_PlaneteOrigin;
 	CPlanete m_PlaneteOverlap;
 	CPlanete m_PlaneteDestination;
 
-	//
+	//Truc de score
 	int[,] graphePlanete;
 	int[,] hainePlanete;
+	bool[,] routePossible;
+	int Score=100;
+	int deltascore;
 
 	//-------------------------------------------------------------------------------
 	/// Unity
@@ -51,6 +56,67 @@ public class CGame : MonoBehaviour {
 				hainePlanete[j,i]=haine;
 				//print ("haine "+i+" "+ "j" +" " +haine);
 			}
+		}
+		//calcul les routes qui peuvent exister ou pas
+		m_EpaisseurRectangle = 4;
+		routePossible = new bool[CConstantes.nNbPlanetes, CConstantes.nNbPlanetes];
+		for (int i=0; i<CConstantes.nNbPlanetes; i++) 
+		{
+			for(int j=0; j<i; j++){
+				bool possible=true;
+				for(int k=0; k<CConstantes.nNbPlanetes; k++)
+				{
+				if(k!= i & k!=j)//on teste la route i j avec les autres
+					{
+
+						float x1=CConstantes.Planetes[i].GetComponent<CPlanete>().transform.position.x;
+						float y1=CConstantes.Planetes[i].GetComponent<CPlanete>().transform.position.y;
+						
+						float x2=CConstantes.Planetes[j].GetComponent<CPlanete>().transform.position.x;
+						float y2=CConstantes.Planetes[j].GetComponent<CPlanete>().transform.position.y;
+						
+						float xA=CConstantes.Planetes[k].GetComponent<CPlanete>().transform.position.x;
+						float yA=CConstantes.Planetes[k].GetComponent<CPlanete>().transform.position.y;
+						print(i+","+j+","+k+","+x1);
+
+						if (x1!=x2){
+							float D=Mathf.Sqrt((x2-x1)*(x2-x1)+(y2-y1)*(y2-y1));
+							float D1=Mathf.Sqrt((xA-x1)*(xA-x1)+(yA-y1)*(yA-y1));
+							float D2=Mathf.Sqrt((xA-x2)*(xA-x2)+(yA-y2)*(yA-y2));
+
+							float a=(y1-y2)/(x1-x2);
+							float b=y1-x1*a;
+							float d=Mathf.Abs(a*xA-yA+b)/Mathf.Sqrt(1+a*a);
+							float H1=Mathf.Sqrt (D1*D1-d*d);
+							float H2=Mathf.Sqrt (D2*D2-d*d);
+							if(H1<D & H2<D)//on est entre les deux mais d peut etre grand
+							{
+								if (d<m_EpaisseurRectangle)
+								{
+									possible=false;
+								}
+							}
+						}
+						else
+						{
+							//x1=x2
+							float d=Mathf.Abs(xA-x1);
+						
+							if (Mathf.Abs(y1-y2)==Mathf.Abs(yA-y2)+Mathf.Abs(yA-y1))
+							{
+								if (d<4)
+								{
+									possible=false;
+									print ("chemin pas possible entre"+i+"et"+j+" a cause de "+k );
+								}
+							}
+						}
+					}
+				}
+				routePossible[i,j]=possible;
+				routePossible[j,i]=possible;
+
+			}	
 		}
 	}
 	
@@ -203,6 +269,8 @@ public class CGame : MonoBehaviour {
 		graphePlanete[id1,id2]++;
 		graphePlanete[id2,id1]++;
 	}
-
+	//updateDeltaScore();
 
 }
+
+

@@ -53,8 +53,6 @@ public class CPlanete : MonoBehaviour {
 	{
 		m_fSize = 5.0f + 2.5f*m_nNbWorkers;
 		gameObject.transform.localScale = new Vector3(m_fSize, m_fSize, m_fSize);
-
-
 	}
 
 	//-------------------------------------------------------------------------------
