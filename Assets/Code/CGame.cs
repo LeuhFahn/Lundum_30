@@ -65,12 +65,15 @@ public class CGame : MonoBehaviour {
 				{
 				if(k!= i & k!=j)//on teste la route i j avec les autres
 					{
-						int x1=0;
-						int y1=0;
-						int x2=0;
-						int y2=0;
-						int xA=0;
-						int yA=0;
+						float x1=CConstantes.Planetes[i].GetComponent<CPlanete>().transform.position.x;
+						float y1=CConstantes.Planetes[i].GetComponent<CPlanete>().transform.position.y;
+						
+						float x2=CConstantes.Planetes[j].GetComponent<CPlanete>().transform.position.x;
+						float y2=CConstantes.Planetes[j].GetComponent<CPlanete>().transform.position.y;
+						
+						float xA=CConstantes.Planetes[k].GetComponent<CPlanete>().transform.position.x;
+						float yA=CConstantes.Planetes[k].GetComponent<CPlanete>().transform.position.y;
+
 
 						if (x1!=x2){
 							float D=Mathf.Sqrt((x2-x1)*(x2-x1)+(y2-y1)*(y2-y1));
