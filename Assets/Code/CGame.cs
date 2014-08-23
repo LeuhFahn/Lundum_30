@@ -77,7 +77,7 @@ public class CGame : MonoBehaviour {
 						
 						float xA=CConstantes.Planetes[k].GetComponent<CPlanete>().transform.position.x;
 						float yA=CConstantes.Planetes[k].GetComponent<CPlanete>().transform.position.y;
-						print(i+","+j+","+k+","+x1);
+
 
 						if (x1!=x2){
 							float D=Mathf.Sqrt((x2-x1)*(x2-x1)+(y2-y1)*(y2-y1));
@@ -89,11 +89,13 @@ public class CGame : MonoBehaviour {
 							float d=Mathf.Abs(a*xA-yA+b)/Mathf.Sqrt(1+a*a);
 							float H1=Mathf.Sqrt (D1*D1-d*d);
 							float H2=Mathf.Sqrt (D2*D2-d*d);
+							//print("entre deux "+i+","+j+","+k+","+H1+" H2 "+H2+" D"+""+D +"+d"+d);
 							if(H1<D & H2<D)//on est entre les deux mais d peut etre grand
 							{
 								if (d<m_EpaisseurRectangle)
 								{
 									possible=false;
+								//	print ("chemin pas possible entre"+i+"et"+j+" a cause de "+k );
 								}
 							}
 						}
@@ -107,7 +109,7 @@ public class CGame : MonoBehaviour {
 								if (d<4)
 								{
 									possible=false;
-									print ("chemin pas possible entre"+i+"et"+j+" a cause de "+k );
+								//	print ("chemin pas possible entre"+i+"et"+j+" a cause de "+k );
 								}
 							}
 						}
@@ -212,24 +214,38 @@ public class CGame : MonoBehaviour {
 	//-------------------------------------------------------------------------------
 	void RoadConstruction()
 	{
-		if(m_PlaneteOrigin != null)
-		{
-		   if(m_PlaneteDestination !=null)
-			{
-				CreateNewRoad(m_PlaneteOrigin, m_PlaneteDestination);
+		//verifier qu'il y a pas déjà une route
+		int id1=m_PlaneteOrigin.GetComponent<CPlanete> ().nID;
+		int id2=m_PlaneteDestination.GetComponent<CPlanete> ().nID;
 
-				m_PlaneteDestination.StopSelection();
-				m_PlaneteDestination = null;
+		if (graphePlanete [id1, id2] != 0 || graphePlanete [id2, id1] != 0) {
+						print ("route déjà existante"+id1+id2);
+				} else {
+
+						if (routePossible [id1, id2]) 
+						{
+								if (m_PlaneteOrigin != null) {
+										if (m_PlaneteDestination != null) {
+												graphePlanete [id2, id1] = -1;
+
+												CreateNewRoad (m_PlaneteOrigin, m_PlaneteDestination);
+
+												m_PlaneteDestination.StopSelection ();
+												m_PlaneteDestination = null;
+										}
+										m_PlaneteOrigin.StopSelection ();
+										m_PlaneteOrigin = null;
+
+								}
+								if (m_PlaneteOverlap != null) {
+										m_PlaneteOverlap.StopSelection ();
+										m_PlaneteOverlap = null;
+								}
+						}
+			else
+			{print ("route pas possible"+id1+id2);
 			}
-			m_PlaneteOrigin.StopSelection();
-			m_PlaneteOrigin = null;
-
-		}
-		if(m_PlaneteOverlap != null)
-		{
-			m_PlaneteOverlap.StopSelection();
-			m_PlaneteOverlap = null;
-		}
+				}
 	}
 
 	//-------------------------------------------------------------------------------
