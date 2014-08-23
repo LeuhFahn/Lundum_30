@@ -48,7 +48,7 @@ public class CGame : MonoBehaviour {
 				haineMax=haineMax-haine;
 				hainePlanete[i,j]=haine;
 				hainePlanete[j,i]=haine;
-				print ("haine "+i+" "+ "j" +" " +haine);
+				//print ("haine "+i+" "+ "j" +" " +haine);
 			}
 		}
 	}
