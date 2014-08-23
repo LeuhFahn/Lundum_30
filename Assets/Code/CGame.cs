@@ -28,7 +28,7 @@ public class CGame : MonoBehaviour {
 				graphePlanete[i,j]=0;
 			}
 		}
-		print (graphePlanete);
+		print (graphePlanete[0,0]);
 
 		CApoilInput.Init();
 
