@@ -6,7 +6,6 @@ public class CGameCreator : MonoBehaviour {
 	static int m_instanceCount = 0;
 	public GameObject m_prefabGame;
 	public GameObject m_prefabCamera;
-	public GameObject m_prefabPlanet;
 	public GameObject [] m_prefabPlanets;
 
 	 GameObject [] Planetes; //liste des 8 planetes
@@ -72,7 +71,8 @@ public class CGameCreator : MonoBehaviour {
 		float deltay = pos1.y - pos2.y;
 		print (Mathf.Sqrt(deltax*deltax+deltay*deltay));
 		return (Mathf.Sqrt(deltax*deltax+deltay*deltay)<8);
-		}
+	}
+
 	void Update () 
 	{
 	

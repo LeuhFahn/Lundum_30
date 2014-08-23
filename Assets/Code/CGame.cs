@@ -31,6 +31,8 @@ public class CGame : MonoBehaviour {
 		print (graphePlanete);
 
 		CApoilInput.Init();
+
+		CConstantes.Game = this;
 	}
 	
 	//-------------------------------------------------------------------------------
@@ -163,4 +165,14 @@ public class CGame : MonoBehaviour {
 	{
 
 	}
+
+	//-------------------------------------------------------------------------------
+	///
+	//-------------------------------------------------------------------------------
+	public void FoutreNinin()
+	{
+		Debug.Log("ninin suce des queues!");
+	}
+
+
 }
