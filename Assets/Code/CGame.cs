@@ -18,8 +18,12 @@ public class CGame : MonoBehaviour {
 	int[,] graphePlanete;
 	int[,] hainePlanete;
 	bool[,] routePossible;
-	int Score=100;
+	int m_score;
+	int Score=1000;
 	int deltascore;
+	float m_fTimeOfScore;
+	float m_fTime;
+	float m_fdeltatime;
 
 	//-------------------------------------------------------------------------------
 	/// Unity
@@ -36,7 +40,7 @@ public class CGame : MonoBehaviour {
 				graphePlanete[i,j]=0;
 			}
 		}
-		print (graphePlanete[0,0]);
+
 
 		CApoilInput.Init();
 
@@ -120,6 +124,14 @@ public class CGame : MonoBehaviour {
 
 			}	
 		}
+
+		//score
+		//
+		deltascore = 0;
+		m_fdeltatime = 1.0f;
+		m_fTimeOfScore = 300.0f;
+		m_fTime = 0.0f;
+
 	}
 	
 	//-------------------------------------------------------------------------------
@@ -127,6 +139,17 @@ public class CGame : MonoBehaviour {
 	//-------------------------------------------------------------------------------
 	void Update () 
 	{
+		if (m_fTime >= m_fTimeOfScore) {
+			m_fTime=0.0f;
+			//score
+			Score -= deltascore;
+			print ("score " + Score);
+			} 
+		else 
+			{
+			m_fTime+=m_fdeltatime;
+			}
+
 		CApoilInput.Process(Time.deltaTime);
 		//Quit on Escape
 		if(CApoilInput.QuitGame)
@@ -285,12 +308,38 @@ public class CGame : MonoBehaviour {
 	//-------------------------------------------------------------------------------
 	public void MaJ( int id1, int id2)
 	{
-		Debug.Log("ninin suce des queues!"+id1+id2);
+		Debug.Log("Route Finie"+id1+id2);
 		//route entre planete id 1 et id 2
-		graphePlanete[id1,id2]++;
-		graphePlanete[id2,id1]++;
+		graphePlanete[id1,id2]=1;
+		graphePlanete[id2,id1]=1;
+		updateScore ();
 	}
-	//updateDeltaScore();
+
+	void updateScore()
+	{
+		deltascore = 0;
+
+		for(int i=0;i<CConstantes.nNbPlanetes;i++)
+		{
+			for(int j=0;j<i;j++)
+			{
+				if (isConnected (i,j))
+				{print ("connected"+i+j);
+					deltascore+=hainePlanete[i,j];
+				}
+			}
+		}
+	}
+
+	bool isConnected (int i, int j)
+		{
+		if (graphePlanete [i, j] == 1) 
+			{
+				return true;		
+			}
+
+		return false;
+		}
 
 }
 
