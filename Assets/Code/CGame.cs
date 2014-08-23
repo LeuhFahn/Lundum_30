@@ -6,7 +6,7 @@ public class CGame : MonoBehaviour {
 	public GameObject m_Camera;
 	public LayerMask m_Mask;
 	public GameObject m_prefabRoad;
-
+	public int m_EpaisseurRectangle;
 	CPlanete m_PlaneteOrigin;
 	CPlanete m_PlaneteOverlap;
 	CPlanete m_PlaneteDestination;
@@ -14,6 +14,7 @@ public class CGame : MonoBehaviour {
 	//Truc de score
 	int[,] graphePlanete;
 	int[,] hainePlanete;
+	bool[,] routePossible;
 	int Score=100;
 	int deltascore;
 
@@ -53,8 +54,59 @@ public class CGame : MonoBehaviour {
 				//print ("haine "+i+" "+ "j" +" " +haine);
 			}
 		}
+		//calcul les routes qui peuvent exister ou pas
+		m_EpaisseurRectangle = 4;
+		routePossible = new bool[CConstantes.nNbPlanetes, CConstantes.nNbPlanetes];
+		for (int i=0; i<CConstantes.nNbPlanetes; i++) 
+		{
+			for(int j=0; j<i; j++){
+				bool possible=true;
+				for(int k=0; k<CConstantes.nNbPlanetes; k++)
+				{
+				if(k!= i & k!=j)//on teste la route i j avec les autres
+					{
+						int x1=0;
+						int y1=0;
+						int x2=0;
+						int y2=0;
+						int xA=0;
+						int yA=0;
 
-		deltascore = 0;
+						if (x1!=x2){
+							float D=Mathf.Sqrt((x2-x1)*(x2-x1)+(y2-y1)*(y2-y1));
+							float D1=Mathf.Sqrt((xA-x1)*(xA-x1)+(yA-y1)*(yA-y1));
+							float D2=Mathf.Sqrt((xA-x2)*(xA-x2)+(yA-y2)*(yA-y2));
+
+							float a=(y1-y2)/(x1-x2);
+							float b=y1-x1*a;
+							float d=Mathf.Abs(a*xA-yA+b)/Mathf.Sqrt(1+a*a);
+							float H1=Mathf.Sqrt (D1*D1-d*d);
+							float H2=Mathf.Sqrt (D2*D2-d*d);
+							if(H1<D & H2<D)//on est entre les deux mais d peut etre grand
+							{
+								if (d<m_EpaisseurRectangle)
+								{
+									possible=false;
+								}
+							}
+						}
+						else
+						{
+							//x1=x2
+							float d=Mathf.Abs(xA-x1);
+						
+							if (Mathf.Abs(y1-y2)==Mathf.Abs(yA-y2)+Mathf.Abs(yA-y1))
+							{
+								if (d<4){possible=false;}
+							}
+						}
+					}
+				}
+				routePossible[i,j]=possible;
+				routePossible[j,i]=possible;
+
+			}	
+		}
 	}
 	
 	//-------------------------------------------------------------------------------

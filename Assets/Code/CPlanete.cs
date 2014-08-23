@@ -5,7 +5,7 @@ public class CPlanete : MonoBehaviour {
 
 	public GameObject m_Halo;
 
-	public int m_nNbWorkers = 0;
+	int m_nNbWorkers;
 	bool m_bIsOverlapByMouse;
 	bool m_bIsOrigin;
 	bool m_bIsDrawInfos;
@@ -19,6 +19,12 @@ public class CPlanete : MonoBehaviour {
 		set {m_fSize = value; }
 	}
 
+	public int nNbWorkers
+	{
+		get {return m_nNbWorkers; }
+		set {m_nNbWorkers = value; }
+	}
+
 	public int nID
 	{
 		get {return m_nId; }
@@ -28,14 +34,18 @@ public class CPlanete : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		Reset ();
-		m_fSize = 5.0f + 2.5f*m_nNbWorkers;
-		gameObject.transform.localScale = new Vector3(m_fSize, m_fSize, m_fSize);
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
 
+	}
+
+	public void Init()
+	{
+		m_fSize = 5.0f + 2.5f*m_nNbWorkers;
+		gameObject.transform.localScale = new Vector3(m_fSize, m_fSize, m_fSize);
 	}
 
 	//-------------------------------------------------------------------------------
