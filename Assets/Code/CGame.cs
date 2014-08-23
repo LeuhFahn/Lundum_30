@@ -11,11 +11,25 @@ public class CGame : MonoBehaviour {
 	CPlanete m_PlaneteOverlap;
 	CPlanete m_PlaneteDestination;
 
+	//
+	int[,] graphePlanete;
+
 	//-------------------------------------------------------------------------------
 	/// Unity
 	//-------------------------------------------------------------------------------
 	void Start () 
 	{
+		//initialise graphePlanete a 0
+		graphePlanete=new int[8,8];
+		for(int i=0;i<8;i++)
+		{
+			for(int j=0;j<8;j++)
+			{
+				graphePlanete[i,j]=0;
+			}
+		}
+		print (graphePlanete);
+
 		CApoilInput.Init();
 	}
 	
