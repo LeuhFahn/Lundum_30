@@ -30,6 +30,10 @@ public class CRoad : MonoBehaviour {
 		m_fTimeOfConstruction = 5.0f;
 		m_fDistanceBetweenConnectedWorlds = (m_PlanetDestination.transform.position - m_PlanetOrigin.transform.position).magnitude;
 		m_fDistanceBetweenConnectedWorlds -= (fSizeOrigin + fSizeDestination)/2.0f;
+
+		Vector3 direction = m_PlanetDestination.transform.position - m_PlanetOrigin.transform.position;
+		gameObject.transform.right = direction;
+		//gameObject.transform.RotateAround(gameObject.transform.position, new Vector3(0,0,1), fAngle);
 	}
 	
 	// Update is called once per frame
