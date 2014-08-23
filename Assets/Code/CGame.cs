@@ -8,6 +8,7 @@ public class CGame : MonoBehaviour {
 	public GameObject m_prefabRoad;
 
 	CPlanete m_PlaneteOrigin;
+	CPlanete m_PlaneteOverlap;
 	CPlanete m_PlaneteDestination;
 
 	//-------------------------------------------------------------------------------
@@ -58,8 +59,16 @@ public class CGame : MonoBehaviour {
 				if(hit.collider.CompareTag("Planete"))
 				{
 					CPlanete planete = hit.collider.GetComponent<CPlanete>();
-					planete.OverlapByMouse();
+					if(planete != m_PlaneteOrigin)
+					{
+						planete.OverlapByMouse();
+						m_PlaneteOverlap = planete;
+					}
 				}
+			}
+			else if(m_PlaneteOverlap != null)
+			{
+				m_PlaneteOverlap.StopSelection();
 			}
 		}
 
@@ -99,6 +108,10 @@ public class CGame : MonoBehaviour {
 			m_PlaneteOrigin = null;
 
 		}
+		if(m_PlaneteOverlap != null)
+		{
+			m_PlaneteOverlap.StopSelection();
+		}
 	}
 
 	//-------------------------------------------------------------------------------
@@ -108,7 +121,8 @@ public class CGame : MonoBehaviour {
 	{
 		GameObject newRoad = ((GameObject) GameObject.Instantiate(m_prefabRoad));
 		newRoad.name = "Road"+PlaneteOrigin.name+PlaneteDestination.name;
-		//newRoad.S
+		newRoad.GetComponent<CRoad>().SetPlanets(PlaneteOrigin, PlaneteDestination);
+		newRoad.GetComponent<CRoad>().Init();
 	}
 
 	//-------------------------------------------------------------------------------
