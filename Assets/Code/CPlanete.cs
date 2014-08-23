@@ -11,7 +11,9 @@ public class CPlanete : MonoBehaviour {
 	bool m_bIsDrawInfos;
 	Color m_HaloColor;
 	float m_fSize;
-	int m_nId;
+	public int m_nId;/// <summary>
+	/// ///////////WARNING
+	/// </summary>
 	GameObject m_Text;
 
 	public float fSize
