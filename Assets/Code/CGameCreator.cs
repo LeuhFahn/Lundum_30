@@ -75,7 +75,7 @@ public class CGameCreator : MonoBehaviour {
 		float deltax = pos1.x - pos2.x;
 		float deltay = pos1.y - pos2.y;
 		//print (Mathf.Sqrt(deltax*deltax+deltay*deltay));
-		return (Mathf.Sqrt(deltax*deltax+deltay*deltay) < 8);
+		return (Mathf.Sqrt(deltax*deltax+deltay*deltay) < 30);
 	}
 
 	void Update () 

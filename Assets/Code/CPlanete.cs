@@ -45,7 +45,7 @@ public class CPlanete : MonoBehaviour {
 		m_Text.transform.Translate(0,m_fSize - m_fSize/4.0f - m_nNbWorkers/2.0f, 0);
 		SetText();
 
-		m_fAngluarVelocity = Random.Range(0.1f, 0.5f);
+		m_fAngluarVelocity = Random.Range(0.1f, 0.6f);
 	}
 	
 	// Update is called once per frame
