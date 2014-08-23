@@ -3,21 +3,117 @@ using System.Collections;
 
 public class CGame : MonoBehaviour {
 
-	// Use this for initialization
+	public GameObject m_Camera;
+	public LayerMask m_Mask;
+	public GameObject m_prefabRoad;
+
+	CPlanete m_PlaneteOrigin;
+	CPlanete m_PlaneteDestination;
+
+	//-------------------------------------------------------------------------------
+	/// Unity
+	//-------------------------------------------------------------------------------
 	void Start () 
 	{
 		CApoilInput.Init();
 	}
 	
-	// Update is called once per frame
+	//-------------------------------------------------------------------------------
+	/// Unity
+	//-------------------------------------------------------------------------------
 	void Update () 
 	{
 		CApoilInput.Process(Time.deltaTime);
 		//Quit on Escape
 		if(CApoilInput.QuitGame)
 			QuitGame();
+
+
+		if(Input.GetMouseButtonDown(0))
+		{
+			Vector3 directionCamera = m_Camera.GetComponent<Camera>().transform.forward;
+			RaycastHit hit;
+			//Debug.DrawRay(m_Camera.transform.position, 100*directionCamera);
+			Debug.DrawRay(m_Camera.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition).origin, 100*directionCamera);
+			if(Physics.Raycast (m_Camera.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition),out hit, 1000, m_Mask))
+			{
+				if(hit.collider.CompareTag("Planete"))
+				{
+					CPlanete planete = hit.collider.GetComponent<CPlanete>();
+					planete.SelectPlaneteAsOrigin();
+					m_PlaneteOrigin = planete;
+				}
+			}
+		}
+
+	
+		if (Input.GetMouseButton(0))
+		{
+			Vector3 directionCamera = m_Camera.GetComponent<Camera>().transform.forward;
+			RaycastHit hit;
+			//Debug.DrawRay(m_Camera.transform.position, 100*directionCamera);
+			Debug.DrawRay(m_Camera.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition).origin, 100*directionCamera);
+			if(Physics.Raycast (m_Camera.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition),out hit, 1000, m_Mask))
+			{
+				if(hit.collider.CompareTag("Planete"))
+				{
+					CPlanete planete = hit.collider.GetComponent<CPlanete>();
+					planete.OverlapByMouse();
+				}
+			}
+		}
+
+		if(Input.GetMouseButtonUp(0))
+		{
+			Vector3 directionCamera = m_Camera.GetComponent<Camera>().transform.forward;
+			RaycastHit hit;
+			//Debug.DrawRay(m_Camera.transform.position, 100*directionCamera);
+			Debug.DrawRay(m_Camera.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition).origin, 100*directionCamera);
+			if(Physics.Raycast (m_Camera.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition),out hit, 1000, m_Mask))
+			{
+				if(hit.collider.CompareTag("Planete"))
+				{
+					CPlanete planete = hit.collider.GetComponent<CPlanete>();
+					m_PlaneteDestination = planete;
+				}
+			}
+			RoadConstruction();
+		}
 	}
 
+	//-------------------------------------------------------------------------------
+	///
+	//-------------------------------------------------------------------------------
+	void RoadConstruction()
+	{
+		if(m_PlaneteOrigin != null)
+		{
+		   if(m_PlaneteDestination !=null)
+			{
+				CreateNewRoad(m_PlaneteOrigin, m_PlaneteDestination);
+
+				m_PlaneteDestination.StopSelection();
+				m_PlaneteDestination = null;
+			}
+			m_PlaneteOrigin.StopSelection();
+			m_PlaneteOrigin = null;
+
+		}
+	}
+
+	//-------------------------------------------------------------------------------
+	///
+	//-------------------------------------------------------------------------------
+	void CreateNewRoad(CPlanete PlaneteOrigin, CPlanete  PlaneteDestination)
+	{
+		GameObject newRoad = ((GameObject) GameObject.Instantiate(m_prefabRoad));
+		newRoad.name = "Road"+PlaneteOrigin.name+PlaneteDestination.name;
+		//newRoad.S
+	}
+
+	//-------------------------------------------------------------------------------
+	///
+	//-------------------------------------------------------------------------------
 	void QuitGame()
 	{
 		Application.Quit();	
