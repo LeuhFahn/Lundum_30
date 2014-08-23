@@ -8,10 +8,10 @@ public class CGameCreator : MonoBehaviour {
 	public GameObject m_prefabCamera;
 	public GameObject m_prefabPlanet;
 
-	public GameObject [] Planetes; //liste des 8 planetes
-	public  Vector3[] positions;//=new Vector3[8];
+	 GameObject [] Planetes; //liste des 8 planetes
+	 Vector3[] positions;//=new Vector3[8];
 
-	public int testrandom;
+
 	void Awake () 
 	{
 
