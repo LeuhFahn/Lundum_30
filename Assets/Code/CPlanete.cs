@@ -30,7 +30,7 @@ public class CPlanete : MonoBehaviour {
 	{
 		//Debug.Log (gameObject.name+"SelectPlaneteAsOrigin");
 		m_Halo.SetActive(true);
-		m_Halo.GetComponent<Light>().color = Color.red;
+		m_Halo.GetComponent<Light>().color = Color.green;
 		m_bIsOrigin = true;
 	}
 
