@@ -177,9 +177,14 @@ public class CGame : MonoBehaviour {
 	//-------------------------------------------------------------------------------
 	///
 	//-------------------------------------------------------------------------------
-	public void FoutreNinin()
+	public void MaJ( GameObject planet1, GameObject planet2)
 	{
 		Debug.Log("ninin suce des queues!");
+		int id1=int.Parse (planet1.name);
+		int id2=int.Parse (planet2.name);
+		//route entre planete id 1 et id 2
+		//graphePlanete[id1,id2]++;
+		//graphePlanete[id2,id1]++;
 	}
 
 
