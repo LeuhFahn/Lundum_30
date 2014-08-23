@@ -30,7 +30,7 @@ public class CGame : MonoBehaviour {
 			QuitGame();
 
 
-		if(Input.GetMouseButtonDown(0))
+		if(CApoilInput.LeftClickDown)
 		{
 			Vector3 directionCamera = m_Camera.GetComponent<Camera>().transform.forward;
 			RaycastHit hit;
@@ -48,7 +48,7 @@ public class CGame : MonoBehaviour {
 		}
 
 	
-		if (Input.GetMouseButton(0))
+		if (CApoilInput.LeftClickDown)
 		{
 			Vector3 directionCamera = m_Camera.GetComponent<Camera>().transform.forward;
 			RaycastHit hit;
@@ -73,7 +73,7 @@ public class CGame : MonoBehaviour {
 			}
 		}
 
-		if(Input.GetMouseButtonUp(0))
+		if(CApoilInput.LeftClickUp)
 		{
 			Vector3 directionCamera = m_Camera.GetComponent<Camera>().transform.forward;
 			RaycastHit hit;
@@ -84,7 +84,14 @@ public class CGame : MonoBehaviour {
 				if(hit.collider.CompareTag("Planete"))
 				{
 					CPlanete planete = hit.collider.GetComponent<CPlanete>();
-					m_PlaneteDestination = planete;
+					if(planete != m_PlaneteOrigin)
+					{
+						m_PlaneteDestination = planete;
+					}
+					else //it's a simple click on a planet
+					{
+						SelectThePlanet();
+					}
 				}
 			}
 			RoadConstruction();
@@ -133,5 +140,13 @@ public class CGame : MonoBehaviour {
 	void QuitGame()
 	{
 		Application.Quit();	
+	}
+
+	//-------------------------------------------------------------------------------
+	///
+	//-------------------------------------------------------------------------------
+	void SelectThePlanet()
+	{
+
 	}
 }

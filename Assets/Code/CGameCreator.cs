@@ -7,6 +7,7 @@ public class CGameCreator : MonoBehaviour {
 	public GameObject m_prefabGame;
 	public GameObject m_prefabCamera;
 	public GameObject m_prefabPlanet;
+	public GameObject [] m_prefabPlanets;
 
 	 GameObject [] Planetes; //liste des 8 planetes
 	 Vector3[] positions;//=new Vector3[8];
@@ -53,41 +54,14 @@ public class CGameCreator : MonoBehaviour {
 		}
 		print ("test choc" +Choc(new Vector3(0,0,0),new Vector3(1,1,0)));
 
-		GameObject planet1 = ((GameObject) GameObject.Instantiate (m_prefabPlanet));
-		planet1.name = "P1";
-		planet1.transform.position = positions[0];
+		GameObject planet;
+		for(int id = 0; id< 8 ; ++id)
+		{
+			planet = ((GameObject) GameObject.Instantiate (m_prefabPlanets[id]));
+			planet.name = "P"+(id+1).ToString();
+			planet.transform.position = positions[id];
+		}
 
-		GameObject planet2 = ((GameObject) GameObject.Instantiate (m_prefabPlanet));
-		planet2.name = "P2";
-		planet2.transform.position = positions[1];
-
-		
-		GameObject planet3 = ((GameObject) GameObject.Instantiate (m_prefabPlanet));
-		planet3.name = "P3";
-		planet3.transform.position = positions[2];
-
-		
-		GameObject planet4 = ((GameObject) GameObject.Instantiate (m_prefabPlanet));
-		planet4.name = "P4";
-		planet4.transform.position = positions[3];
-
-		GameObject planet5 = ((GameObject) GameObject.Instantiate (m_prefabPlanet));
-		planet5.name = "P5";
-		planet5.transform.position = positions[4];
-		
-		GameObject planet6 = ((GameObject) GameObject.Instantiate (m_prefabPlanet));
-		planet6.name = "P6";
-		planet6.transform.position = positions[5];
-		
-		
-		GameObject planet7 = ((GameObject) GameObject.Instantiate (m_prefabPlanet));
-		planet7.name = "P7";
-		planet7.transform.position = positions[6];
-		
-		
-		GameObject planet8 = ((GameObject) GameObject.Instantiate (m_prefabPlanet));
-		planet8.name = "P8";
-		planet8.transform.position = positions[7];
 
 
 	}
