@@ -229,10 +229,7 @@ public class CGame : MonoBehaviour {
 
 					if (routePossible [id1, id2]) 
 					{
-				//if (m_PlaneteOrigin != null) {
-					//if (m_PlaneteDestination != null) {
 						graphePlanete [id2, id1] = -1;
-
 						CreateNewRoad (m_PlaneteOrigin, m_PlaneteDestination);
 					}
 					else
