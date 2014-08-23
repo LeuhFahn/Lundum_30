@@ -28,7 +28,7 @@ public class CPlanete : MonoBehaviour {
 
 	public void SelectPlaneteAsOrigin()
 	{
-		Debug.Log (gameObject.name+"SelectPlaneteAsOrigin");
+		//Debug.Log (gameObject.name+"SelectPlaneteAsOrigin");
 		m_Halo.SetActive(true);
 		m_Halo.GetComponent<Light>().color = Color.red;
 		m_bIsOrigin = true;
@@ -38,7 +38,7 @@ public class CPlanete : MonoBehaviour {
 	{
 		if(!m_bIsOrigin && !m_bIsOverlapByMouse)
 		{
-			Debug.Log (gameObject.name+"OverlapByMouse");
+			//Debug.Log (gameObject.name+"OverlapByMouse");
 
 			m_bIsOverlapByMouse = true;
 			m_Halo.GetComponent<Light>().color = Color.white;

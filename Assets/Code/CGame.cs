@@ -69,6 +69,7 @@ public class CGame : MonoBehaviour {
 			else if(m_PlaneteOverlap != null)
 			{
 				m_PlaneteOverlap.StopSelection();
+				m_PlaneteOverlap = null;
 			}
 		}
 
@@ -111,6 +112,7 @@ public class CGame : MonoBehaviour {
 		if(m_PlaneteOverlap != null)
 		{
 			m_PlaneteOverlap.StopSelection();
+			m_PlaneteOverlap = null;
 		}
 	}
 
