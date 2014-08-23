@@ -64,7 +64,7 @@ public class CGame : MonoBehaviour {
 		}
 
 	
-		if (CApoilInput.LeftClickDown)
+		if (CApoilInput.LeftClick)
 		{
 			Vector3 directionCamera = m_Camera.GetComponent<Camera>().transform.forward;
 			RaycastHit hit;
