@@ -35,7 +35,7 @@ public class CGameCreator : MonoBehaviour {
 		int i = 0;	
 		while(i<8)
 		{
-			print("Creating positions: "+i);
+			//print("Creating positions: "+i);
 			positions[i]=new Vector3(Random.Range(-200,200)/10, Random.Range(-200,200)/10, 0);
 			//test si colision avec précédent
 			bool colision= false;
@@ -43,7 +43,7 @@ public class CGameCreator : MonoBehaviour {
 			{
 
 				colision=colision || (Choc(positions[j],positions[i]));
-				print("test "+i+j+" "+colision+ "  "+Choc(positions[j],positions[i])+" "+positions[i]+" " +positions[j]);
+				//print("test "+i+j+" "+colision+ "  "+Choc(positions[j],positions[i])+" "+positions[i]+" " +positions[j]);
 			
 
 			}
@@ -51,7 +51,7 @@ public class CGameCreator : MonoBehaviour {
 			if (!colision){i++;}
 
 		}
-		print ("test choc" +Choc(new Vector3(0,0,0),new Vector3(1,1,0)));
+		//print ("test choc" +Choc(new Vector3(0,0,0),new Vector3(1,1,0)));
 
 		GameObject planet;
 		for(int id = 0; id< 8 ; ++id)
@@ -69,7 +69,7 @@ public class CGameCreator : MonoBehaviour {
 	{
 		float deltax = pos1.x - pos2.x;
 		float deltay = pos1.y - pos2.y;
-		print (Mathf.Sqrt(deltax*deltax+deltay*deltay));
+		//print (Mathf.Sqrt(deltax*deltax+deltay*deltay));
 		return (Mathf.Sqrt(deltax*deltax+deltay*deltay)<8);
 	}
 
