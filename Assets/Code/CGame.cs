@@ -65,6 +65,7 @@ public class CGame : MonoBehaviour {
 				{
 				if(k!= i & k!=j)//on teste la route i j avec les autres
 					{
+
 						float x1=CConstantes.Planetes[i].GetComponent<CPlanete>().transform.position.x;
 						float y1=CConstantes.Planetes[i].GetComponent<CPlanete>().transform.position.y;
 						
@@ -73,7 +74,7 @@ public class CGame : MonoBehaviour {
 						
 						float xA=CConstantes.Planetes[k].GetComponent<CPlanete>().transform.position.x;
 						float yA=CConstantes.Planetes[k].GetComponent<CPlanete>().transform.position.y;
-
+						print(i+","+j+","+k+","+x1);
 
 						if (x1!=x2){
 							float D=Mathf.Sqrt((x2-x1)*(x2-x1)+(y2-y1)*(y2-y1));
@@ -100,7 +101,11 @@ public class CGame : MonoBehaviour {
 						
 							if (Mathf.Abs(y1-y2)==Mathf.Abs(yA-y2)+Mathf.Abs(yA-y1))
 							{
-								if (d<4){possible=false;}
+								if (d<4)
+								{
+									possible=false;
+									print ("chemin pas possible entre"+i+"et"+j+" a cause de "+k );
+								}
 							}
 						}
 					}
