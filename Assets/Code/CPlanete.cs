@@ -4,7 +4,8 @@ using System.Collections;
 public class CPlanete : MonoBehaviour {
 
 	public GameObject m_Halo;
-	
+
+	public int m_nNbWorkers = 0;
 	bool m_bIsOverlapByMouse;
 	bool m_bIsOrigin;
 	Color m_HaloColor;
@@ -19,7 +20,7 @@ public class CPlanete : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		Reset ();
-		m_fSize = 5.0f;
+		m_fSize = 5.0f + 2.5f*m_nNbWorkers;
 		gameObject.transform.localScale = new Vector3(m_fSize, m_fSize, m_fSize);
 	}
 	
