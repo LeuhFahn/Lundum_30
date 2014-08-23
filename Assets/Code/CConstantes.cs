@@ -4,4 +4,5 @@ using System.Collections;
 public class CConstantes : MonoBehaviour 
 {
 	public static CGame Game;
+	public static GameObject [] Planetes;
 }

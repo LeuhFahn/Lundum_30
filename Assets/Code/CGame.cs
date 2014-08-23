@@ -45,7 +45,15 @@ public class CGame : MonoBehaviour {
 		if(CApoilInput.QuitGame)
 			QuitGame();
 
+		ClickOnPlanetes();
 
+	}
+
+	//-------------------------------------------------------------------------------
+	/// 
+	//-------------------------------------------------------------------------------
+	void ClickOnPlanetes()
+	{
 		if(CApoilInput.LeftClickDown)
 		{
 			Vector3 directionCamera = m_Camera.GetComponent<Camera>().transform.forward;
@@ -62,8 +70,8 @@ public class CGame : MonoBehaviour {
 				}
 			}
 		}
-
-	
+		
+		
 		if (CApoilInput.LeftClick)
 		{
 			Vector3 directionCamera = m_Camera.GetComponent<Camera>().transform.forward;
@@ -88,7 +96,7 @@ public class CGame : MonoBehaviour {
 				m_PlaneteOverlap = null;
 			}
 		}
-
+		
 		if(CApoilInput.LeftClickUp)
 		{
 			Vector3 directionCamera = m_Camera.GetComponent<Camera>().transform.forward;
@@ -106,7 +114,7 @@ public class CGame : MonoBehaviour {
 					}
 					else //it's a simple click on a planet
 					{
-						SelectThePlanet();
+						SelectThePlanet(planete);
 					}
 				}
 			}
@@ -161,9 +169,9 @@ public class CGame : MonoBehaviour {
 	//-------------------------------------------------------------------------------
 	///
 	//-------------------------------------------------------------------------------
-	void SelectThePlanet()
+	void SelectThePlanet(CPlanete planete)
 	{
-
+		planete.SelectForDrawInfo();
 	}
 
 	//-------------------------------------------------------------------------------
