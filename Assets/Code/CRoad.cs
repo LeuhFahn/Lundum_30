@@ -73,6 +73,6 @@ public class CRoad : MonoBehaviour {
 	{
 		m_bConstructionIsOver = true;
 		m_MeshRoad.renderer.material.color = Color.blue;
-		CConstantes.Game.FoutreNinin();
+		CConstantes.Game.MaJ(m_PlanetOrigin,m_PlanetDestination);
 	}
 }
