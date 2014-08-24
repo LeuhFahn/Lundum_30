@@ -35,6 +35,7 @@ public class CMenuInGame : MonoBehaviour {
 		m_UIGroot.transform.FindChild("PlaneteInfo").FindChild("PlaneteInfo_Background").gameObject.SetActive(true);
 
 		planete.SelectForDrawInfo();
+
 		switch(planete.m_eNamePlanet)
 		{
 		case CPlanete.ENamePlanet.e_A:

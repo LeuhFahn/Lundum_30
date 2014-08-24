@@ -215,8 +215,11 @@ public class CGame : MonoBehaviour {
 			else
 			{
 				gameObject.GetComponent<CMenuInGame>().PlaneteInfoDesactivation();
-
-
+				
+				for(int i = 0 ; i < CConstantes.nNbPlanetes ; ++i)
+				{
+					CConstantes.Planetes[i].GetComponent<CPlanete>().StopDrawInfo();
+				}
 			}
 		}
 		
@@ -264,7 +267,6 @@ public class CGame : MonoBehaviour {
 					else //it's a simple click on a planet
 					{
 						gameObject.GetComponent<CMenuInGame>().SelectThePlanet(planete);
-						//TODO TIM
 					}
 				}
 			}
