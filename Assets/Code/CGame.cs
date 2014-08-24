@@ -33,6 +33,7 @@ public class CGame : MonoBehaviour {
 	//truc de tournois
 	int[] Quart;
 	int currentMatch;
+	bool matchEnCours;
 
 
 	//-------------------------------------------------------------------------------
@@ -138,6 +139,7 @@ public class CGame : MonoBehaviour {
 
 
 		//tournois
+		matchEnCours = false;
 		Quart = new int[15];
 
 		for (int i=0; i<15; i++) {
@@ -147,7 +149,7 @@ public class CGame : MonoBehaviour {
 		tirageAuSort ();
 		currentMatch = 0;
 		timeOfStartup = 0.0f;
-		timeMultiplicator = 0.5f;
+		timeMultiplicator = 2f;
 		currentMatch = 0;
 		
 		timeOfMatch  = new float[] {5f, 10f, 15f, 20f,25f,30f,35f};
@@ -173,9 +175,16 @@ public class CGame : MonoBehaviour {
 		m_fTime += Time.deltaTime;
 	//GESTION DES MATCHS
 		if (currentMatch < 7) {
-						if (m_fTime - timeOfStartup > timeOfMatch [currentMatch] * timeMultiplicator) {
+				
+				if (m_fTime -timeOfStartup> (timeOfMatch [currentMatch] * timeMultiplicator -4f) & matchEnCours==false)
+					{
+								startMatch(currentMatch);
+								matchEnCours=true;
+					}
+				 if (m_fTime - timeOfStartup > timeOfMatch [currentMatch] * timeMultiplicator) 
+						{
 								endMatch (currentMatch);
-						}
+					}
 				}
 	//GESTION Du SCORES
 	
@@ -408,7 +417,10 @@ public class CGame : MonoBehaviour {
 		}
 	}
 
-
+	void startMatch(int match)
+	{
+		print ("début du match " + (match+1));
+		}
 	void endMatch(int match){
 		print ("MATCH "+(currentMatch+1)+" " + CConstantes.Planetes [Quart [2 * currentMatch]].name + " VS " + CConstantes.Planetes [Quart [2 * currentMatch + 1]].name + " Fini");
 	//	string adv1=CConstantes.Planetes[Quart[2*match]].name;
@@ -438,11 +450,13 @@ public class CGame : MonoBehaviour {
 	void MatchIsOver(GameObject winPlanet)
 
 	{
+		matchEnCours=false;
 		currentMatch++;
 		}
 
 	void endGame(bool win)
 	{
+		matchEnCours=false;
 		if (win) {
 			print ("le GRAND VAINQUEUR EST "+ CConstantes.Planetes [Quart [14]].name);
 			print ("you win");
