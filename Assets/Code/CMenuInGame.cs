@@ -15,7 +15,8 @@ public class CMenuInGame : MonoBehaviour {
 	
 
 	void Update () {
-	
+		m_UIGroot.transform.FindChild("ScoreUI").FindChild("Label").gameObject.GetComponent<UILabel>().text = CConstantes.Game.pScore.ToString();
+
 	}
 
 	public int TrouveAnimosite(CPlanete planete, int posVoulue)
@@ -62,8 +63,6 @@ public class CMenuInGame : MonoBehaviour {
 	//-------------------------------------------------------------------------------
 	public void SelectThePlanet(CPlanete planete)
 	{
-
-
 		planete.SelectForDrawInfo(); //Dessin du halo autour de la planete cliquee
 
 		//Partie affichage du bloc d'info de planete en bas à droite
@@ -75,7 +74,8 @@ public class CMenuInGame : MonoBehaviour {
 		m_UIGroot.transform.FindChild("PlaneteInfo").FindChild("PlaneteInfo_Satisfaction").gameObject.SetActive(true);
 
 		//Affichage des 3 animosites de la planete
-		Debug.Log(TrouveAnimosite(planete, 1));
+		//Animosite i    TrouveAnimosite(planete, i))  avec i entre 1 et 3
+	
 
 		planete.SelectForDrawInfo();
 

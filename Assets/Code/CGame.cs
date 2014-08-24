@@ -48,6 +48,12 @@ public class CGame : MonoBehaviour {
 		set {hainePlanete = value; }
 	}
 
+	public int pScore
+	{
+		get {return Score; }
+		set {Score = value; }
+	}
+
 	//-------------------------------------------------------------------------------
 	/// Unity
 	//-------------------------------------------------------------------------------
