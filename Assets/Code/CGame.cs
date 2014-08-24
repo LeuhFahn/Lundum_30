@@ -6,7 +6,7 @@ public class CGame : MonoBehaviour {
 	public GameObject m_Camera;
 	public LayerMask m_Mask;
 	public GameObject m_prefabRoad;
-	public GameObject m_prefab3DText;
+	//public GameObject m_prefab3DText;
 	public GameObject m_prefabChampAsteroides;
 
 	public int m_EpaisseurRectangle;
@@ -133,9 +133,10 @@ public class CGame : MonoBehaviour {
 		m_fTimeOfScore = 300.0f;
 		m_fTime = 0.0f;
 		//tets
+		/*
 		m_score = ((GameObject) GameObject.Instantiate(CConstantes.Game.m_prefab3DText));
 		m_score.transform.position = new Vector3 (0, 0, 0);
-		m_score.GetComponent<TextMesh> ().text = Score.ToString();
+		m_score.GetComponent<TextMesh> ().text = Score.ToString();*/
 	}
 	
 	//-------------------------------------------------------------------------------
@@ -148,7 +149,7 @@ public class CGame : MonoBehaviour {
 			//score
 			Score -= deltascore;
 			print ("score " + Score);
-			m_score.GetComponent<TextMesh> ().text = Score.ToString();
+			//m_score.GetComponent<TextMesh> ().text = Score.ToString();
 			
 			} 
 		else 

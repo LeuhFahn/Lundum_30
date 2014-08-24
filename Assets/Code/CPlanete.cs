@@ -16,6 +16,8 @@ public class CPlanete : MonoBehaviour {
 	
 	public GameObject m_Halo;
 	public GameObject m_Mesh;
+	public GameObject m_Text;
+	public GameObject m_Artifices;
 
 	public ENamePlanet m_eNamePlanet;
 
@@ -29,7 +31,7 @@ public class CPlanete : MonoBehaviour {
 	public int m_nId;/// <summary>
 	/// ///////////WARNING
 	/// </summary>
-	GameObject m_Text;
+
 
 	public float fSize
 	{
@@ -53,7 +55,6 @@ public class CPlanete : MonoBehaviour {
 	void Start () 
 	{
 		Reset ();
-		m_Text = ((GameObject) GameObject.Instantiate(CConstantes.Game.m_prefab3DText));
 		m_Text.transform.parent = transform;
 		m_Text.transform.position = transform.position;
 		m_Text.transform.Translate(0,m_fSize - m_fSize/4.0f - m_nNbWorkers/2.0f, 0);
