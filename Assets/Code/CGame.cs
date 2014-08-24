@@ -23,17 +23,18 @@ public class CGame : MonoBehaviour {
 	GameObject m_score;
 	int Score=1000;
 	int deltascore;
+
 	//truc de temps
-	float timeOfStartup;
-	float timeMultiplicator;
-	float m_fTimeOfScore;
 	float m_fTime;
-	float m_fdeltatime;
-	float[] timeOfMatch;
-	int currentMatch;
+	float timeOfStartup;
+	float[] timeOfMatch ;
+	float timeMultiplicator;
 
 	//truc de tournois
 	int[] Quart;
+	int currentMatch;
+
+
 	//-------------------------------------------------------------------------------
 	/// Unity
 	//-------------------------------------------------------------------------------
@@ -139,23 +140,22 @@ public class CGame : MonoBehaviour {
 		//tournois
 		Quart = new int[15];
 
-		for (int i=0; i<8; i++) {
+		for (int i=0; i<15; i++) {
 				Quart [i] = -1;
 				}
+		
 		tirageAuSort ();
-	//	print ("MATCH 1:"+CConstantes.Planetes [Quart [0]].name+"VS"+CConstantes.Planetes [Quart [1]].name);
-		//score
-
-		deltascore = 0;
-		//m_fdeltatime = 1.0f;
-		//m_fTimeOfScore = 300.0f;
-		m_fTime = 0.0f;
+		currentMatch = 0;
 		timeOfStartup = 0.0f;
 		timeMultiplicator = 0.5f;
 		currentMatch = 0;
-
+		
 		timeOfMatch  = new float[] {5f, 10f, 15f, 20f,25f,30f,35f};
-		//
+		//score
+
+		deltascore = 0;
+		m_fTime = 0.0f;
+		//tets
 
 		/*
 		m_score = ((GameObject) GameObject.Instantiate(CConstantes.Game.m_prefab3DText));
@@ -169,6 +169,7 @@ public class CGame : MonoBehaviour {
 	//-------------------------------------------------------------------------------
 	void Update () 
 	{
+
 		m_fTime += Time.deltaTime;
 	//GESTION DES MATCHS
 		if (currentMatch < 7) {
@@ -177,10 +178,8 @@ public class CGame : MonoBehaviour {
 						}
 				}
 	//GESTION Du SCORES
-	//ON update le score tous les "jours"
+	
 
-	//GESTION DES RANDOM EVENT
-	//
 		CApoilInput.Process(Time.deltaTime);
 		//Quit on Escape
 		if(CApoilInput.QuitGame)
@@ -208,6 +207,15 @@ public class CGame : MonoBehaviour {
 					CPlanete planete = hit.collider.transform.parent.GetComponent<CPlanete>();
 					planete.SelectPlaneteAsOrigin();
 					m_PlaneteOrigin = planete;
+				}
+			}
+			else
+			{
+				gameObject.GetComponent<CMenuInGame>().PlaneteInfoDesactivation();
+				
+				for(int i = 0 ; i < CConstantes.nNbPlanetes ; ++i)
+				{
+					CConstantes.Planetes[i].GetComponent<CPlanete>().StopDrawInfo();
 				}
 			}
 		}
@@ -255,7 +263,7 @@ public class CGame : MonoBehaviour {
 					}
 					else //it's a simple click on a planet
 					{
-						SelectThePlanet(planete);
+						gameObject.GetComponent<CMenuInGame>().SelectThePlanet(planete);
 					}
 				}
 			}
@@ -283,8 +291,16 @@ public class CGame : MonoBehaviour {
 
 					if (routePossible [id1, id2]) 
 					{
-						graphePlanete [id2, id1] = -1;
-						CreateNewRoad (m_PlaneteOrigin, m_PlaneteDestination);
+						//Verifier que la main d'Oeuvre est dispo
+						if(m_PlaneteOrigin.nNbWorkers > 0 && m_PlaneteDestination.nNbWorkers > 0)
+						{
+							graphePlanete [id2, id1] = -1;
+							CreateNewRoad (m_PlaneteOrigin, m_PlaneteDestination);
+						}
+						else
+						{
+							print ("pas assez de main d'oeuvre dude!");
+						}
 					}
 					else
 					{
@@ -317,6 +333,10 @@ public class CGame : MonoBehaviour {
 		newRoad.GetComponent<CRoad>().SetPlanets(PlaneteOrigin, PlaneteDestination);
 		newRoad.GetComponent<CRoad>().Init();
 		CConstantes.ListRoad.Add(newRoad);
+
+		PlaneteOrigin.nNbWorkers = PlaneteOrigin.nNbWorkers - 1;
+		PlaneteDestination.nNbWorkers = PlaneteDestination.nNbWorkers - 1;
+
 	}
 
 	//-------------------------------------------------------------------------------
@@ -327,13 +347,6 @@ public class CGame : MonoBehaviour {
 		Application.Quit();	
 	}
 
-	//-------------------------------------------------------------------------------
-	///
-	//-------------------------------------------------------------------------------
-	void SelectThePlanet(CPlanete planete)
-	{
-		planete.SelectForDrawInfo();
-	}
 
 	//-------------------------------------------------------------------------------
 	///
@@ -394,10 +407,11 @@ public class CGame : MonoBehaviour {
 		}
 	}
 
+
 	void endMatch(int match){
 		print ("MATCH "+(currentMatch+1)+" " + CConstantes.Planetes [Quart [2 * currentMatch]].name + " VS " + CConstantes.Planetes [Quart [2 * currentMatch + 1]].name + " Fini");
-		string adv1=CConstantes.Planetes[Quart[2*match]].name;
-		string adv2=CConstantes.Planetes[Quart[2*match+1]].name;
+	//	string adv1=CConstantes.Planetes[Quart[2*match]].name;
+//		string adv2=CConstantes.Planetes[Quart[2*match+1]].name;
 
 		//Aléa qui gagne
 		int gagnant=Random.Range(0,1);
@@ -436,6 +450,7 @@ public class CGame : MonoBehaviour {
 			print ("you lose");
 				}
 	}
+
 
 
 }

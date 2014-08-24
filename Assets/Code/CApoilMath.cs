@@ -58,9 +58,22 @@ public class CApoilMath
 	{
 		return fRad * Mathf.Rad2Deg;
 	}
-	
+
+	//-------------------------------------------------------------------------------
+	///
+	//-------------------------------------------------------------------------------
 	public static float InterpolationLinear(float fTimeCurrent, float fTimeStart, float fTimeEnd, float fStart, float fEnd)
 	{
 		return fStart + fTimeCurrent * (fEnd - fStart)/(fTimeEnd - fTimeStart);	
+	}
+
+	//-------------------------------------------------------------------------------
+	///
+	//-------------------------------------------------------------------------------
+	public static T GetRandomEnum<T>()
+	{
+		System.Array A = System.Enum.GetValues(typeof(T));
+		T V = (T)A.GetValue(UnityEngine.Random.Range(0,A.Length));
+		return V;
 	}
 }
