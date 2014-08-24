@@ -181,7 +181,7 @@ public class CGame : MonoBehaviour {
 			{
 				if(hit.collider.CompareTag("Planete"))
 				{
-					CPlanete planete = hit.collider.GetComponent<CPlanete>();
+					CPlanete planete = hit.collider.transform.parent.GetComponent<CPlanete>();
 					planete.SelectPlaneteAsOrigin();
 					m_PlaneteOrigin = planete;
 				}
@@ -199,7 +199,7 @@ public class CGame : MonoBehaviour {
 			{
 				if(hit.collider.CompareTag("Planete"))
 				{
-					CPlanete planete = hit.collider.GetComponent<CPlanete>();
+					CPlanete planete = hit.collider.transform.parent.GetComponent<CPlanete>();
 					if(planete != m_PlaneteOrigin)
 					{
 						planete.OverlapByMouse();
@@ -224,7 +224,7 @@ public class CGame : MonoBehaviour {
 			{
 				if(hit.collider.CompareTag("Planete"))
 				{
-					CPlanete planete = hit.collider.GetComponent<CPlanete>();
+					CPlanete planete = hit.collider.transform.parent.GetComponent<CPlanete>();
 					if(planete != m_PlaneteOrigin)
 					{
 						m_PlaneteDestination = planete;
