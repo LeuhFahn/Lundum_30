@@ -212,6 +212,12 @@ public class CGame : MonoBehaviour {
 					m_PlaneteOrigin = planete;
 				}
 			}
+			else
+			{
+				gameObject.GetComponent<CMenuInGame>().PlaneteInfoDesactivation();
+
+
+			}
 		}
 		
 		
@@ -257,7 +263,8 @@ public class CGame : MonoBehaviour {
 					}
 					else //it's a simple click on a planet
 					{
-						SelectThePlanet(planete);
+						gameObject.GetComponent<CMenuInGame>().SelectThePlanet(planete);
+						//TODO TIM
 					}
 				}
 			}
@@ -341,13 +348,6 @@ public class CGame : MonoBehaviour {
 		Application.Quit();	
 	}
 
-	//-------------------------------------------------------------------------------
-	///
-	//-------------------------------------------------------------------------------
-	void SelectThePlanet(CPlanete planete)
-	{
-		planete.SelectForDrawInfo();
-	}
 
 	//-------------------------------------------------------------------------------
 	///
