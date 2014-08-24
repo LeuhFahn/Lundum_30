@@ -34,6 +34,13 @@ public class CGame : MonoBehaviour {
 
 	//truc de tournois
 	int[] Quart;
+
+	public int[,] ppnHainePlanete
+	{
+		get {return hainePlanete; }
+		set {hainePlanete = value; }
+	}
+
 	//-------------------------------------------------------------------------------
 	/// Unity
 	//-------------------------------------------------------------------------------
@@ -62,6 +69,7 @@ public class CGame : MonoBehaviour {
 		int haineMax = 400;
 		for (int i=0; i<8; i++)
 		{
+			hainePlanete[i,i]=4+i*2; //Haine de la planete envers elle-meme (= satisfaction)
 			for (int j=0;j<i;j++)
 			{
 				int haine= Random.Range(0,Mathf.Min (30,haineMax));
