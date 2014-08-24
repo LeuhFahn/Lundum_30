@@ -32,9 +32,7 @@ public class CGame : MonoBehaviour {
 	float[] timeOfMatch ;
 	float timeMultiplicator;
 	float m_fTimeOfScore;
-	float m_fTime;
 	float m_fdeltatime;
-	float[] timeOfMatch;
 	int currentMatch;
 	bool matchEnCours;
 
