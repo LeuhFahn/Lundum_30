@@ -5,6 +5,7 @@ public class CRoad : MonoBehaviour {
 
 	public GameObject m_MeshGhost;
 	public GameObject m_MeshRoad;
+	public AudioSource m_RoadSound;
 
 	GameObject m_PlanetOrigin;
 	GameObject m_PlanetDestination;
@@ -37,6 +38,10 @@ public class CRoad : MonoBehaviour {
 		gameObject.transform.right = direction;
 		//gameObject.transform.RotateAround(gameObject.transform.position, new Vector3(0,0,1), fAngle);
 		SetSizeOfMesh(m_MeshGhost, m_fDistanceBetweenConnectedWorlds);
+
+		m_RoadSound.audio.Play ();
+		m_RoadSound.audio.loop= true ;
+
 	}
 	
 	// Update is called once per frame
@@ -47,6 +52,8 @@ public class CRoad : MonoBehaviour {
 			float fProgression = CApoilMath.InterpolationLinear(m_fTime, 0.0f, m_fTimeOfConstruction, 0, m_fDistanceBetweenConnectedWorlds);
 			SetSizeOfMesh(m_MeshRoad, fProgression);
 			m_fTime += Time.deltaTime;
+
+			m_RoadSound.audio.pitch = (m_fTimeOfConstruction/m_fDistanceBetweenConnectedWorlds)/(5/m_fDistanceBetweenConnectedWorlds);
 		}
 		if(!m_bConstructionIsOver && m_fTime > m_fTimeOfConstruction)
 		{
@@ -74,5 +81,6 @@ public class CRoad : MonoBehaviour {
 		m_bConstructionIsOver = true;
 		m_MeshRoad.renderer.material.color = Color.blue;
 		CConstantes.Game.MaJ(m_PlanetOrigin.GetComponent<CPlanete>().nID,m_PlanetDestination.GetComponent<CPlanete>().nID);
+		m_RoadSound.Stop ();
 	}
 }
