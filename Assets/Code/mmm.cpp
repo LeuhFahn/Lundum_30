@@ -2,6 +2,6 @@
 
 int main()
 {
-	std::cout << "MMM suce des Queues!" << std::endl;
+	std::cout << "MMM fait des UI!" << std::endl;
 	return 0;
 }
