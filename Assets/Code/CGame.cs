@@ -23,17 +23,16 @@ public class CGame : MonoBehaviour {
 	GameObject m_score;
 	int Score=1000;
 	int deltascore;
-	//truc de temps
-	float timeOfStartup;
-	float timeMultiplicator;
 	float m_fTimeOfScore;
 	float m_fTime;
 	float m_fdeltatime;
-	float[] timeOfMatch;
-	int currentMatch;
 
 	//truc de tournois
 	int[] Quart;
+	int[] Demi;
+	int[] Finale;
+	int vainqueur;
+
 	//-------------------------------------------------------------------------------
 	/// Unity
 	//-------------------------------------------------------------------------------
@@ -137,25 +136,25 @@ public class CGame : MonoBehaviour {
 
 
 		//tournois
-		Quart = new int[15];
-
+		Quart = new int[8];
+		Demi = new int[4];
+		Finale = new int[2];
 		for (int i=0; i<8; i++) {
 				Quart [i] = -1;
+				Demi[i/2]=-1;
+				Finale[i/4]=-1;
 				}
+
+		 vainqueur = -1;
 		tirageAuSort ();
-	//	print ("MATCH 1:"+CConstantes.Planetes [Quart [0]].name+"VS"+CConstantes.Planetes [Quart [1]].name);
+
 		//score
 
 		deltascore = 0;
-		//m_fdeltatime = 1.0f;
-		//m_fTimeOfScore = 300.0f;
+		m_fdeltatime = 1.0f;
+		m_fTimeOfScore = 300.0f;
 		m_fTime = 0.0f;
-		timeOfStartup = 0.0f;
-		timeMultiplicator = 0.5f;
-		currentMatch = 0;
-
-		timeOfMatch  = new float[] {5f, 10f, 15f, 20f,25f,30f,35f};
-		//
+		//tets
 
 		/*
 		m_score = ((GameObject) GameObject.Instantiate(CConstantes.Game.m_prefab3DText));
@@ -169,19 +168,21 @@ public class CGame : MonoBehaviour {
 	//-------------------------------------------------------------------------------
 	void Update () 
 	{
-		m_fTime += Time.deltaTime;
-	//GESTION DES MATCHS
-		if (currentMatch < 7) {
-						if (m_fTime - timeOfStartup > timeOfMatch [currentMatch] * timeMultiplicator) {
-								print ("MATCH "+(currentMatch+1)+" " + CConstantes.Planetes [Quart [2 * currentMatch]].name + " VS " + CConstantes.Planetes [Quart [2 * currentMatch + 1]].name + " Fini");
-								endMatch (currentMatch);
-						}
-				}
-	//GESTION Du SCORES
-	//ON update le score tous les "jours"
+		if (m_fTime >= m_fTimeOfScore) {
+			m_fTime=0.0f;
+			//score
+			Score -= deltascore;
+			print ("score " + Score);
 
-	//GESTION DES RANDOM EVENT
-	//
+			//m_score.GetComponent<TextMesh> ().text = Score.ToString();
+
+			
+			} 
+		else 
+			{
+			m_fTime+=m_fdeltatime;
+			}
+
 		CApoilInput.Process(Time.deltaTime);
 		//Quit on Escape
 		if(CApoilInput.QuitGame)
@@ -284,8 +285,16 @@ public class CGame : MonoBehaviour {
 
 					if (routePossible [id1, id2]) 
 					{
-						graphePlanete [id2, id1] = -1;
-						CreateNewRoad (m_PlaneteOrigin, m_PlaneteDestination);
+						//Verifier que la main d'Oeuvre est dispo
+						if(m_PlaneteOrigin.nNbWorkers > 0 && m_PlaneteDestination.nNbWorkers > 0)
+						{
+							graphePlanete [id2, id1] = -1;
+							CreateNewRoad (m_PlaneteOrigin, m_PlaneteDestination);
+						}
+						else
+						{
+							print ("pas assez de main d'oeuvre dude!");
+						}
 					}
 					else
 					{
@@ -318,6 +327,10 @@ public class CGame : MonoBehaviour {
 		newRoad.GetComponent<CRoad>().SetPlanets(PlaneteOrigin, PlaneteDestination);
 		newRoad.GetComponent<CRoad>().Init();
 		CConstantes.ListRoad.Add(newRoad);
+
+		PlaneteOrigin.nNbWorkers = PlaneteOrigin.nNbWorkers - 1;
+		PlaneteDestination.nNbWorkers = PlaneteDestination.nNbWorkers - 1;
+
 	}
 
 	//-------------------------------------------------------------------------------
@@ -395,38 +408,6 @@ public class CGame : MonoBehaviour {
 		}
 	}
 
-	void endMatch(int match){
-
-		string adv1=CConstantes.Planetes[Quart[2*match]].name;
-		string adv2=CConstantes.Planetes[Quart[2*match+1]].name;
-		//Aléa qui gagne
-		int gagnant=Random.Range(0,1);
-		Quart[match+8]=Quart[2*match+gagnant];
-
-		//SI  C est la finale on vient de calculer le vainqueur ,on passe a endgame
-		if (currentMatch >= 6) {
-						endGame (true);
-				} else {
-						if (gagnant == 0) {
-								print (adv1 + " a gagné");
-						} else {
-								print (adv2 + " a gagné");
-						}
-						currentMatch++;
-						print ("prochain match" + CConstantes.Planetes [Quart [2 * currentMatch]].name + " VS " + CConstantes.Planetes [Quart [2 * currentMatch + 1]].name);
-				}
-	}
-
-	void endGame(bool win)
-	{
-		if (win) {
-			print ("le GRAND VAINQUEUR EST "+ CConstantes.Planetes [Quart [14]].name);
-			print ("you win");
-				} 
-		else {
-			print ("you lose");
-				}
-	}
 
 
 }
