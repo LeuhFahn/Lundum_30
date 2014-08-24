@@ -9,6 +9,7 @@ public class CCamera : MonoBehaviour {
 
 	public AudioSource m_Ambiance;
 	public AudioSource m_Test;
+	public AudioSource m_Stade;
 
 	// Use this for initialization
 	void Start () 
