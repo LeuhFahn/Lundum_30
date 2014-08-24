@@ -20,13 +20,22 @@ public class CEvent : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-	
+		if(CApoilInput.DebugF9)
+			CEvent.LaunchEventOnARoad();
 	}
 
 	static public void LaunchEventOnARoad()
 	{
-		Debug.Log ("on va tous crever!!");
-		//CConstantes.Game.GetComponent<CEvent>().LaunchAsteroides(CConstantes.ListRoad[0]);
+		int nSizeListRoad = CConstantes.ListRoad.Count;
+		int nIdRoad = Random.Range(1, nSizeListRoad);
+		EeventType eChoiceEvent = CApoilMath.GetRandomEnum<EeventType>();
+		CConstantes.Game.GetComponent<CEvent>().LaunchEvent(eChoiceEvent);
+	}
+
+	void LaunchEvent(EeventType eChoiceEvent)
+	{
+		Debug.Log (eChoiceEvent);
+
 	}
 
 	void LaunchAsteroides(GameObject road)
