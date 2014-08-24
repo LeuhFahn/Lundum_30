@@ -3,7 +3,21 @@ using System.Collections;
 
 public class CPlanete : MonoBehaviour {
 
+	public enum ENamePlanet{
+		e_Terra,
+		e_Sentry,
+		e_Yoranus,
+		e_C,
+		e_A,
+		e_V,
+		e_K,
+		e_X
+	}
+	
 	public GameObject m_Halo;
+	public GameObject m_Mesh;
+
+	public ENamePlanet m_eNamePlanet;
 
 	int m_nNbWorkers;
 	bool m_bIsOverlapByMouse;
@@ -53,14 +67,13 @@ public class CPlanete : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-		gameObject.transform.RotateAround(transform.position, transform.up, m_fAngluarVelocity);
-		m_Text.transform.RotateAround(transform.position, transform.up, -m_fAngluarVelocity);
+		m_Mesh.transform.RotateAround(m_Mesh.transform.position, m_Mesh.transform.up, m_fAngluarVelocity);
 	}
 
 	public void Init()
 	{
 		m_fSize = 2.5f + 2.5f*m_nNbWorkers;
-		gameObject.transform.localScale = new Vector3(m_fSize, m_fSize, m_fSize);
+		m_Mesh.transform.localScale = new Vector3(m_fSize, m_fSize, m_fSize);
 	}
 
 	//-------------------------------------------------------------------------------
