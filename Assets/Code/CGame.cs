@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class CGame : MonoBehaviour {
 
@@ -7,13 +8,13 @@ public class CGame : MonoBehaviour {
 	public LayerMask m_Mask;
 	public GameObject m_prefabRoad;
 	//public GameObject m_prefab3DText;
-	public GameObject m_prefabChampAsteroides;
 
 	public int m_EpaisseurRectangle;
 
 	CPlanete m_PlaneteOrigin;
 	CPlanete m_PlaneteOverlap;
 	CPlanete m_PlaneteDestination;
+
 
 	//Truc de score
 	int[,] graphePlanete;
@@ -46,6 +47,7 @@ public class CGame : MonoBehaviour {
 		CApoilInput.Init();
 
 		CConstantes.Game = this;
+		CConstantes.ListRoad = new List<GameObject>();
 
 		//initialise randomly haine planete symetrique
 		//Haine max totale 400, max totale un couple 30
@@ -292,6 +294,7 @@ public class CGame : MonoBehaviour {
 		newRoad.name = "Road"+PlaneteOrigin.name+PlaneteDestination.name;
 		newRoad.GetComponent<CRoad>().SetPlanets(PlaneteOrigin, PlaneteDestination);
 		newRoad.GetComponent<CRoad>().Init();
+		CConstantes.ListRoad.Add(newRoad);
 	}
 
 	//-------------------------------------------------------------------------------
@@ -308,12 +311,6 @@ public class CGame : MonoBehaviour {
 	void SelectThePlanet(CPlanete planete)
 	{
 		planete.SelectForDrawInfo();
-	}
-
-	void LaunchAsteroides(GameObject road)
-	{
-		GameObject asteroide = ((GameObject) GameObject.Instantiate(m_prefabChampAsteroides));
-		asteroide.transform.position = road.transform.position;
 	}
 
 	//-------------------------------------------------------------------------------
