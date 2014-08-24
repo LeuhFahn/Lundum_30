@@ -7,6 +7,7 @@ public class CGame : MonoBehaviour {
 	public LayerMask m_Mask;
 	public GameObject m_prefabRoad;
 	public GameObject m_prefab3DText;
+	public GameObject m_prefabChampAsteroides;
 
 	public int m_EpaisseurRectangle;
 
@@ -308,6 +309,12 @@ public class CGame : MonoBehaviour {
 		planete.SelectForDrawInfo();
 	}
 
+	void LaunchAsteroides(GameObject road)
+	{
+		GameObject asteroide = ((GameObject) GameObject.Instantiate(m_prefabChampAsteroides));
+		asteroide.transform.position = road.transform.position;
+	}
+
 	//-------------------------------------------------------------------------------
 	///
 	//-------------------------------------------------------------------------------
@@ -337,14 +344,14 @@ public class CGame : MonoBehaviour {
 	}
 
 	bool isConnected (int i, int j)
+	{
+	if (graphePlanete [i, j] == 1) 
 		{
-		if (graphePlanete [i, j] == 1) 
-			{
-				return true;		
-			}
-
-		return false;
+			return true;		
 		}
+
+	return false;
+	}
 
 }
 
