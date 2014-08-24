@@ -173,7 +173,6 @@ public class CGame : MonoBehaviour {
 	//GESTION DES MATCHS
 		if (currentMatch < 7) {
 						if (m_fTime - timeOfStartup > timeOfMatch [currentMatch] * timeMultiplicator) {
-								print ("MATCH "+(currentMatch+1)+" " + CConstantes.Planetes [Quart [2 * currentMatch]].name + " VS " + CConstantes.Planetes [Quart [2 * currentMatch + 1]].name + " Fini");
 								endMatch (currentMatch);
 						}
 				}
@@ -396,26 +395,36 @@ public class CGame : MonoBehaviour {
 	}
 
 	void endMatch(int match){
-
+		print ("MATCH "+(currentMatch+1)+" " + CConstantes.Planetes [Quart [2 * currentMatch]].name + " VS " + CConstantes.Planetes [Quart [2 * currentMatch + 1]].name + " Fini");
 		string adv1=CConstantes.Planetes[Quart[2*match]].name;
 		string adv2=CConstantes.Planetes[Quart[2*match+1]].name;
+
 		//Aléa qui gagne
 		int gagnant=Random.Range(0,1);
 		Quart[match+8]=Quart[2*match+gagnant];
 
 		//SI  C est la finale on vient de calculer le vainqueur ,on passe a endgame
+
+
 		if (currentMatch >= 6) {
 						endGame (true);
 				} else {
-						if (gagnant == 0) {
+						MatchIsOver (CConstantes.Planetes [Quart [2 * match + gagnant]]);
+					/*	if (gagnant == 0) {
 								print (adv1 + " a gagné");
 						} else {
 								print (adv2 + " a gagné");
 						}
-						currentMatch++;
-						print ("prochain match" + CConstantes.Planetes [Quart [2 * currentMatch]].name + " VS " + CConstantes.Planetes [Quart [2 * currentMatch + 1]].name);
+						
+						print ("prochain match" + CConstantes.Planetes [Quart [2 * currentMatch]].name + " VS " + CConstantes.Planetes [Quart [2 * currentMatch + 1]].name);*/
 				}
 	}
+
+	void MatchIsOver(GameObject winPlanet)
+
+	{
+		currentMatch++;
+		}
 
 	void endGame(bool win)
 	{
