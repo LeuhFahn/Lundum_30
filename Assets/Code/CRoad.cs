@@ -14,6 +14,7 @@ public class CRoad : MonoBehaviour {
 	float m_fTime;
 	float m_fDistanceBetweenConnectedWorlds;
 	bool m_bConstructionIsOver;
+	bool m_bIsUnderAttack;
 
 	void Awake()
 	{

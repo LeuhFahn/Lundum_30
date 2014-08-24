@@ -372,7 +372,8 @@ public class CGame : MonoBehaviour {
 			for(int j=0;j<i;j++)
 			{
 				if (isConnected (i,j))
-				{print ("connected"+i+j);
+				{
+					print ("connected"+i+j);
 					deltascore+=hainePlanete[i,j];
 				}
 			}
