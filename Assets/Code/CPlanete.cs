@@ -42,7 +42,10 @@ public class CPlanete : MonoBehaviour {
 	public int nNbWorkers
 	{
 		get {return m_nNbWorkers; }
-		set {m_nNbWorkers = value; }
+		set {
+			m_nNbWorkers = value; 
+			SetText();
+		}
 	}
 
 	public int nID
@@ -57,7 +60,8 @@ public class CPlanete : MonoBehaviour {
 		Reset ();
 		m_Text.transform.parent = transform;
 		m_Text.transform.position = transform.position;
-		m_Text.transform.Translate(0,m_fSize - m_fSize/4.0f - m_nNbWorkers/2.0f, 0);
+		m_Text.transform.Translate(0,m_fSize - m_fSize/4.0f, 0);
+		m_Text.SetActive(true);
 		SetText();
 
 		m_Halo.GetComponent<Light>().range = 6.0f + 2.5f * m_nNbWorkers;
@@ -107,7 +111,6 @@ public class CPlanete : MonoBehaviour {
 		if(!m_bIsOrigin && !m_bIsOverlapByMouse)
 		{
 			//Debug.Log (gameObject.name+"OverlapByMouse");
-
 			m_bIsOverlapByMouse = true;
 			m_Halo.SetActive(true);
 			m_Halo.GetComponent<Light>().color = Color.white;

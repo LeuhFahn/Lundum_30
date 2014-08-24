@@ -75,9 +75,9 @@ public class CMenuInGame : MonoBehaviour {
 		m_UIGroot.transform.FindChild("PlaneteInfo").FindChild("PlaneteInfo_Satisfaction").gameObject.SetActive(true);
 
 		//Affichage des 3 animosites de la planete
-
 		Debug.Log(TrouveAnimosite(planete, 1));
 
+		planete.SelectForDrawInfo();
 
 		switch(planete.m_eNamePlanet)
 		{
