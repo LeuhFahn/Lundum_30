@@ -15,6 +15,7 @@ public class CGame : MonoBehaviour {
 	CPlanete m_PlaneteOverlap;
 	CPlanete m_PlaneteDestination;
 
+	string[]  couleurPlanete;
 
 	//Truc de score
 	int[,] graphePlanete;
@@ -23,6 +24,7 @@ public class CGame : MonoBehaviour {
 	GameObject m_score;
 	int Score=1000;
 	int deltascore;
+	int[] multiplicateurScore;
 
 	//truc de temps
 	float m_fTime;
@@ -37,7 +39,7 @@ public class CGame : MonoBehaviour {
 	bool matchEnCours;
 
 
-	bool notAlreadyLaunchedThiwWeek;
+	bool notAlreadyLaunchedThisWeek;
 	//truc de tournois
 	int[] Quart;
 
@@ -60,6 +62,7 @@ public class CGame : MonoBehaviour {
 	void Start () 
 	{
 
+		couleurPlanete  = new string[] {"Orange","bleue" ,"verte" ,"Beige" ,"Terre","Rouge","Violette","Rose"};
 		//initialise graphePlanete a 0
 		graphePlanete=new int[8,8];
 		for(int i=0;i<8;i++)
@@ -168,18 +171,20 @@ public class CGame : MonoBehaviour {
 		
 		tirageAuSort ();
 		currentMatch = 0;
+		print ("prochain match" +couleurPlanete [Quart [2 * currentMatch]] + " VS " + couleurPlanete [Quart [2 * currentMatch + 1]]);
 		timeOfStartup = 0.0f;
-		timeMultiplicator = 10f;
+		timeMultiplicator = 5f;
 		currentMatch = 0;
 		
 		timeOfMatch  = new float[] {5f, 10f, 15f, 20f,25f,30f,35f};
 		//score
+		multiplicateurScore = new int[]{1,1,1,1,2,2,4};
 		m_currentWeek = 0;
 		 m_currentDay=0;
 		deltascore = 0;
 		m_fTime = 0.0f;
 		//events
-		bool notAlreadyLaunchedThiwWeek = true;
+		bool notAlreadyLaunchedThisWeek = true;
 
 		/*
 		m_score = ((GameObject) GameObject.Instantiate(CConstantes.Game.m_prefab3DText));
@@ -199,7 +204,7 @@ public class CGame : MonoBehaviour {
 		int m_currentWeek2= Mathf.FloorToInt((m_fTime-timeOfStartup)/(timeMultiplicator));
 
 		if (m_currentWeek2 != m_currentWeek) {
-						notAlreadyLaunchedThiwWeek=true;
+						notAlreadyLaunchedThisWeek=true;
 						m_currentWeek = m_currentWeek2;
 						print ("semaine actuelle "+m_currentWeek);
 						
@@ -229,10 +234,10 @@ public class CGame : MonoBehaviour {
 			//print ("Score:"+Score);
 						m_currentDay = m_currentDay2;
 						//print (m_currentDay2);
-						if (notAlreadyLaunchedThiwWeek & Random.Range(0,6)==0)
+						if (notAlreadyLaunchedThisWeek & Random.Range(0,6)==0)
 							{
 							print("launch");CEvent.LaunchEventOnARoad(); 
-							notAlreadyLaunchedThiwWeek=false;
+							notAlreadyLaunchedThisWeek=false;
 							}
 				
 				}
@@ -505,9 +510,9 @@ public class CGame : MonoBehaviour {
 		Quart[match+8]=Quart[2*match+gagnant];
 		//Si les deux planetes sonr relié ont augmente le score
 		if (isConnected (Quart [2 * currentMatch], Quart [2 * currentMatch + 1])) {
-			Score+=hainePlanete[Quart [2 * currentMatch], Quart [2 * currentMatch + 1]]*1000;
+			Score+=hainePlanete[Quart [2 * currentMatch], Quart [2 * currentMatch + 1]]*500*multiplicateurScore[match];
 				} else {
-			Score-=hainePlanete[Quart [2 * currentMatch], Quart [2 * currentMatch + 1]]*1000;
+			Score-=hainePlanete[Quart [2 * currentMatch], Quart [2 * currentMatch + 1]]*500*multiplicateurScore[match];
 				}
 		//SI  C est la finale on vient de calculer le vainqueur ,on passe a endgame
 
@@ -521,8 +526,8 @@ public class CGame : MonoBehaviour {
 						} else {
 								print (adv2 + " a gagné");
 						}
-						
-						print ("prochain match" + CConstantes.Planetes [Quart [2 * currentMatch]].name + " VS " + CConstantes.Planetes [Quart [2 * currentMatch + 1]].name);*/
+						*/
+						print ("prochain match" +couleurPlanete [Quart [2 * currentMatch]] + " VS " + couleurPlanete [Quart [2 * currentMatch + 1]]);
 				}
 	}
 
