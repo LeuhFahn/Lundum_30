@@ -3,7 +3,23 @@ using System.Collections;
 
 public class CPlanete : MonoBehaviour {
 
+	public enum ENamePlanet{
+		e_Terra,
+		e_Sentry,
+		e_Yoranus,
+		e_C,
+		e_A,
+		e_V,
+		e_K,
+		e_X
+	}
+	
 	public GameObject m_Halo;
+	public GameObject m_Mesh;
+	public GameObject m_Text;
+	public GameObject m_Artifices;
+
+	public ENamePlanet m_eNamePlanet;
 
 	int m_nNbWorkers;
 	bool m_bIsOverlapByMouse;
@@ -11,10 +27,11 @@ public class CPlanete : MonoBehaviour {
 	bool m_bIsDrawInfos;
 	Color m_HaloColor;
 	float m_fSize;
+	float m_fAngluarVelocity;
 	public int m_nId;/// <summary>
 	/// ///////////WARNING
 	/// </summary>
-	GameObject m_Text;
+
 
 	public float fSize
 	{
@@ -38,23 +55,26 @@ public class CPlanete : MonoBehaviour {
 	void Start () 
 	{
 		Reset ();
-		m_Text = ((GameObject) GameObject.Instantiate(CConstantes.Game.m_prefab3DText));
 		m_Text.transform.parent = transform;
 		m_Text.transform.position = transform.position;
 		m_Text.transform.Translate(0,m_fSize - m_fSize/4.0f - m_nNbWorkers/2.0f, 0);
 		SetText();
+
+		m_Halo.GetComponent<Light>().range = 6.0f + 2.5f * m_nNbWorkers;
+
+		m_fAngluarVelocity = Random.Range(0.1f, 0.6f);
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
-
+		m_Mesh.transform.RotateAround(m_Mesh.transform.position, m_Mesh.transform.up, m_fAngluarVelocity);
 	}
 
 	public void Init()
 	{
 		m_fSize = 2.5f + 2.5f*m_nNbWorkers;
-		gameObject.transform.localScale = new Vector3(m_fSize, m_fSize, m_fSize);
+		m_Mesh.transform.localScale = new Vector3(m_fSize, m_fSize, m_fSize);
 	}
 
 	//-------------------------------------------------------------------------------

@@ -16,9 +16,7 @@ public class CCamera : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-
 		GestionCamera();
-		Debug.Log (gameObject.transform.position + "/o/o/"+GetComponent<Camera>().orthographicSize);
 	}
 
 	void GestionCamera()
