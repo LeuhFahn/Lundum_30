@@ -219,9 +219,11 @@ public class CGame : MonoBehaviour {
 		int m_currentDay2=Mathf.FloorToInt((7*m_fTime-timeOfStartup)/(timeMultiplicator));
 		if ( m_currentDay2 != m_currentDay) {
 			updateScore();
+			Score -= deltascore;
+			//print ("Score:"+Score);
 						m_currentDay = m_currentDay2;
 						//print (m_currentDay2);
-						if (notAlreadyLaunchedThiwWeek & Random.Range(0,6)==8)
+						if (notAlreadyLaunchedThiwWeek & Random.Range(0,6)==0)
 							{
 							print("launch");CEvent.LaunchEventOnARoad(); 
 							notAlreadyLaunchedThiwWeek=false;
@@ -333,7 +335,7 @@ public class CGame : MonoBehaviour {
 
 				if (graphePlanete [id1, id2] != 0 || graphePlanete [id2, id1] != 0) 
 				{
-					//print ("route déjà existante"+id1+id2);
+					print ("route déjà existante"+id1+id2);
 				} 
 				else 
 				{
@@ -353,7 +355,7 @@ public class CGame : MonoBehaviour {
 					}
 					else
 					{
-						//print ("route pas possible"+id1+id2);
+						print ("route pas possible"+id1+id2);
 					}
 
 				}
@@ -407,7 +409,12 @@ public class CGame : MonoBehaviour {
 		graphePlanete[id2,id1]=1;
 		updateScore ();
 	}
-
+	public void removeRoad(int id1,int id2){
+		print ("route enlever");
+		graphePlanete[id1,id2]=0;
+		graphePlanete[id2,id1]=0;
+		updateScore ();
+		}
 	void updateScore()
 	{
 		deltascore = 0;
@@ -416,17 +423,22 @@ public class CGame : MonoBehaviour {
 		{
 			for(int j=0;j<i;j++)
 			{
-				if (isConnected (i,j))
+				int distance=distanceConnected(i,j);
+				if (distance<10)
 				{
-					print ("connected"+i+j);
-					deltascore+=hainePlanete[i,j];
+					//print ("distance"+i+j+ " :"+distance);
+					deltascore+=(hainePlanete[i,j]);
 				}
 			}
 		}
-		Score -= deltascore;
+
 	}
 
-	bool isConnected (int id1, int id2)
+	bool isConnected (int id1, int id2){
+		int distance=distanceConnected ( id1, id2);
+		if(distance<10){return true;}else{return false;}
+		}
+	int distanceConnected (int id1, int id2)
 	{
 	
 
@@ -436,6 +448,7 @@ public class CGame : MonoBehaviour {
 			}
 
 		return false;*/
+		int distance = 10;
 		int[] visite = {0,0,0,0,0,0,0,0};
 		visite [id1] = 1;
 		for (int i=0; i<8; i++) {
@@ -444,14 +457,13 @@ public class CGame : MonoBehaviour {
 					for(int k=0;k<8;k++){
 						if(graphePlanete[j,k]==1){
 							visite[k]=1;
+							if (k==id2){distance=Mathf.Min(i+1,distance);}
 						}
 					}
 				}
 			}
 		}
-		if (visite [id2] == 1){
-		print ("isconected " + id1 + " " + id2 + " " + (visite [id2] == 1));}
-						return (visite[id2]==1);
+		return distance;
 	}
 
 	void tirageAuSort()
