@@ -56,6 +56,7 @@ public class CGame : MonoBehaviour {
 
 		CConstantes.Game = this;
 		CConstantes.ListRoad = new List<GameObject>();
+		CConstantes.fTimerBeforeRoadDestruction = 10.0f;
 
 		//initialise randomly haine planete symetrique
 		//Haine max totale 400, max totale un couple 30
@@ -332,7 +333,6 @@ public class CGame : MonoBehaviour {
 		newRoad.name = "Road"+PlaneteOrigin.name+PlaneteDestination.name;
 		newRoad.GetComponent<CRoad>().SetPlanets(PlaneteOrigin, PlaneteDestination);
 		newRoad.GetComponent<CRoad>().Init();
-		CConstantes.ListRoad.Add(newRoad);
 
 		PlaneteOrigin.nNbWorkers = PlaneteOrigin.nNbWorkers - 1;
 		PlaneteDestination.nNbWorkers = PlaneteDestination.nNbWorkers - 1;

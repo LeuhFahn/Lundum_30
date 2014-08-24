@@ -27,9 +27,17 @@ public class CEvent : MonoBehaviour {
 	static public void LaunchEventOnARoad()
 	{
 		int nSizeListRoad = CConstantes.ListRoad.Count;
-		int nIdRoad = Random.Range(0, nSizeListRoad);
-		EeventType eChoiceEvent = CApoilMath.GetRandomEnum<EeventType>();
-		CConstantes.Game.GetComponent<CEvent>().LaunchEvent(eChoiceEvent, CConstantes.ListRoad[nIdRoad]);
+		if(nSizeListRoad > 0)
+		{
+			int nIdRoad = Random.Range(0, nSizeListRoad);
+			if(!CConstantes.ListRoad[nIdRoad].GetComponent<CRoad>().IsUnderAttack())
+			{
+				EeventType eChoiceEvent = CApoilMath.GetRandomEnum<EeventType>();
+
+				CConstantes.Game.GetComponent<CEvent>().LaunchEvent(eChoiceEvent, CConstantes.ListRoad[nIdRoad]);
+				CConstantes.ListRoad[nIdRoad].GetComponent<CRoad>().Attack();
+			}
+		}
 	}
 
 	void LaunchEvent(EeventType eChoiceEvent, GameObject road)
