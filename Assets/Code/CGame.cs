@@ -26,6 +26,8 @@ public class CGame : MonoBehaviour {
 
 	//truc de temps
 	float m_fTime;
+	int m_currentWeek;
+	int m_currentDay;
 	float timeOfStartup;
 	float[] timeOfMatch ;
 	float timeMultiplicator;
@@ -36,6 +38,8 @@ public class CGame : MonoBehaviour {
 	int currentMatch;
 	bool matchEnCours;
 
+
+	bool notAlreadyLaunchedThiwWeek;
 	//truc de tournois
 	int[] Quart;
 
@@ -161,15 +165,17 @@ public class CGame : MonoBehaviour {
 		tirageAuSort ();
 		currentMatch = 0;
 		timeOfStartup = 0.0f;
-		timeMultiplicator = 2f;
+		timeMultiplicator = 10f;
 		currentMatch = 0;
 		
 		timeOfMatch  = new float[] {5f, 10f, 15f, 20f,25f,30f,35f};
 		//score
-
+		m_currentWeek = 0;
+		 m_currentDay=0;
 		deltascore = 0;
 		m_fTime = 0.0f;
-		//tets
+		//events
+		bool notAlreadyLaunchedThiwWeek = true;
 
 		/*
 		m_score = ((GameObject) GameObject.Instantiate(CConstantes.Game.m_prefab3DText));
@@ -186,6 +192,16 @@ public class CGame : MonoBehaviour {
 
 		m_fTime += Time.deltaTime;
 	//GESTION DES MATCHS
+		int m_currentWeek2= Mathf.FloorToInt((m_fTime-timeOfStartup)/(timeMultiplicator));
+
+		if (m_currentWeek2 != m_currentWeek) {
+						notAlreadyLaunchedThiwWeek=true;
+						m_currentWeek = m_currentWeek2;
+						print ("semaine actuelle "+m_currentWeek);
+						
+
+				}
+
 		if (currentMatch < 7) {
 				
 				if (m_fTime -timeOfStartup> (timeOfMatch [currentMatch] * timeMultiplicator -4f) & matchEnCours==false)
@@ -199,7 +215,21 @@ public class CGame : MonoBehaviour {
 					}
 				}
 	//GESTION Du SCORES
-		
+	
+	//GESTION DES EVENTS
+	//Un event peut commencer aléatoirement une fois par semaine
+		int m_currentDay2=Mathf.FloorToInt((7*m_fTime-timeOfStartup)/(timeMultiplicator));
+		if ( m_currentDay2 != m_currentDay) {
+			updateScore();
+						m_currentDay = m_currentDay2;
+						//print (m_currentDay2);
+						if (notAlreadyLaunchedThiwWeek & Random.Range(0,6)==8)
+							{
+							print("launch");CEvent.LaunchEventOnARoad(); 
+							notAlreadyLaunchedThiwWeek=false;
+							}
+				
+				}
 
 		CApoilInput.Process(Time.deltaTime);
 		//Quit on Escape
@@ -305,7 +335,7 @@ public class CGame : MonoBehaviour {
 
 				if (graphePlanete [id1, id2] != 0 || graphePlanete [id2, id1] != 0) 
 				{
-					print ("route déjà existante"+id1+id2);
+					//print ("route déjà existante"+id1+id2);
 				} 
 				else 
 				{
@@ -325,7 +355,7 @@ public class CGame : MonoBehaviour {
 					}
 					else
 					{
-						print ("route pas possible"+id1+id2);
+						//print ("route pas possible"+id1+id2);
 					}
 
 				}
@@ -395,19 +425,36 @@ public class CGame : MonoBehaviour {
 				}
 			}
 		}
+		Score -= deltascore;
 	}
 
-	bool isConnected (int i, int j)
+	bool isConnected (int id1, int id2)
 	{
 	
 
-		if (graphePlanete [i, j] == 1) //TODO BETTER
+	/*	if (graphePlanete [id1, id2] == 1) //TODO BETTER
 			{
 				return true;		
 			}
 
-		return false;
+		return false;*/
+		int[] visite = {0,0,0,0,0,0,0,0};
+		visite [id1] = 1;
+		for (int i=0; i<8; i++) {
+			for(int j=0;j<8;j++){
+				if(visite[j]==1){
+					for(int k=0;k<8;k++){
+						if(graphePlanete[j,k]==1){
+							visite[k]=1;
+						}
+					}
+				}
+			}
 		}
+		if (visite [id2] == 1){
+		print ("isconected " + id1 + " " + id2 + " " + (visite [id2] == 1));}
+						return (visite[id2]==1);
+	}
 
 	void tirageAuSort()
 	{
@@ -440,7 +487,12 @@ public class CGame : MonoBehaviour {
 		//Aléa qui gagne
 		int gagnant=Random.Range(0,1);
 		Quart[match+8]=Quart[2*match+gagnant];
-
+		//Si les deux planetes sonr relié ont augmente le score
+		if (isConnected (Quart [2 * currentMatch], Quart [2 * currentMatch + 1])) {
+			Score+=hainePlanete[Quart [2 * currentMatch], Quart [2 * currentMatch + 1]]*1000;
+				} else {
+			Score-=hainePlanete[Quart [2 * currentMatch], Quart [2 * currentMatch + 1]]*1000;
+				}
 		//SI  C est la finale on vient de calculer le vainqueur ,on passe a endgame
 
 
