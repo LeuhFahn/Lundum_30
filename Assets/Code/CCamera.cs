@@ -6,11 +6,17 @@ public class CCamera : MonoBehaviour {
 	Vector3 m_vInitPosMous;
 	int nMaxZoom;
 	int nMinZoom;
+
+	public AudioSource m_Ambiance;
+	public AudioSource m_Test;
+
 	// Use this for initialization
 	void Start () 
 	{
 		nMaxZoom = 35;
 		nMinZoom = 3;
+		m_Ambiance.loop = true;
+		m_Ambiance.Play();
 	}
 	
 	// Update is called once per frame
@@ -23,11 +29,14 @@ public class CCamera : MonoBehaviour {
 	{
 		if (CApoilInput.RightClickDown)
 		{
+			m_Test.Play();
 			m_vInitPosMous = GetMousePositionInScreen();
 		}
 		
 		if (CApoilInput.RightClick)
 		{
+
+
 			Vector3 vDeltaMousePos = GetMousePositionInScreen() - m_vInitPosMous;
 			MoveHorizontal(vDeltaMousePos.x);
 			MoveVertical(vDeltaMousePos.y);
