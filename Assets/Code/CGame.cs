@@ -174,7 +174,7 @@ public class CGame : MonoBehaviour {
 		currentMatch = 0;
 		print ("prochain match" +couleurPlanete [Quart [2 * currentMatch]] + " VS " + couleurPlanete [Quart [2 * currentMatch + 1]]);
 		timeOfStartup = 0.0f;
-		timeMultiplicator = 5f;
+		timeMultiplicator = 0.1f;
 		currentMatch = 0;
 		
 		timeOfMatch  = new float[] {5f, 10f, 15f, 20f,25f,30f,35f};
@@ -414,14 +414,14 @@ public class CGame : MonoBehaviour {
 	//-------------------------------------------------------------------------------
 	public void MaJ( int id1, int id2)
 	{
-		Debug.Log("Route Finie"+id1+id2);
+	//	Debug.Log("Route Finie"+id1+id2);
 		//route entre planete id 1 et id 2
 		graphePlanete[id1,id2]=1;
 		graphePlanete[id2,id1]=1;
 		updateScore ();
 	}
 	public void removeRoad(int id1,int id2){
-		print ("route enlever");
+		//print ("route enlever");
 		graphePlanete[id1,id2]=0;
 		graphePlanete[id2,id1]=0;
 		updateScore ();
@@ -438,7 +438,7 @@ public class CGame : MonoBehaviour {
 				if (distance<10)
 				{
 					//print ("distance"+i+j+ " :"+distance);
-					deltascore+=(hainePlanete[i,j]);
+					deltascore+=(hainePlanete[i,j])/distance;
 				}
 			}
 		}
@@ -501,13 +501,11 @@ public class CGame : MonoBehaviour {
 		print ("début du match " + (match+1));
 		}
 	void endMatch(int match){
-		print ("MATCH "+(currentMatch+1)+" " + CConstantes.Planetes [Quart [2 * currentMatch]].name + " VS " + CConstantes.Planetes [Quart [2 * currentMatch + 1]].name + " Fini");
-	//	string adv1=CConstantes.Planetes[Quart[2*match]].name;
-//		string adv2=CConstantes.Planetes[Quart[2*match+1]].name;
-
+		
 		//Aléa qui gagne
 		int gagnant=Random.Range(0,1);
 		Quart[match+8]=Quart[2*match+gagnant];
+		print ("MATCH "+(currentMatch+1)+" " +couleurPlanete [Quart [2 * currentMatch]] + " VS " + couleurPlanete [Quart [2 * currentMatch + 1]] + " Fini | Gagnant: "+couleurPlanete [Quart [2 * currentMatch+gagnant]]+" Perdant :"+couleurPlanete[Quart [2 * currentMatch+(1-gagnant)]]  );
 		//Si les deux planetes sonr relié ont augmente le score
 		int changeScore=hainePlanete[Quart [2 * currentMatch], Quart [2 * currentMatch + 1]]*500*multiplicateurScore[match];
 		print ("changeScore:" +changeScore);
@@ -543,9 +541,10 @@ public class CGame : MonoBehaviour {
 
 	void endGame(bool win)
 	{
+		gameEnded=true;
 		matchEnCours=false;
 		if (win) {
-			gameEnded=true;
+
 			print ("le GRAND VAINQUEUR EST "+ CConstantes.Planetes [Quart [14]].name);
 			print ("you win");
 				} 
