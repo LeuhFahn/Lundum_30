@@ -25,6 +25,12 @@ public class CGame : MonoBehaviour {
 	float m_fTime;
 	float m_fdeltatime;
 
+	//truc de tournois
+	int[] Quart;
+	int[] Demi;
+	int[] Finale;
+	int vainqueur;
+
 	//-------------------------------------------------------------------------------
 	/// Unity
 	//-------------------------------------------------------------------------------
@@ -62,7 +68,7 @@ public class CGame : MonoBehaviour {
 			}
 		}
 		//calcul les routes qui peuvent exister ou pas
-		m_EpaisseurRectangle = 4;
+		m_EpaisseurRectangle = 8;
 		routePossible = new bool[CConstantes.nNbPlanetes, CConstantes.nNbPlanetes];
 		for (int i=0; i<CConstantes.nNbPlanetes; i++) 
 		{
@@ -110,7 +116,7 @@ public class CGame : MonoBehaviour {
 						
 							if (Mathf.Abs(y1-y2)==Mathf.Abs(yA-y2)+Mathf.Abs(yA-y1))
 							{
-								if (d<4)
+								if (d<m_EpaisseurRectangle)
 								{
 									possible=false;
 								//	print ("chemin pas possible entre"+i+"et"+j+" a cause de "+k );
@@ -125,6 +131,20 @@ public class CGame : MonoBehaviour {
 			}	
 		}
 
+
+		//tournois
+		Quart = new int[8];
+		Demi = new int[4];
+		Finale = new int[2];
+		for (int i=0; i<8; i++) {
+				Quart [i] = -1;
+				Demi[i/2]=-1;
+				Finale[i/4]=-1;
+				}
+
+		 vainqueur = -1;
+		tirageAuSort ();
+
 		//score
 
 		deltascore = 0;
@@ -132,9 +152,9 @@ public class CGame : MonoBehaviour {
 		m_fTimeOfScore = 300.0f;
 		m_fTime = 0.0f;
 		//tets
-		m_score = ((GameObject) GameObject.Instantiate(CConstantes.Game.m_prefab3DText));
-		m_score.transform.position = new Vector3 (0, 0, 0);
-		m_score.GetComponent<TextMesh> ().text = Score.ToString();
+	//	m_score = ((GameObject) GameObject.Instantiate(CConstantes.Game.m_prefab3DText));
+	//	m_score.transform.position = new Vector3 (0, 0, 0);
+	//	m_score.GetComponent<TextMesh> ().text = Score.ToString();
 	}
 	
 	//-------------------------------------------------------------------------------
@@ -147,7 +167,7 @@ public class CGame : MonoBehaviour {
 			//score
 			Score -= deltascore;
 			print ("score " + Score);
-			m_score.GetComponent<TextMesh> ().text = Score.ToString();
+		//	m_score.GetComponent<TextMesh> ().text = Score.ToString();
 			
 			} 
 		else 
@@ -338,13 +358,33 @@ public class CGame : MonoBehaviour {
 
 	bool isConnected (int i, int j)
 		{
-		if (graphePlanete [i, j] == 1) 
+		if (graphePlanete [i, j] == 1) //TODO BETTER
 			{
 				return true;		
 			}
 
 		return false;
 		}
+
+	void tirageAuSort()
+	{
+		for (int i=0; i<8; i++) //WARNING 8
+		{
+			int alea=Random.Range (0,7);
+			bool placer=false;
+			int j=0;
+			while(!placer)
+			{
+				if(Quart[(alea+j)%8]==-1)
+				{
+					Quart[(alea+j)%8]=i;
+					placer=true;
+				}
+				j++;
+			}
+		}
+	}
+
 
 }
 
