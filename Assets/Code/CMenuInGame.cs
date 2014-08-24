@@ -11,6 +11,10 @@ public class CMenuInGame : MonoBehaviour {
 		m_UIGroot = ((GameObject) GameObject.Instantiate(prefabUIGroot));
 		m_UIGroot.name = "_UIGroot";
 		PlaneteInfoDesactivation();
+		CalendrierDesactivation();
+
+		//Test appel du calendrier prochain match
+		//CalendrierProchainMatch( CConstantes.Planetes[0].GetComponent<CPlanete>(), CConstantes.Planetes[2].GetComponent<CPlanete>(), CConstantes.Planetes[6].GetComponent<CPlanete>() );
 	}
 	
 
@@ -123,6 +127,56 @@ public class CMenuInGame : MonoBehaviour {
 		}
 		}
 	}
+	
+	//-------------------------------------------------------------------------------
+	///
+	//-------------------------------------------------------------------------------
+	public void CalendrierProchainMatch(CPlanete planet1, CPlanete planet2, CPlanete lieu)
+	{
+		CalendrierDesactivation();
+
+		//Active affichage lieu
+		switch(lieu.m_eNamePlanet)
+		{
+		case CPlanete.ENamePlanet.e_A: { m_UIGroot.transform.FindChild("Calendrier").FindChild("Planete").FindChild("OrangeA").gameObject.SetActive(true); break; }
+		case CPlanete.ENamePlanet.e_C: { m_UIGroot.transform.FindChild("Calendrier").FindChild("Planete").FindChild("TurquoiseC").gameObject.SetActive(true); break; }
+		case CPlanete.ENamePlanet.e_K: { m_UIGroot.transform.FindChild("Calendrier").FindChild("Planete").FindChild("VertK").gameObject.SetActive(true); break; }
+		case CPlanete.ENamePlanet.e_Sentry: { m_UIGroot.transform.FindChild("Calendrier").FindChild("Planete").FindChild("JauneS").gameObject.SetActive(true); break; }
+		case CPlanete.ENamePlanet.e_Terra: { m_UIGroot.transform.FindChild("Calendrier").FindChild("Planete").FindChild("BleuT").gameObject.SetActive(true); break; }
+		case CPlanete.ENamePlanet.e_V: { m_UIGroot.transform.FindChild("Calendrier").FindChild("Planete").FindChild("RougeV").gameObject.SetActive(true); break; }
+		case CPlanete.ENamePlanet.e_X: { m_UIGroot.transform.FindChild("Calendrier").FindChild("Planete").FindChild("VioletX").gameObject.SetActive(true); break; }
+		case CPlanete.ENamePlanet.e_Yoranus: { m_UIGroot.transform.FindChild("Calendrier").FindChild("Planete").FindChild("RoseY").gameObject.SetActive(true); break; }
+		}
+
+		//Active affichage equipe1
+		switch(planet1.m_eNamePlanet)
+		{
+		case CPlanete.ENamePlanet.e_A: { m_UIGroot.transform.FindChild("Calendrier").FindChild("Equipe1").FindChild("OrangeA").gameObject.SetActive(true); break; }
+		case CPlanete.ENamePlanet.e_C: { m_UIGroot.transform.FindChild("Calendrier").FindChild("Equipe1").FindChild("TurquoiseC").gameObject.SetActive(true); break; }
+		case CPlanete.ENamePlanet.e_K: { m_UIGroot.transform.FindChild("Calendrier").FindChild("Equipe1").FindChild("VertK").gameObject.SetActive(true); break; }
+		case CPlanete.ENamePlanet.e_Sentry: { m_UIGroot.transform.FindChild("Calendrier").FindChild("Equipe1").FindChild("JauneS").gameObject.SetActive(true); break; }
+		case CPlanete.ENamePlanet.e_Terra: { m_UIGroot.transform.FindChild("Calendrier").FindChild("Equipe1").FindChild("BleuT").gameObject.SetActive(true); break; }
+		case CPlanete.ENamePlanet.e_V: { m_UIGroot.transform.FindChild("Calendrier").FindChild("Equipe1").FindChild("RougeV").gameObject.SetActive(true); break; }
+		case CPlanete.ENamePlanet.e_X: { m_UIGroot.transform.FindChild("Calendrier").FindChild("Equipe1").FindChild("VioletX").gameObject.SetActive(true); break; }
+		case CPlanete.ENamePlanet.e_Yoranus: { m_UIGroot.transform.FindChild("Calendrier").FindChild("Equipe1").FindChild("RoseY").gameObject.SetActive(true); break; }
+		}
+
+		//Active affichage equipe2
+		switch(planet2.m_eNamePlanet)
+		{
+		case CPlanete.ENamePlanet.e_A: { m_UIGroot.transform.FindChild("Calendrier").FindChild("Equipe2").FindChild("OrangeA").gameObject.SetActive(true); break; }
+		case CPlanete.ENamePlanet.e_C: { m_UIGroot.transform.FindChild("Calendrier").FindChild("Equipe2").FindChild("TurquoiseC").gameObject.SetActive(true); break; }
+		case CPlanete.ENamePlanet.e_K: { m_UIGroot.transform.FindChild("Calendrier").FindChild("Equipe2").FindChild("VertK").gameObject.SetActive(true); break; }
+		case CPlanete.ENamePlanet.e_Sentry: { m_UIGroot.transform.FindChild("Calendrier").FindChild("Equipe2").FindChild("JauneS").gameObject.SetActive(true); break; }
+		case CPlanete.ENamePlanet.e_Terra: { m_UIGroot.transform.FindChild("Calendrier").FindChild("Equipe2").FindChild("BleuT").gameObject.SetActive(true); break; }
+		case CPlanete.ENamePlanet.e_V: { m_UIGroot.transform.FindChild("Calendrier").FindChild("Equipe2").FindChild("RougeV").gameObject.SetActive(true); break; }
+		case CPlanete.ENamePlanet.e_X: { m_UIGroot.transform.FindChild("Calendrier").FindChild("Equipe2").FindChild("VioletX").gameObject.SetActive(true); break; }
+		case CPlanete.ENamePlanet.e_Yoranus: { m_UIGroot.transform.FindChild("Calendrier").FindChild("Equipe2").FindChild("RoseY").gameObject.SetActive(true); break; }
+		}
+
+	}
+
+
 
 	//-------------------------------------------------------------------------------
 	///
@@ -139,9 +193,38 @@ public class CMenuInGame : MonoBehaviour {
 		m_UIGroot.transform.FindChild("PlaneteInfo").FindChild("PlaneteInfo_VertK").gameObject.SetActive(false);
 		m_UIGroot.transform.FindChild("PlaneteInfo").FindChild("PlaneteInfo_VioletX").gameObject.SetActive(false);
 		m_UIGroot.transform.FindChild("PlaneteInfo").FindChild("PlaneteInfo_Satisfaction").gameObject.SetActive(false);
-
-
 	}
 
+	//-------------------------------------------------------------------------------
+	///
+	//-------------------------------------------------------------------------------
+	public void CalendrierDesactivation()
+	{
+		m_UIGroot.transform.FindChild("Calendrier").FindChild("Planete").FindChild("BleuT").gameObject.SetActive(false);
+		m_UIGroot.transform.FindChild("Calendrier").FindChild("Planete").FindChild("JauneS").gameObject.SetActive(false);
+		m_UIGroot.transform.FindChild("Calendrier").FindChild("Planete").FindChild("OrangeA").gameObject.SetActive(false);
+		m_UIGroot.transform.FindChild("Calendrier").FindChild("Planete").FindChild("RoseY").gameObject.SetActive(false);
+		m_UIGroot.transform.FindChild("Calendrier").FindChild("Planete").FindChild("RougeV").gameObject.SetActive(false);
+		m_UIGroot.transform.FindChild("Calendrier").FindChild("Planete").FindChild("TurquoiseC").gameObject.SetActive(false);
+		m_UIGroot.transform.FindChild("Calendrier").FindChild("Planete").FindChild("VertK").gameObject.SetActive(false);
+		m_UIGroot.transform.FindChild("Calendrier").FindChild("Planete").FindChild("VioletX").gameObject.SetActive(false);
 
+		m_UIGroot.transform.FindChild("Calendrier").FindChild("Equipe1").FindChild("BleuT").gameObject.SetActive(false);
+		m_UIGroot.transform.FindChild("Calendrier").FindChild("Equipe1").FindChild("JauneS").gameObject.SetActive(false);
+		m_UIGroot.transform.FindChild("Calendrier").FindChild("Equipe1").FindChild("OrangeA").gameObject.SetActive(false);
+		m_UIGroot.transform.FindChild("Calendrier").FindChild("Equipe1").FindChild("RoseY").gameObject.SetActive(false);
+		m_UIGroot.transform.FindChild("Calendrier").FindChild("Equipe1").FindChild("RougeV").gameObject.SetActive(false);
+		m_UIGroot.transform.FindChild("Calendrier").FindChild("Equipe1").FindChild("TurquoiseC").gameObject.SetActive(false);
+		m_UIGroot.transform.FindChild("Calendrier").FindChild("Equipe1").FindChild("VertK").gameObject.SetActive(false);
+		m_UIGroot.transform.FindChild("Calendrier").FindChild("Equipe1").FindChild("VioletX").gameObject.SetActive(false);
+		
+		m_UIGroot.transform.FindChild("Calendrier").FindChild("Equipe2").FindChild("BleuT").gameObject.SetActive(false);
+		m_UIGroot.transform.FindChild("Calendrier").FindChild("Equipe2").FindChild("JauneS").gameObject.SetActive(false);
+		m_UIGroot.transform.FindChild("Calendrier").FindChild("Equipe2").FindChild("OrangeA").gameObject.SetActive(false);
+		m_UIGroot.transform.FindChild("Calendrier").FindChild("Equipe2").FindChild("RoseY").gameObject.SetActive(false);
+		m_UIGroot.transform.FindChild("Calendrier").FindChild("Equipe2").FindChild("RougeV").gameObject.SetActive(false);
+		m_UIGroot.transform.FindChild("Calendrier").FindChild("Equipe2").FindChild("TurquoiseC").gameObject.SetActive(false);
+		m_UIGroot.transform.FindChild("Calendrier").FindChild("Equipe2").FindChild("VertK").gameObject.SetActive(false);
+		m_UIGroot.transform.FindChild("Calendrier").FindChild("Equipe2").FindChild("VioletX").gameObject.SetActive(false);
+	}
 }
