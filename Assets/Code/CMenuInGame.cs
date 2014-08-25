@@ -74,60 +74,44 @@ public class CMenuInGame : MonoBehaviour {
 	{
 		planete.SelectForDrawInfo(); //Dessin du halo autour de la planete cliquee
 
-		//Partie affichage du bloc d'info de planete en bas à droite
 		PlaneteInfoDesactivation();
 		PlaneteInfoDurDesactivation();
-		m_UIGroot.transform.FindChild("PlaneteInfo").FindChild("PlaneteInfo_Background").gameObject.SetActive(true);
 
-		//Satisfaction (haineMax = 30 dans CGame)
-		m_UIGroot.transform.FindChild("PlaneteInfo").FindChild("PlaneteInfo_Satisfaction").gameObject.GetComponent<UISlider>().value = CConstantes.Game.ppnHainePlanete[planete.nID, planete.nID]/30.0f;
-		m_UIGroot.transform.FindChild("PlaneteInfo").FindChild("PlaneteInfo_Satisfaction").gameObject.SetActive(true);
+		planete.SelectForDrawInfo();
 
-		//Affichage des 3 animosites de la planete
-		//Animosite i    TrouveAnimosite(planete, i))  avec i entre 1 et 3
-	
-		switch(planete.m_eNamePlanet)
+		if (infoPlaneteEnDur)
 		{
-		case CPlanete.ENamePlanet.e_A:
-		{
-			m_UIGroot.transform.FindChild("PlaneteInfo").FindChild("PlaneteInfo_OrangeA").gameObject.SetActive(true);
-			break;
+			switch(planete.m_eNamePlanet)
+			{
+			case CPlanete.ENamePlanet.e_A: { m_UIGroot.transform.FindChild("PlaneteInfoDur").FindChild("PlaneteInfo_OrangeA").gameObject.SetActive(true); break; }
+			case CPlanete.ENamePlanet.e_C: { m_UIGroot.transform.FindChild("PlaneteInfoDur").FindChild("PlaneteInfo_TurquoiseC").gameObject.SetActive(true); break; }
+			case CPlanete.ENamePlanet.e_K: { m_UIGroot.transform.FindChild("PlaneteInfoDur").FindChild("PlaneteInfo_VertK").gameObject.SetActive(true); break; }
+			case CPlanete.ENamePlanet.e_Sentry: { m_UIGroot.transform.FindChild("PlaneteInfoDur").FindChild("PlaneteInfo_JauneS").gameObject.SetActive(true); break; }
+			case CPlanete.ENamePlanet.e_Terra: { m_UIGroot.transform.FindChild("PlaneteInfoDur").FindChild("PlaneteInfo_BleuT").gameObject.SetActive(true); break; }
+			case CPlanete.ENamePlanet.e_V: { m_UIGroot.transform.FindChild("PlaneteInfoDur").FindChild("PlaneteInfo_RougeV").gameObject.SetActive(true); break; }
+			case CPlanete.ENamePlanet.e_X: { m_UIGroot.transform.FindChild("PlaneteInfoDur").FindChild("PlaneteInfo_VioletX").gameObject.SetActive(true); break; }
+			case CPlanete.ENamePlanet.e_Yoranus: { m_UIGroot.transform.FindChild("PlaneteInfoDur").FindChild("PlaneteInfo_RoseY").gameObject.SetActive(true); break; }
+			}
 		}
-		case CPlanete.ENamePlanet.e_C:
+		else
 		{
-			m_UIGroot.transform.FindChild("PlaneteInfo").FindChild("PlaneteInfo_TurquoiseC").gameObject.SetActive(true);
-			break;
-		}
-		case CPlanete.ENamePlanet.e_K:
-		{
-			m_UIGroot.transform.FindChild("PlaneteInfo").FindChild("PlaneteInfo_VertK").gameObject.SetActive(true);
-			break;
-		}
-		case CPlanete.ENamePlanet.e_Sentry:
-		{
-			m_UIGroot.transform.FindChild("PlaneteInfo").FindChild("PlaneteInfo_JauneS").gameObject.SetActive(true);
-			break;
-		}
-		case CPlanete.ENamePlanet.e_Terra:
-		{
-			m_UIGroot.transform.FindChild("PlaneteInfo").FindChild("PlaneteInfo_BleuT").gameObject.SetActive(true);
-			break;
-		}
-		case CPlanete.ENamePlanet.e_V:
-		{
-			m_UIGroot.transform.FindChild("PlaneteInfo").FindChild("PlaneteInfo_RougeV").gameObject.SetActive(true);
-			break;
-		}
-		case CPlanete.ENamePlanet.e_X:
-		{
-			m_UIGroot.transform.FindChild("PlaneteInfo").FindChild("PlaneteInfo_VioletX").gameObject.SetActive(true);
-			break;
-		}
-		case CPlanete.ENamePlanet.e_Yoranus:
-		{
-			m_UIGroot.transform.FindChild("PlaneteInfo").FindChild("PlaneteInfo_RoseY").gameObject.SetActive(true);
-			break;
-		}
+			//Affichage du bloc d'info de planete en bas à droite
+			m_UIGroot.transform.FindChild("PlaneteInfo").FindChild("PlaneteInfo_Background").gameObject.SetActive(true);
+			//Satisfaction (haineMax = 30 dans CGame)
+			m_UIGroot.transform.FindChild("PlaneteInfo").FindChild("PlaneteInfo_Satisfaction").gameObject.GetComponent<UISlider>().value = CConstantes.Game.ppnHainePlanete[planete.nID, planete.nID]/30.0f;
+			m_UIGroot.transform.FindChild("PlaneteInfo").FindChild("PlaneteInfo_Satisfaction").gameObject.SetActive(true);
+
+			switch(planete.m_eNamePlanet)
+			{
+			case CPlanete.ENamePlanet.e_A: { m_UIGroot.transform.FindChild("PlaneteInfo").FindChild("PlaneteInfo_OrangeA").gameObject.SetActive(true); break; }
+			case CPlanete.ENamePlanet.e_C: { m_UIGroot.transform.FindChild("PlaneteInfo").FindChild("PlaneteInfo_TurquoiseC").gameObject.SetActive(true); break; }
+			case CPlanete.ENamePlanet.e_K: { m_UIGroot.transform.FindChild("PlaneteInfo").FindChild("PlaneteInfo_VertK").gameObject.SetActive(true); break; }
+			case CPlanete.ENamePlanet.e_Sentry: { m_UIGroot.transform.FindChild("PlaneteInfo").FindChild("PlaneteInfo_JauneS").gameObject.SetActive(true); break; }
+			case CPlanete.ENamePlanet.e_Terra: { m_UIGroot.transform.FindChild("PlaneteInfo").FindChild("PlaneteInfo_BleuT").gameObject.SetActive(true); break; }
+			case CPlanete.ENamePlanet.e_V: { m_UIGroot.transform.FindChild("PlaneteInfo").FindChild("PlaneteInfo_RougeV").gameObject.SetActive(true); break; }
+			case CPlanete.ENamePlanet.e_X: { m_UIGroot.transform.FindChild("PlaneteInfo").FindChild("PlaneteInfo_VioletX").gameObject.SetActive(true); break; }
+			case CPlanete.ENamePlanet.e_Yoranus: { m_UIGroot.transform.FindChild("PlaneteInfo").FindChild("PlaneteInfo_RoseY").gameObject.SetActive(true); break; }
+			}
 		}
 	}
 	
