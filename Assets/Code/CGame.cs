@@ -7,6 +7,8 @@ public class CGame : MonoBehaviour {
 	public GameObject m_Camera;
 	public LayerMask m_Mask;
 	public GameObject m_prefabRoad;
+	public GameObject m_prefabExplosion;
+	public GameObject m_prefabSceneLight;
 	//public GameObject m_prefab3DText;
 
 	public int m_EpaisseurRectangle;
@@ -90,6 +92,8 @@ public class CGame : MonoBehaviour {
 		CConstantes.Game = this;
 		CConstantes.ListRoad = new List<GameObject>();
 		CConstantes.fTimerBeforeRoadDestruction = 10.0f;
+
+		GameObject light = GameObject.Instantiate(m_prefabSceneLight) as GameObject;
 
 		//initialise randomly haine planete symetrique
 		//Haine max totale 400, max totale un couple 30
@@ -270,7 +274,7 @@ public class CGame : MonoBehaviour {
 						if (CApoilInput.QuitGame)
 								QuitGame ();
 
-						ClickOnPlanetes ();
+						ClickFunction ();
 				}
 
 	}
@@ -278,7 +282,7 @@ public class CGame : MonoBehaviour {
 	//-------------------------------------------------------------------------------
 	/// 
 	//-------------------------------------------------------------------------------
-	void ClickOnPlanetes()
+	void ClickFunction()
 	{
 		if(CApoilInput.LeftClickDown)
 		{
@@ -293,6 +297,11 @@ public class CGame : MonoBehaviour {
 					CPlanete planete = hit.collider.transform.parent.GetComponent<CPlanete>();
 					planete.SelectPlaneteAsOrigin();
 					m_PlaneteOrigin = planete;
+				}
+				else if(hit.collider.CompareTag("Road"))
+				{
+					CRoad roadClicked = hit.collider.transform.parent.GetComponent<CRoad>();
+					roadClicked.DeployAgentsOfShield();
 				}
 			}
 			else

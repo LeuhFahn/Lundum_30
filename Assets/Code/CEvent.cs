@@ -34,43 +34,36 @@ public class CEvent : MonoBehaviour {
 			{
 				EeventType eChoiceEvent = CApoilMath.GetRandomEnum<EeventType>();
 
-				CConstantes.Game.GetComponent<CEvent>().LaunchEvent(eChoiceEvent, CConstantes.ListRoad[nIdRoad]);
-				CConstantes.ListRoad[nIdRoad].GetComponent<CRoad>().Attack();
+				GameObject badGuy = CConstantes.Game.GetComponent<CEvent>().LaunchEvent(eChoiceEvent, CConstantes.ListRoad[nIdRoad]);
+				CConstantes.ListRoad[nIdRoad].GetComponent<CRoad>().Attack(badGuy);
 			}
 		}
 	}
 
-	void LaunchEvent(EeventType eChoiceEvent, GameObject road)
+	GameObject LaunchEvent(EeventType eChoiceEvent, GameObject road)
 	{
-		Debug.Log (eChoiceEvent);
+		GameObject badGuy;
 		switch(eChoiceEvent)
 		{
-			case EeventType.e_Asteroides:
-			{
-				LaunchAsteroides(road);
-				break;
-			}
-			case EeventType.e_Pirates:
-			{
-				LaunchPirates(road);
-				break;
-			}
+			case EeventType.e_Asteroides	:	badGuy = LaunchAsteroides(road);break;
+			case EeventType.e_Pirates	:	badGuy = LaunchPirates(road);break;
+			default	:	badGuy = null; break;
 		}
+		return badGuy;
 	}
 
-	void LaunchAsteroides(GameObject road)
+	GameObject LaunchAsteroides(GameObject road)
 	{
 		GameObject asteroide = ((GameObject) GameObject.Instantiate(m_prefabChampAsteroides));
 		asteroide.transform.position = road.transform.position;
 		asteroide.transform.right = road.transform.right;
-		//asteroide.transform.Translate (10*asteroide.transform.up);
+		return asteroide;
 	}
 
-	void LaunchPirates(GameObject road)
+	GameObject LaunchPirates(GameObject road)
 	{
 		GameObject pirates = ((GameObject) GameObject.Instantiate(m_prefabPirates));
 		pirates.transform.position = road.transform.position;
-		//pirates.transform.right = -road.transform.right;
-		//pirates.transform.forward = road.transform.forward;
+		return pirates;
 	}
 }

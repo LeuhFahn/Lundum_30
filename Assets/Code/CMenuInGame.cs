@@ -95,7 +95,7 @@ public class CMenuInGame : MonoBehaviour {
 		}
 		else
 		{
-			//Aaffichage du bloc d'info de planete en bas à droite
+			//Affichage du bloc d'info de planete en bas à droite
 			m_UIGroot.transform.FindChild("PlaneteInfo").FindChild("PlaneteInfo_Background").gameObject.SetActive(true);
 			//Satisfaction (haineMax = 30 dans CGame)
 			m_UIGroot.transform.FindChild("PlaneteInfo").FindChild("PlaneteInfo_Satisfaction").gameObject.GetComponent<UISlider>().value = CConstantes.Game.ppnHainePlanete[planete.nID, planete.nID]/30.0f;
