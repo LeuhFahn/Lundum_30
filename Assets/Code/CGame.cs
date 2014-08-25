@@ -420,7 +420,7 @@ public class CGame : MonoBehaviour {
 	void startMatch(int match)
 	{
 		print ("début du match " + (match+1));
-			m_Camera.GetComponent<CCamera>().m_Stade.Play ();
+			//m_Camera.GetComponent<CCamera>().m_Stade.Play ();
 		}
 	void endMatch(int match){
 		print ("MATCH "+(currentMatch+1)+" " + CConstantes.Planetes [Quart [2 * currentMatch]].name + " VS " + CConstantes.Planetes [Quart [2 * currentMatch + 1]].name + " Fini");
