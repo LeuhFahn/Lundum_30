@@ -38,7 +38,7 @@ public class CGame : MonoBehaviour {
 	int currentMatch;
 	bool matchEnCours;
 	bool gameEnded;
-
+	int jourAvantProchainMatch;
 
 	bool notAlreadyLaunchedThisWeek;
 	//truc de tournois
@@ -55,6 +55,12 @@ public class CGame : MonoBehaviour {
 	{
 		get {return Score; }
 		set {Score = value; }
+	}
+
+	public int pjourAvantProchainMatch
+	{
+		get {return jourAvantProchainMatch; }
+		set {jourAvantProchainMatch = value; }
 	}
 
 	//-------------------------------------------------------------------------------
@@ -188,6 +194,7 @@ public class CGame : MonoBehaviour {
 		
 		timeOfMatch  = new float[] {5f, 10f, 15f, 20f,25f,30f,35f};
 		//score
+		jourAvantProchainMatch = 35;
 		multiplicateurScore = new int[]{1,1,1,1,2,2,4};
 		m_currentWeek = 0;
 		 m_currentDay=0;
@@ -237,6 +244,8 @@ public class CGame : MonoBehaviour {
 						//Un event peut commencer aléatoirement une fois par semaine
 						int m_currentDay2 = Mathf.FloorToInt ((7 * m_fTime - timeOfStartup) / (timeMultiplicator));
 						if (m_currentDay2 != m_currentDay) {
+						jourAvantProchainMatch=((jourAvantProchainMatch+1)%35);
+						print (jourAvantProchainMatch);
 								updateScore ();
 								Score -= deltascore;
 								//print ("Score:"+Score);
@@ -508,7 +517,7 @@ public class CGame : MonoBehaviour {
 	void startMatch(int match)
 	{
 		print ("début du match " + (match+1));
-			//m_Camera.GetComponent<CCamera>().m_Stade.Play ();
+			m_Camera.GetComponent<CCamera>().m_Stade.Play ();
 		}
 	void endMatch(int match){
 		
