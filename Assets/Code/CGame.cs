@@ -8,6 +8,7 @@ public class CGame : MonoBehaviour {
 	public LayerMask m_Mask;
 	public GameObject m_prefabRoad;
 	public GameObject m_prefabExplosion;
+	public GameObject m_prefabArtifice;
 	public GameObject m_prefabSceneLight;
 	//public GameObject m_prefab3DText;
 
@@ -102,7 +103,10 @@ public class CGame : MonoBehaviour {
 
 		GameObject light = GameObject.Instantiate(m_prefabSceneLight) as GameObject;
 
-		m_bGoofy = GameObject.Find("_Menu").GetComponent<CMenu>().IsGoofy;
+		if(GameObject.Find("_Menu") != null)
+			m_bGoofy = GameObject.Find("_Menu").GetComponent<CMenu>().IsGoofy;
+		else
+			m_bGoofy = true;
 
 		//initialise randomly haine planete symetrique
 		//Haine max totale 400, max totale un couple 30
@@ -593,7 +597,10 @@ public class CGame : MonoBehaviour {
 	{
 		matchEnCours=false;
 		currentMatch++;
-		}
+		GameObject feu = GameObject.Instantiate(m_prefabArtifice) as GameObject;
+		feu.transform.position = winPlanet.transform.position;
+		//winPlanet.m_Artifices.SetActive(true);
+	}
 
 	void endGame(bool win)
 	{
@@ -607,6 +614,7 @@ public class CGame : MonoBehaviour {
 			pos.z = -10;
 			m_Camera.GetComponent<CCamera> ().transform.position =pos;
 			m_Camera.GetComponent<Camera>().orthographicSize=10;
+			CConstantes.Planetes [Quart [14]].GetComponent<CPlanete>().m_Artifices.SetActive(true);
 
 			print ("you win");
 				} 
