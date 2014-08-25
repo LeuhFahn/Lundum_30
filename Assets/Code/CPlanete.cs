@@ -195,5 +195,7 @@ public class CPlanete : MonoBehaviour {
 	{
 		m_Text.GetComponent<TextMesh>().text = m_nNbWorkers.ToString();
 	}
-
+	public void SetText2(string t){
+		m_Text.GetComponent<TextMesh>().text = t;
+		}
 }
