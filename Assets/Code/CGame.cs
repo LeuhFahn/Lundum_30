@@ -69,8 +69,10 @@ public class CGame : MonoBehaviour {
 	//-------------------------------------------------------------------------------
 	void Start () 
 	{
+
+
 		gameEnded = false;
-		Score = 50000;
+		Score = 500000;
 		couleurPlanete  = new string[] {"Orange","bleue" ,"verte" ,"Beige" ,"Terre","Rouge","Violette","Rose"};
 		//initialise graphePlanete a 0
 		graphePlanete=new int[8,8];
@@ -191,7 +193,7 @@ public class CGame : MonoBehaviour {
 		gameObject.GetComponent<CMenuInGame>().CalendrierProchainMatch(P1,P2,P3);
 		print ("prochain match" +couleurPlanete [Quart [2 * currentMatch]] + " VS " + couleurPlanete [Quart [2 * currentMatch + 1]]);
 		timeOfStartup = 0.0f;
-		timeMultiplicator = 5f;
+		timeMultiplicator = 0.1f;
 		currentMatch = 0;
 		
 		timeOfMatch  = new float[] {5f, 10f, 15f, 20f,25f,30f,35f};
@@ -217,6 +219,7 @@ public class CGame : MonoBehaviour {
 	//-------------------------------------------------------------------------------
 	void Update () 
 	{
+
 		if (!gameEnded) {
 						m_fTime += Time.deltaTime;
 						//GESTION DES MATCHS
@@ -529,6 +532,11 @@ public class CGame : MonoBehaviour {
 		Quart[match+8]=Quart[2*match+gagnant];
 		print ("MATCH "+(currentMatch+1)+" " +couleurPlanete [Quart [2 * currentMatch]] + " VS " + couleurPlanete [Quart [2 * currentMatch + 1]] + " Fini | Gagnant: "+couleurPlanete [Quart [2 * currentMatch+gagnant]]+" Perdant :"+couleurPlanete[Quart [2 * currentMatch+(1-gagnant)]]  );
 		//Si les deux planetes sonr relié ont augmente le score
+		print (CConstantes.Planetes [0].transform.position.x+" " +CConstantes.Planetes [0].transform.position.y);
+
+
+
+
 		int changeScore=hainePlanete[Quart [2 * currentMatch], Quart [2 * currentMatch + 1]]*500*multiplicateurScore[match];
 		print ("changeScore:" +changeScore);
 		if (isConnected (Quart [2 * currentMatch], Quart [2 * currentMatch + 1])) {
@@ -576,6 +584,12 @@ public class CGame : MonoBehaviour {
 		if (win) {
 
 			print ("le GRAND VAINQUEUR EST "+ CConstantes.Planetes [Quart [14]].name);
+			CConstantes.Planetes[Quart[14]].GetComponent<CPlanete>().SetText2("Galactic\n Jokari Champion");
+			Vector3 pos=CConstantes.Planetes [Quart [14]].transform.position;
+			pos.z = -10;
+			m_Camera.GetComponent<CCamera> ().transform.position =pos;
+			m_Camera.GetComponent<Camera>().orthographicSize=10;
+
 			print ("you win");
 				} 
 		else {
