@@ -23,6 +23,7 @@ public class CGame : MonoBehaviour {
 	public bool[,] routePossible;
 	GameObject m_score;
 	int Score=1000;
+	int scoreLose = 0;
 	int deltascore;
 	int[] multiplicateurScore;
 
@@ -68,7 +69,8 @@ public class CGame : MonoBehaviour {
 	//-------------------------------------------------------------------------------
 	void Start () 
 	{
-
+		gameEnded = false;
+		Score = 50000;
 		couleurPlanete  = new string[] {"Orange","bleue" ,"verte" ,"Beige" ,"Terre","Rouge","Violette","Rose"};
 		//initialise graphePlanete a 0
 		graphePlanete=new int[8,8];
@@ -248,6 +250,7 @@ public class CGame : MonoBehaviour {
 						print (jourAvantProchainMatch);
 								updateScore ();
 								Score -= deltascore;
+								if (Score< scoreLose){endGame(false);}
 								//print ("Score:"+Score);
 								m_currentDay = m_currentDay2;
 								//print (m_currentDay2);
@@ -533,6 +536,7 @@ public class CGame : MonoBehaviour {
 			Score+=changeScore;
 				} else {
 			Score-=changeScore;
+			if (Score< scoreLose){endGame(false);}
 				}
 		//SI  C est la finale on vient de calculer le vainqueur ,on passe a endgame
 
