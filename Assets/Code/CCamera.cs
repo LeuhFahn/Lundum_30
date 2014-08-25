@@ -31,7 +31,6 @@ public class CCamera : MonoBehaviour {
 	{
 		if (CApoilInput.RightClickDown)
 		{
-			m_Test.Play();
 			m_vInitPosMous = GetMousePositionInScreen();
 		}
 		

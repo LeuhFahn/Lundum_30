@@ -8,6 +8,7 @@ public class CGame : MonoBehaviour {
 	public LayerMask m_Mask;
 	public GameObject m_prefabRoad;
 	public GameObject m_prefabExplosion;
+	public GameObject m_prefabSceneLight;
 	//public GameObject m_prefab3DText;
 
 	public int m_EpaisseurRectangle;
@@ -91,6 +92,8 @@ public class CGame : MonoBehaviour {
 		CConstantes.Game = this;
 		CConstantes.ListRoad = new List<GameObject>();
 		CConstantes.fTimerBeforeRoadDestruction = 10.0f;
+
+		GameObject light = GameObject.Instantiate(m_prefabSceneLight) as GameObject;
 
 		//initialise randomly haine planete symetrique
 		//Haine max totale 400, max totale un couple 30

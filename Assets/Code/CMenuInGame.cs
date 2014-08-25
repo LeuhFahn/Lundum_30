@@ -86,9 +86,6 @@ public class CMenuInGame : MonoBehaviour {
 		//Affichage des 3 animosites de la planete
 		//Animosite i    TrouveAnimosite(planete, i))  avec i entre 1 et 3
 	
-
-		planete.SelectForDrawInfo();
-
 		switch(planete.m_eNamePlanet)
 		{
 		case CPlanete.ENamePlanet.e_A:
