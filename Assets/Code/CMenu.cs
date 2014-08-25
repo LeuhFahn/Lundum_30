@@ -13,11 +13,11 @@ public class CMenu : MonoBehaviour {
 
 	public void LoadNextLevel ()
 	{
-		Debug.Log("Lancer scene");
-//		if(Application.loadedLevel < Application.levelCount)
-//		{
-//			Application.LoadLevel(Application.loadedLevel+1);
-//		}
+		//Debug.Log("Lancer scene");
+		if(Application.loadedLevel < Application.levelCount)
+		{
+			Application.LoadLevel(Application.loadedLevel+1);
+		}
 	}
 	
 	public void OpenMenuPrincipal()
