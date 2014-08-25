@@ -103,6 +103,8 @@ public class CRoad : MonoBehaviour {
 		m_PlanetOrigin.GetComponent<CPlanete>().nNbWorkers++; 
 		m_PlanetDestination.GetComponent<CPlanete>().nNbWorkers++; 
 		m_RoadSound.Stop ();
+
+		Destroy(m_MeshGhost);
 	}
 
 	public void Attack()
