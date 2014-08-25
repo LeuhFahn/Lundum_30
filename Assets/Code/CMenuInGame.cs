@@ -22,9 +22,7 @@ public class CMenuInGame : MonoBehaviour {
 
 	void Update () {
 		m_UIGroot.transform.FindChild("ScoreUI").FindChild("Label").gameObject.GetComponent<UILabel>().text = CConstantes.Game.pScore.ToString();
-
-		//testProgressBarJourAvant Prochain Match
-		m_UIGroot.transform.FindChild ("TestNinin").gameObject.GetComponent<UISlider> ().value = ((float) CConstantes.Game.pjourAvantProchainMatch) / 35f;;
+		m_UIGroot.transform.FindChild ("Calendrier").FindChild ("Chrono").gameObject.GetComponent<UISlider> ().value = (35 - (float) CConstantes.Game.pjourAvantProchainMatch) / 35f;;
 
 	}
 
