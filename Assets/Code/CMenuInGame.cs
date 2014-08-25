@@ -5,11 +5,13 @@ public class CMenuInGame : MonoBehaviour {
 
 	public GameObject prefabUIGroot;
 	GameObject m_UIGroot;
+	public bool infoPlaneteEnDur = true;
 
 	void Awake(){
 		m_UIGroot = ((GameObject) GameObject.Instantiate(prefabUIGroot));
 		m_UIGroot.name = "_UIGroot";
 		PlaneteInfoDesactivation();
+		PlaneteInfoDurDesactivation();
 		CalendrierDesactivation();
 		}
 	void Start () {
@@ -74,6 +76,7 @@ public class CMenuInGame : MonoBehaviour {
 
 		//Partie affichage du bloc d'info de planete en bas à droite
 		PlaneteInfoDesactivation();
+		PlaneteInfoDurDesactivation();
 		m_UIGroot.transform.FindChild("PlaneteInfo").FindChild("PlaneteInfo_Background").gameObject.SetActive(true);
 
 		//Satisfaction (haineMax = 30 dans CGame)
@@ -198,6 +201,21 @@ public class CMenuInGame : MonoBehaviour {
 		m_UIGroot.transform.FindChild("PlaneteInfo").FindChild("PlaneteInfo_VertK").gameObject.SetActive(false);
 		m_UIGroot.transform.FindChild("PlaneteInfo").FindChild("PlaneteInfo_VioletX").gameObject.SetActive(false);
 		m_UIGroot.transform.FindChild("PlaneteInfo").FindChild("PlaneteInfo_Satisfaction").gameObject.SetActive(false);
+	}
+
+	//-------------------------------------------------------------------------------
+	///
+	//-------------------------------------------------------------------------------
+	public void PlaneteInfoDurDesactivation()
+	{
+		m_UIGroot.transform.FindChild("PlaneteInfoDur").FindChild("PlaneteInfo_BleuT").gameObject.SetActive(false);
+		m_UIGroot.transform.FindChild("PlaneteInfoDur").FindChild("PlaneteInfo_JauneS").gameObject.SetActive(false);
+		m_UIGroot.transform.FindChild("PlaneteInfoDur").FindChild("PlaneteInfo_OrangeA").gameObject.SetActive(false);
+		m_UIGroot.transform.FindChild("PlaneteInfoDur").FindChild("PlaneteInfo_RoseY").gameObject.SetActive(false);
+		m_UIGroot.transform.FindChild("PlaneteInfoDur").FindChild("PlaneteInfo_RougeV").gameObject.SetActive(false);
+		m_UIGroot.transform.FindChild("PlaneteInfoDur").FindChild("PlaneteInfo_TurquoiseC").gameObject.SetActive(false);
+		m_UIGroot.transform.FindChild("PlaneteInfoDur").FindChild("PlaneteInfo_VertK").gameObject.SetActive(false);
+		m_UIGroot.transform.FindChild("PlaneteInfoDur").FindChild("PlaneteInfo_VioletX").gameObject.SetActive(false);
 	}
 
 	//-------------------------------------------------------------------------------

@@ -1,9 +1,8 @@
 fileFormatVersion: 2
-guid: 0997d1ebdca45714baa9d90f3c3c1e5f
+guid: 1a4a0dead39e4f043b3c9b86ae35ca19
 TextureImporter:
   fileIDToRecycleName:
-    21300000: SplashImage 1
-    21300002: SplashImage
+    21300000: InfoPlaneteDur_TurquoiseC
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -19,11 +18,11 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: .25
     normalMapFilter: 0
-  isReadable: 0
+  isReadable: 1
   grayScaleToAlpha: 0
   generateCubemap: 0
   seamlessCubemap: 0
-  textureFormat: -3
+  textureFormat: 5
   maxTextureSize: 512
   textureSettings:
     filterMode: -1
