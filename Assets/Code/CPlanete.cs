@@ -83,6 +83,7 @@ public class CPlanete : MonoBehaviour {
 		m_Halo.GetComponent<Light>().range = 6.0f + 2.5f * m_nNbWorkers;
 
 		m_fAngluarVelocity = Random.Range(0.1f, 0.6f);
+		m_fAngluarVelocity *= CConstantes.Game.IsGoofy ? 1 : -1;
 	}
 	
 	// Update is called once per frame

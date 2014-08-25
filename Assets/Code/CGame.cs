@@ -41,6 +41,7 @@ public class CGame : MonoBehaviour {
 	int currentMatch;
 	bool matchEnCours;
 	bool gameEnded;
+	bool m_bGoofy;
 	int jourAvantProchainMatch;
 
 	bool notAlreadyLaunchedThisWeek;
@@ -64,6 +65,12 @@ public class CGame : MonoBehaviour {
 	{
 		get {return jourAvantProchainMatch; }
 		set {jourAvantProchainMatch = value; }
+	}
+
+	public bool IsGoofy
+	{
+		get {return m_bGoofy; }
+		set {m_bGoofy = value; }
 	}
 
 	//-------------------------------------------------------------------------------
@@ -94,6 +101,8 @@ public class CGame : MonoBehaviour {
 		CConstantes.fTimerBeforeRoadDestruction = 10.0f;
 
 		GameObject light = GameObject.Instantiate(m_prefabSceneLight) as GameObject;
+
+		m_bGoofy = GameObject.Find("_Menu").GetComponent<CMenu>().IsGoofy;
 
 		//initialise randomly haine planete symetrique
 		//Haine max totale 400, max totale un couple 30

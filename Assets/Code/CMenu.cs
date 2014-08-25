@@ -7,6 +7,7 @@ public class CMenu : MonoBehaviour {
 	{
 		e_menuState_splash,
 		e_menuState_main,
+		e_menuState_inGame,
 	}
 
 	public GameObject goMenuPrincipal;
@@ -17,19 +18,26 @@ public class CMenu : MonoBehaviour {
 	EmenuState m_EState;
 	float m_fTempsSplash;
 	const float m_fTempsSplashInit = 1.0f;
+	bool m_bGoofy;
+
+	public bool IsGoofy
+	{
+		get {return m_bGoofy; }
+		set {m_bGoofy = value; }
+	}
 
 	void Start()
 	{
 		m_EState = EmenuState.e_menuState_splash;
 		m_fTempsSplash = m_fTempsSplashInit;
 		goScene.SetActive(false);
+		DontDestroyOnLoad(transform.gameObject);
 	}
 
 	void Update()
 	{
 		if(m_EState == EmenuState.e_menuState_splash && m_fTempsSplash>0.0f)
 			m_fTempsSplash -= Time.deltaTime;
-
 	}
 
 	void OnGUI() 
@@ -57,12 +65,29 @@ public class CMenu : MonoBehaviour {
 			{
 				break;
 			}
+			case EmenuState.e_menuState_inGame:
+			{
+				break;
+			}
 		}
+	}
+
+	public void ClicGoofy()
+	{
+		m_bGoofy = true;
+		LoadNextLevel ();
+	}
+
+	public void ClicRegular()
+	{
+		m_bGoofy = false;
+		LoadNextLevel ();
 	}
 
 	public void LoadNextLevel ()
 	{
 		//Debug.Log("Lancer scene");
+		m_EState = EmenuState.e_menuState_inGame;
 		if(Application.loadedLevel < Application.levelCount)
 		{
 			Application.LoadLevel(Application.loadedLevel+1);
