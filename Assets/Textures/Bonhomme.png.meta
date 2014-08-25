@@ -1,8 +1,8 @@
 fileFormatVersion: 2
-guid: 9c729ae82b49d4d458a6e3fd4ef37245
+guid: a847e81bf99719e45ae842f97d876b1d
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Blason_JauneS
+    21300000: Bonhomme
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -18,11 +18,11 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: .25
     normalMapFilter: 0
-  isReadable: 1
+  isReadable: 0
   grayScaleToAlpha: 0
   generateCubemap: 0
   seamlessCubemap: 0
-  textureFormat: 5
+  textureFormat: -1
   maxTextureSize: 1024
   textureSettings:
     filterMode: 0
@@ -39,7 +39,7 @@ TextureImporter:
   spritePivot: {x: .5, y: .5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 100
-  alphaIsTransparency: 0
+  alphaIsTransparency: 1
   textureType: 8
   buildTargetSettings: []
   spriteSheet:

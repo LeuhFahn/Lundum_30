@@ -15,6 +15,7 @@ public class CGame : MonoBehaviour {
 	CPlanete m_PlaneteOverlap;
 	CPlanete m_PlaneteDestination;
 
+	string[]  couleurPlanete;
 
 	//Truc de score
 	int[,] graphePlanete;
@@ -23,18 +24,38 @@ public class CGame : MonoBehaviour {
 	GameObject m_score;
 	int Score=1000;
 	int deltascore;
+	int[] multiplicateurScore;
 
 	//truc de temps
 	float m_fTime;
+	int m_currentWeek;
+	int m_currentDay;
 	float timeOfStartup;
 	float[] timeOfMatch ;
 	float timeMultiplicator;
-
-	//truc de tournois
-	int[] Quart;
+	float m_fTimeOfScore;
+	float m_fdeltatime;
 	int currentMatch;
 	bool matchEnCours;
+	bool gameEnded;
 
+
+	bool notAlreadyLaunchedThisWeek;
+	//truc de tournois
+	int[] Quart;
+
+
+	public int[,] ppnHainePlanete
+	{
+		get {return hainePlanete; }
+		set {hainePlanete = value; }
+	}
+
+	public int pScore
+	{
+		get {return Score; }
+		set {Score = value; }
+	}
 
 	//-------------------------------------------------------------------------------
 	/// Unity
@@ -42,6 +63,7 @@ public class CGame : MonoBehaviour {
 	void Start () 
 	{
 
+		couleurPlanete  = new string[] {"Orange","bleue" ,"verte" ,"Beige" ,"Terre","Rouge","Violette","Rose"};
 		//initialise graphePlanete a 0
 		graphePlanete=new int[8,8];
 		for(int i=0;i<8;i++)
@@ -65,6 +87,7 @@ public class CGame : MonoBehaviour {
 		int haineMax = 400;
 		for (int i=0; i<8; i++)
 		{
+			hainePlanete[i,i]=4+i*2; //Haine de la planete envers elle-meme (= satisfaction)
 			for (int j=0;j<i;j++)
 			{
 				int haine= Random.Range(0,Mathf.Min (30,haineMax));
@@ -143,22 +166,26 @@ public class CGame : MonoBehaviour {
 		matchEnCours = false;
 		Quart = new int[15];
 
-		for (int i=0; i<15; i++) {
+		for (int i=0; i < 15; i++) {
 				Quart [i] = -1;
 				}
 		
 		tirageAuSort ();
 		currentMatch = 0;
+		print ("prochain match" +couleurPlanete [Quart [2 * currentMatch]] + " VS " + couleurPlanete [Quart [2 * currentMatch + 1]]);
 		timeOfStartup = 0.0f;
-		timeMultiplicator = 2f;
+		timeMultiplicator = 0.1f;
 		currentMatch = 0;
 		
 		timeOfMatch  = new float[] {5f, 10f, 15f, 20f,25f,30f,35f};
 		//score
-
+		multiplicateurScore = new int[]{1,1,1,1,2,2,4};
+		m_currentWeek = 0;
+		 m_currentDay=0;
 		deltascore = 0;
 		m_fTime = 0.0f;
-		//tets
+		//events
+		bool notAlreadyLaunchedThisWeek = true;
 
 		/*
 		m_score = ((GameObject) GameObject.Instantiate(CConstantes.Game.m_prefab3DText));
@@ -172,30 +199,55 @@ public class CGame : MonoBehaviour {
 	//-------------------------------------------------------------------------------
 	void Update () 
 	{
+		if (!gameEnded) {
+						m_fTime += Time.deltaTime;
+						//GESTION DES MATCHS
+						int m_currentWeek2 = Mathf.FloorToInt ((m_fTime - timeOfStartup) / (timeMultiplicator));
 
-		m_fTime += Time.deltaTime;
-	//GESTION DES MATCHS
-		if (currentMatch < 7) {
+						if (m_currentWeek2 != m_currentWeek) {
+								notAlreadyLaunchedThisWeek = true;
+								m_currentWeek = m_currentWeek2;
+								print ("semaine actuelle " + m_currentWeek);
+						
+
+						}
+
+						if (currentMatch < 7) {
 				
-				if (m_fTime -timeOfStartup> (timeOfMatch [currentMatch] * timeMultiplicator -4f) & matchEnCours==false)
-					{
-								startMatch(currentMatch);
-								matchEnCours=true;
-					}
-				 if (m_fTime - timeOfStartup > timeOfMatch [currentMatch] * timeMultiplicator) 
-						{
-								endMatch (currentMatch);
-					}
-				}
-	//GESTION Du SCORES
+								if (m_fTime - timeOfStartup > (timeOfMatch [currentMatch] * timeMultiplicator - 4f) & matchEnCours == false) {
+										startMatch (currentMatch);
+										matchEnCours = true;
+								}
+								if (m_fTime - timeOfStartup > timeOfMatch [currentMatch] * timeMultiplicator) {
+										endMatch (currentMatch);
+								}
+						}
+						//GESTION Du SCORES
 	
+						//GESTION DES EVENTS
+						//Un event peut commencer aléatoirement une fois par semaine
+						int m_currentDay2 = Mathf.FloorToInt ((7 * m_fTime - timeOfStartup) / (timeMultiplicator));
+						if (m_currentDay2 != m_currentDay) {
+								updateScore ();
+								Score -= deltascore;
+								//print ("Score:"+Score);
+								m_currentDay = m_currentDay2;
+								//print (m_currentDay2);
+								if (notAlreadyLaunchedThisWeek & Random.Range (0, 6) == 0) {
+										print ("launch");
+										CEvent.LaunchEventOnARoad (); 
+										notAlreadyLaunchedThisWeek = false;
+								}
+				
+						}
 
-		CApoilInput.Process(Time.deltaTime);
-		//Quit on Escape
-		if(CApoilInput.QuitGame)
-			QuitGame();
+						CApoilInput.Process (Time.deltaTime);
+						//Quit on Escape
+						if (CApoilInput.QuitGame)
+								QuitGame ();
 
-		ClickOnPlanetes();
+						ClickOnPlanetes ();
+				}
 
 	}
 
@@ -362,13 +414,18 @@ public class CGame : MonoBehaviour {
 	//-------------------------------------------------------------------------------
 	public void MaJ( int id1, int id2)
 	{
-		Debug.Log("Route Finie"+id1+id2);
+	//	Debug.Log("Route Finie"+id1+id2);
 		//route entre planete id 1 et id 2
 		graphePlanete[id1,id2]=1;
 		graphePlanete[id2,id1]=1;
 		updateScore ();
 	}
-
+	public void removeRoad(int id1,int id2){
+		//print ("route enlever");
+		graphePlanete[id1,id2]=0;
+		graphePlanete[id2,id1]=0;
+		updateScore ();
+		}
 	void updateScore()
 	{
 		deltascore = 0;
@@ -377,26 +434,48 @@ public class CGame : MonoBehaviour {
 		{
 			for(int j=0;j<i;j++)
 			{
-				if (isConnected (i,j))
+				int distance=distanceConnected(i,j);
+				if (distance<10)
 				{
-					print ("connected"+i+j);
-					deltascore+=hainePlanete[i,j];
+					//print ("distance"+i+j+ " :"+distance);
+					deltascore+=(hainePlanete[i,j])/distance;
 				}
 			}
 		}
+
 	}
 
-	bool isConnected (int i, int j)
+	bool isConnected (int id1, int id2){
+		int distance=distanceConnected ( id1, id2);
+		if(distance<10){return true;}else{return false;}
+		}
+	int distanceConnected (int id1, int id2)
 	{
 	
 
-		if (graphePlanete [i, j] == 1) //TODO BETTER
+	/*	if (graphePlanete [id1, id2] == 1) //TODO BETTER
 			{
 				return true;		
 			}
 
-		return false;
+		return false;*/
+		int distance = 10;
+		int[] visite = {0,0,0,0,0,0,0,0};
+		visite [id1] = 1;
+		for (int i=0; i<8; i++) {
+			for(int j=0;j<8;j++){
+				if(visite[j]==1){
+					for(int k=0;k<8;k++){
+						if(graphePlanete[j,k]==1){
+							visite[k]=1;
+							if (k==id2){distance=Mathf.Min(i+1,distance);}
+						}
+					}
+				}
+			}
 		}
+		return distance;
+	}
 
 	void tirageAuSort()
 	{
@@ -422,14 +501,20 @@ public class CGame : MonoBehaviour {
 		print ("début du match " + (match+1));
 		}
 	void endMatch(int match){
-		print ("MATCH "+(currentMatch+1)+" " + CConstantes.Planetes [Quart [2 * currentMatch]].name + " VS " + CConstantes.Planetes [Quart [2 * currentMatch + 1]].name + " Fini");
-	//	string adv1=CConstantes.Planetes[Quart[2*match]].name;
-//		string adv2=CConstantes.Planetes[Quart[2*match+1]].name;
-
+		
 		//Aléa qui gagne
 		int gagnant=Random.Range(0,1);
 		Quart[match+8]=Quart[2*match+gagnant];
+		print ("MATCH "+(currentMatch+1)+" " +couleurPlanete [Quart [2 * currentMatch]] + " VS " + couleurPlanete [Quart [2 * currentMatch + 1]] + " Fini | Gagnant: "+couleurPlanete [Quart [2 * currentMatch+gagnant]]+" Perdant :"+couleurPlanete[Quart [2 * currentMatch+(1-gagnant)]]  );
+		//Si les deux planetes sonr relié ont augmente le score
+		int changeScore=hainePlanete[Quart [2 * currentMatch], Quart [2 * currentMatch + 1]]*500*multiplicateurScore[match];
+		print ("changeScore:" +changeScore);
+		if (isConnected (Quart [2 * currentMatch], Quart [2 * currentMatch + 1])) {
 
+			Score+=changeScore;
+				} else {
+			Score-=changeScore;
+				}
 		//SI  C est la finale on vient de calculer le vainqueur ,on passe a endgame
 
 
@@ -442,8 +527,8 @@ public class CGame : MonoBehaviour {
 						} else {
 								print (adv2 + " a gagné");
 						}
-						
-						print ("prochain match" + CConstantes.Planetes [Quart [2 * currentMatch]].name + " VS " + CConstantes.Planetes [Quart [2 * currentMatch + 1]].name);*/
+						*/
+						print ("prochain match" +couleurPlanete [Quart [2 * currentMatch]] + " VS " + couleurPlanete [Quart [2 * currentMatch + 1]]);
 				}
 	}
 
@@ -456,8 +541,10 @@ public class CGame : MonoBehaviour {
 
 	void endGame(bool win)
 	{
+		gameEnded=true;
 		matchEnCours=false;
 		if (win) {
+
 			print ("le GRAND VAINQUEUR EST "+ CConstantes.Planetes [Quart [14]].name);
 			print ("you win");
 				} 

@@ -120,8 +120,10 @@ public class CRoad : MonoBehaviour {
 
 	public void DestroyRoad()
 	{
+		CConstantes.Game.removeRoad (m_PlanetOrigin.GetComponent<CPlanete> ().nID, m_PlanetDestination.GetComponent<CPlanete> ().nID);
 		m_RoadSound.Stop ();
 		GameObject.Destroy(this.gameObject);
+
 	}
 
 	public bool IsUnderAttack()
