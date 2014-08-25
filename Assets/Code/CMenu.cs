@@ -17,7 +17,7 @@ public class CMenu : MonoBehaviour {
 
 	EmenuState m_EState;
 	float m_fTempsSplash;
-	const float m_fTempsSplashInit = 1.0f;
+	const float m_fTempsSplashInit = 4.0f;
 	bool m_bGoofy;
 
 	public bool IsGoofy

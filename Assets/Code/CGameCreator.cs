@@ -39,7 +39,7 @@ public class CGameCreator : MonoBehaviour {
 			fond.name = "_Fond";
 			CConstantes.nMapSize = m_nMapSize;
 			float fMapSize = m_nMapSize / 3.0f;
-			fond.transform.localScale = new Vector3(fMapSize, fMapSize, fMapSize);
+			fond.transform.localScale = new Vector3(fMapSize*2.0f, fMapSize*2.0f, fMapSize*2.0f);
 			
 
 			// genere 8 position qui s'entrechoque pas
