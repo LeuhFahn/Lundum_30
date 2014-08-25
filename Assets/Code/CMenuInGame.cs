@@ -11,7 +11,6 @@ public class CMenuInGame : MonoBehaviour {
 		m_UIGroot = ((GameObject) GameObject.Instantiate(prefabUIGroot));
 		m_UIGroot.name = "_UIGroot";
 		PlaneteInfoDesactivation();
-		PlaneteInfoDurDesactivation();
 		CalendrierDesactivation();
 		}
 	void Start () {
@@ -75,9 +74,6 @@ public class CMenuInGame : MonoBehaviour {
 		planete.SelectForDrawInfo(); //Dessin du halo autour de la planete cliquee
 
 		PlaneteInfoDesactivation();
-		PlaneteInfoDurDesactivation();
-
-		planete.SelectForDrawInfo();
 
 		if (infoPlaneteEnDur)
 		{
@@ -182,13 +178,7 @@ public class CMenuInGame : MonoBehaviour {
 		m_UIGroot.transform.FindChild("PlaneteInfo").FindChild("PlaneteInfo_VertK").gameObject.SetActive(false);
 		m_UIGroot.transform.FindChild("PlaneteInfo").FindChild("PlaneteInfo_VioletX").gameObject.SetActive(false);
 		m_UIGroot.transform.FindChild("PlaneteInfo").FindChild("PlaneteInfo_Satisfaction").gameObject.SetActive(false);
-	}
 
-	//-------------------------------------------------------------------------------
-	///
-	//-------------------------------------------------------------------------------
-	public void PlaneteInfoDurDesactivation()
-	{
 		m_UIGroot.transform.FindChild("PlaneteInfoDur").FindChild("PlaneteInfo_BleuT").gameObject.SetActive(false);
 		m_UIGroot.transform.FindChild("PlaneteInfoDur").FindChild("PlaneteInfo_JauneS").gameObject.SetActive(false);
 		m_UIGroot.transform.FindChild("PlaneteInfoDur").FindChild("PlaneteInfo_OrangeA").gameObject.SetActive(false);
