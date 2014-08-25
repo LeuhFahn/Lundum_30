@@ -17,6 +17,11 @@ public class CPlanete : MonoBehaviour {
 	public GameObject m_Halo;
 	public GameObject m_Mesh;
 	public GameObject m_Text;
+
+	//NININ
+	public GameObject m_TextHaine;
+
+	//
 	public GameObject m_Artifices;
 
 	public ENamePlanet m_eNamePlanet;
@@ -64,6 +69,17 @@ public class CPlanete : MonoBehaviour {
 		m_Text.SetActive(true);
 		SetText();
 
+
+		//NININ texte haine au cas ou
+
+		m_TextHaine.transform.parent = transform;
+		m_TextHaine.transform.position = transform.position;
+		m_TextHaine.transform.Translate(0f,0f, 0);
+		m_TextHaine.SetActive(false);
+		m_TextHaine.GetComponent<TextMesh>().text = "test";
+		//\NININ
+
+
 		m_Halo.GetComponent<Light>().range = 6.0f + 2.5f * m_nNbWorkers;
 
 		m_fAngluarVelocity = Random.Range(0.1f, 0.6f);
@@ -106,14 +122,21 @@ public class CPlanete : MonoBehaviour {
 	//-------------------------------------------------------------------------------
 	///
 	//-------------------------------------------------------------------------------
-	public void OverlapByMouse()
+	public void OverlapByMouse(CPlanete m_PlaneteOrigin)
 	{
 		if(!m_bIsOrigin && !m_bIsOverlapByMouse)
 		{
 			//Debug.Log (gameObject.name+"OverlapByMouse");
 			m_bIsOverlapByMouse = true;
 			m_Halo.SetActive(true);
+			m_TextHaine.GetComponent<TextMesh>().text = CConstantes.Game.ppnHainePlanete[m_PlaneteOrigin.nID,m_nId].ToString();
+			m_TextHaine.SetActive(true);
+			if(CConstantes.Game.routePossible[m_PlaneteOrigin.nID,m_nId]){
 			m_Halo.GetComponent<Light>().color = Color.white;
+			}
+			else{
+				m_Halo.GetComponent<Light>().color = Color.red;
+			}
 
 		}
 	}
@@ -128,6 +151,7 @@ public class CPlanete : MonoBehaviour {
 			m_bIsOverlapByMouse = false;
 			m_bIsOrigin = false;
 			m_Halo.SetActive(false);
+			m_TextHaine.SetActive(false);
 		}
 	}
 

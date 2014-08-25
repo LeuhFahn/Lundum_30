@@ -20,7 +20,7 @@ public class CGame : MonoBehaviour {
 	//Truc de score
 	int[,] graphePlanete;
 	int[,] hainePlanete;
-	bool[,] routePossible;
+	public bool[,] routePossible;
 	GameObject m_score;
 	int Score=1000;
 	int deltascore;
@@ -314,7 +314,7 @@ public class CGame : MonoBehaviour {
 					CPlanete planete = hit.collider.transform.parent.GetComponent<CPlanete>();
 					if(planete != m_PlaneteOrigin)
 					{
-						planete.OverlapByMouse();
+						planete.OverlapByMouse(m_PlaneteOrigin);
 						m_PlaneteOverlap = planete;
 					}
 				}
