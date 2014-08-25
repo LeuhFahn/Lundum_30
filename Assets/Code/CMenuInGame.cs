@@ -6,12 +6,14 @@ public class CMenuInGame : MonoBehaviour {
 	public GameObject prefabUIGroot;
 	GameObject m_UIGroot;
 
-
-	void Start () {
+	void Awake(){
 		m_UIGroot = ((GameObject) GameObject.Instantiate(prefabUIGroot));
 		m_UIGroot.name = "_UIGroot";
 		PlaneteInfoDesactivation();
 		CalendrierDesactivation();
+		}
+	void Start () {
+
 
 		//Test appel du calendrier prochain match
 		//CalendrierProchainMatch( CConstantes.Planetes[0].GetComponent<CPlanete>(), CConstantes.Planetes[2].GetComponent<CPlanete>(), CConstantes.Planetes[6].GetComponent<CPlanete>() );
@@ -133,6 +135,8 @@ public class CMenuInGame : MonoBehaviour {
 	//-------------------------------------------------------------------------------
 	public void CalendrierProchainMatch(CPlanete planet1, CPlanete planet2, CPlanete lieu)
 	{
+	//	print ("azeaze "+lieu.m_eNamePlanet);
+	//	m_UIGroot.transform.FindChild ("Calendrier").FindChild ("Planete").FindChild ("OrangeA").gameObject.SetActive (true);
 		CalendrierDesactivation();
 
 		//Active affichage lieu

@@ -172,9 +172,18 @@ public class CGame : MonoBehaviour {
 		
 		tirageAuSort ();
 		currentMatch = 0;
+		//affichage prochain match graphique
+		int adv1 = Quart [2 * currentMatch];
+		int adv2=Quart [2 * currentMatch+1];
+		CPlanete P1 = CConstantes.Planetes [adv1].GetComponent<CPlanete> ();
+		CPlanete P2 = CConstantes.Planetes [adv2].GetComponent<CPlanete> ();
+		CPlanete P3 = CConstantes.Planetes [Random.Range(0,7)].GetComponent<CPlanete> ();
+
+
+		gameObject.GetComponent<CMenuInGame>().CalendrierProchainMatch(P1,P2,P3);
 		print ("prochain match" +couleurPlanete [Quart [2 * currentMatch]] + " VS " + couleurPlanete [Quart [2 * currentMatch + 1]]);
 		timeOfStartup = 0.0f;
-		timeMultiplicator = 0.1f;
+		timeMultiplicator = 5f;
 		currentMatch = 0;
 		
 		timeOfMatch  = new float[] {5f, 10f, 15f, 20f,25f,30f,35f};
@@ -528,8 +537,15 @@ public class CGame : MonoBehaviour {
 						} else {
 								print (adv2 + " a gagné");
 						}
-						*/
-						print ("prochain match" +couleurPlanete [Quart [2 * currentMatch]] + " VS " + couleurPlanete [Quart [2 * currentMatch + 1]]);
+					*/
+
+			int adv1 = Quart [2 * currentMatch];
+			int adv2=Quart [2 * currentMatch+1];
+			CPlanete P1 = CConstantes.Planetes [adv1].GetComponent<CPlanete> ();
+			CPlanete P2 = CConstantes.Planetes [adv2].GetComponent<CPlanete> ();
+			CPlanete P3 = CConstantes.Planetes [Random.Range(0,7)].GetComponent<CPlanete> ();
+			gameObject.GetComponent<CMenuInGame>().CalendrierProchainMatch(P1,P2,P3);
+			print ("prochain match" +couleurPlanete [Quart [2 * currentMatch]] + " VS " + couleurPlanete [Quart [2 * currentMatch + 1]]);
 				}
 	}
 
