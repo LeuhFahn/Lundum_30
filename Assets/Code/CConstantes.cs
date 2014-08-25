@@ -9,4 +9,5 @@ public class CConstantes : MonoBehaviour
 	public static int nNbPlanetes;
 	public static int nMapSize;
 	public static List<GameObject> ListRoad;
+	public static float fTimerBeforeRoadDestruction;
 }

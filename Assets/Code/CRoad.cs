@@ -5,6 +5,7 @@ public class CRoad : MonoBehaviour {
 
 	public GameObject m_MeshGhost;
 	public GameObject m_MeshRoad;
+	public GameObject m_Text;
 	public AudioSource m_RoadSound;
 
 	GameObject m_PlanetOrigin;
@@ -12,6 +13,7 @@ public class CRoad : MonoBehaviour {
 
 	float m_fTimeOfConstruction;
 	float m_fTime;
+	float m_fTimeBeforeDestruction;
 	float m_fDistanceBetweenConnectedWorlds;
 	bool m_bConstructionIsOver;
 	bool m_bIsUnderAttack;
@@ -21,6 +23,8 @@ public class CRoad : MonoBehaviour {
 		m_fTime = 0.0f;
 		SetSizeOfMesh(m_MeshRoad, 0.0f);
 		m_bConstructionIsOver = false;
+		m_Text.SetActive(false);
+
 	}
 
 	public void Init()
@@ -39,6 +43,8 @@ public class CRoad : MonoBehaviour {
 		gameObject.transform.right = direction;
 		//gameObject.transform.RotateAround(gameObject.transform.position, new Vector3(0,0,1), fAngle);
 		SetSizeOfMesh(m_MeshGhost, m_fDistanceBetweenConnectedWorlds);
+
+		m_Text.transform.right = new Vector3(1,0,0);
 
 		m_RoadSound.audio.Play ();
 		m_RoadSound.audio.loop= true ;
@@ -60,8 +66,17 @@ public class CRoad : MonoBehaviour {
 		{
 			EndOfConstruction();
 		}
-		//Debug.DrawLine(m_PlanetOrigin.transform.position, m_PlanetDestination.transform.position);
 
+
+		if(m_bIsUnderAttack)
+		{
+			m_fTimeBeforeDestruction -= Time.deltaTime;
+			SetText();
+			if(m_fTimeBeforeDestruction <= 0)
+			{
+				DestroyRoad();
+			}
+		}
 	}
 
 	void SetSizeOfMesh(GameObject mesh, float fSize)
@@ -82,8 +97,45 @@ public class CRoad : MonoBehaviour {
 		m_bConstructionIsOver = true;
 		m_MeshRoad.renderer.material.color = Color.blue;
 		CConstantes.Game.MaJ(m_PlanetOrigin.GetComponent<CPlanete>().nID,m_PlanetDestination.GetComponent<CPlanete>().nID);
+
+		CConstantes.ListRoad.Add(this.gameObject);
+
 		m_PlanetOrigin.GetComponent<CPlanete>().nNbWorkers++; 
 		m_PlanetDestination.GetComponent<CPlanete>().nNbWorkers++; 
 		m_RoadSound.Stop ();
+	}
+
+	public void Attack()
+	{
+		m_bIsUnderAttack = true;
+		m_fTimeBeforeDestruction = CConstantes.fTimerBeforeRoadDestruction;
+		m_Text.SetActive(true);
+	}
+
+	public void RescueRoad()
+	{
+		m_bIsUnderAttack = false;
+		m_Text.SetActive(false);
+	}
+
+	public void DestroyRoad()
+	{
+		CConstantes.Game.removeRoad (m_PlanetOrigin.GetComponent<CPlanete> ().nID, m_PlanetDestination.GetComponent<CPlanete> ().nID);
+		m_RoadSound.Stop ();
+		GameObject.Destroy(this.gameObject);
+
+	}
+
+	public bool IsUnderAttack()
+	{
+		return m_bIsUnderAttack;
+	}
+
+	//-------------------------------------------------------------------------------
+	///
+	//-------------------------------------------------------------------------------
+	void SetText()
+	{
+		m_Text.GetComponent<TextMesh>().text = m_fTimeBeforeDestruction.ToString();
 	}
 }

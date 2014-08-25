@@ -3,27 +3,63 @@ using System.Collections;
 
 public class CMenuInGame : MonoBehaviour {
 
-	/*public GameObject goInfo_Background;
-	public GameObject goInfo_BleuT;
-	public GameObject goInfo_JauneS;
-	public GameObject goInfo_OrangeA;
-	public GameObject goInfo_RoseY;
-	public GameObject goInfo_RougeV;
-	public GameObject goInfo_TurquoiseC;
-	public GameObject goInfo_VertK;
-	public GameObject goInfo_VioletX;*/
 	public GameObject prefabUIGroot;
 	GameObject m_UIGroot;
-	// Use this for initialization
+
+
 	void Start () {
 		m_UIGroot = ((GameObject) GameObject.Instantiate(prefabUIGroot));
 		m_UIGroot.name = "_UIGroot";
 		PlaneteInfoDesactivation();
+		CalendrierDesactivation();
+
+		//Test appel du calendrier prochain match
+		//CalendrierProchainMatch( CConstantes.Planetes[0].GetComponent<CPlanete>(), CConstantes.Planetes[2].GetComponent<CPlanete>(), CConstantes.Planetes[6].GetComponent<CPlanete>() );
 	}
 	
-	// Update is called once per frame
+
 	void Update () {
-	
+		m_UIGroot.transform.FindChild("ScoreUI").FindChild("Label").gameObject.GetComponent<UILabel>().text = CConstantes.Game.pScore.ToString();
+
+	}
+
+	public int TrouveAnimosite(CPlanete planete, int posVoulue)
+	{
+		int[] hainesPlanete = new int[8];
+		for(int i=0 ; i<8 ; i++)
+		{
+			hainesPlanete[i] = CConstantes.Game.ppnHainePlanete[planete.nID, i];
+		}
+
+		int posDu1Max=0;
+		int posDu2Max=0;
+		int posDu3Max=0;
+		int posReturn=-1;
+
+		for (int i=0; i<8; i++)
+		{
+			if (hainesPlanete[i] > hainesPlanete[posDu1Max]){posDu1Max = i;}
+		}
+		for (int i=0; i<8; i++)
+		{
+			if ( i != posDu1Max )
+			{
+				if (hainesPlanete[i] > hainesPlanete[posDu2Max]){posDu2Max = i;}
+			}
+		}
+		for (int i=0; i<8; i++)
+		{
+			if (( i != posDu1Max ) & ( i != posDu2Max ))
+			{
+				if (hainesPlanete[i] > hainesPlanete[posDu2Max]){posDu3Max = i;}
+			}
+		}
+
+		if (posVoulue == 1){ posReturn = posDu1Max; }
+		if (posVoulue == 2){ posReturn = posDu2Max; }
+		if (posVoulue == 3){ posReturn = posDu3Max; }
+
+		return posReturn;
 	}
 
 	//-------------------------------------------------------------------------------
@@ -31,8 +67,19 @@ public class CMenuInGame : MonoBehaviour {
 	//-------------------------------------------------------------------------------
 	public void SelectThePlanet(CPlanete planete)
 	{
+		planete.SelectForDrawInfo(); //Dessin du halo autour de la planete cliquee
+
+		//Partie affichage du bloc d'info de planete en bas à droite
 		PlaneteInfoDesactivation();
 		m_UIGroot.transform.FindChild("PlaneteInfo").FindChild("PlaneteInfo_Background").gameObject.SetActive(true);
+
+		//Satisfaction (haineMax = 30 dans CGame)
+		m_UIGroot.transform.FindChild("PlaneteInfo").FindChild("PlaneteInfo_Satisfaction").gameObject.GetComponent<UISlider>().value = CConstantes.Game.ppnHainePlanete[planete.nID, planete.nID]/30.0f;
+		m_UIGroot.transform.FindChild("PlaneteInfo").FindChild("PlaneteInfo_Satisfaction").gameObject.SetActive(true);
+
+		//Affichage des 3 animosites de la planete
+		//Animosite i    TrouveAnimosite(planete, i))  avec i entre 1 et 3
+	
 
 		planete.SelectForDrawInfo();
 
@@ -80,6 +127,56 @@ public class CMenuInGame : MonoBehaviour {
 		}
 		}
 	}
+	
+	//-------------------------------------------------------------------------------
+	///
+	//-------------------------------------------------------------------------------
+	public void CalendrierProchainMatch(CPlanete planet1, CPlanete planet2, CPlanete lieu)
+	{
+		CalendrierDesactivation();
+
+		//Active affichage lieu
+		switch(lieu.m_eNamePlanet)
+		{
+		case CPlanete.ENamePlanet.e_A: { m_UIGroot.transform.FindChild("Calendrier").FindChild("Planete").FindChild("OrangeA").gameObject.SetActive(true); break; }
+		case CPlanete.ENamePlanet.e_C: { m_UIGroot.transform.FindChild("Calendrier").FindChild("Planete").FindChild("TurquoiseC").gameObject.SetActive(true); break; }
+		case CPlanete.ENamePlanet.e_K: { m_UIGroot.transform.FindChild("Calendrier").FindChild("Planete").FindChild("VertK").gameObject.SetActive(true); break; }
+		case CPlanete.ENamePlanet.e_Sentry: { m_UIGroot.transform.FindChild("Calendrier").FindChild("Planete").FindChild("JauneS").gameObject.SetActive(true); break; }
+		case CPlanete.ENamePlanet.e_Terra: { m_UIGroot.transform.FindChild("Calendrier").FindChild("Planete").FindChild("BleuT").gameObject.SetActive(true); break; }
+		case CPlanete.ENamePlanet.e_V: { m_UIGroot.transform.FindChild("Calendrier").FindChild("Planete").FindChild("RougeV").gameObject.SetActive(true); break; }
+		case CPlanete.ENamePlanet.e_X: { m_UIGroot.transform.FindChild("Calendrier").FindChild("Planete").FindChild("VioletX").gameObject.SetActive(true); break; }
+		case CPlanete.ENamePlanet.e_Yoranus: { m_UIGroot.transform.FindChild("Calendrier").FindChild("Planete").FindChild("RoseY").gameObject.SetActive(true); break; }
+		}
+
+		//Active affichage equipe1
+		switch(planet1.m_eNamePlanet)
+		{
+		case CPlanete.ENamePlanet.e_A: { m_UIGroot.transform.FindChild("Calendrier").FindChild("Equipe1").FindChild("OrangeA").gameObject.SetActive(true); break; }
+		case CPlanete.ENamePlanet.e_C: { m_UIGroot.transform.FindChild("Calendrier").FindChild("Equipe1").FindChild("TurquoiseC").gameObject.SetActive(true); break; }
+		case CPlanete.ENamePlanet.e_K: { m_UIGroot.transform.FindChild("Calendrier").FindChild("Equipe1").FindChild("VertK").gameObject.SetActive(true); break; }
+		case CPlanete.ENamePlanet.e_Sentry: { m_UIGroot.transform.FindChild("Calendrier").FindChild("Equipe1").FindChild("JauneS").gameObject.SetActive(true); break; }
+		case CPlanete.ENamePlanet.e_Terra: { m_UIGroot.transform.FindChild("Calendrier").FindChild("Equipe1").FindChild("BleuT").gameObject.SetActive(true); break; }
+		case CPlanete.ENamePlanet.e_V: { m_UIGroot.transform.FindChild("Calendrier").FindChild("Equipe1").FindChild("RougeV").gameObject.SetActive(true); break; }
+		case CPlanete.ENamePlanet.e_X: { m_UIGroot.transform.FindChild("Calendrier").FindChild("Equipe1").FindChild("VioletX").gameObject.SetActive(true); break; }
+		case CPlanete.ENamePlanet.e_Yoranus: { m_UIGroot.transform.FindChild("Calendrier").FindChild("Equipe1").FindChild("RoseY").gameObject.SetActive(true); break; }
+		}
+
+		//Active affichage equipe2
+		switch(planet2.m_eNamePlanet)
+		{
+		case CPlanete.ENamePlanet.e_A: { m_UIGroot.transform.FindChild("Calendrier").FindChild("Equipe2").FindChild("OrangeA").gameObject.SetActive(true); break; }
+		case CPlanete.ENamePlanet.e_C: { m_UIGroot.transform.FindChild("Calendrier").FindChild("Equipe2").FindChild("TurquoiseC").gameObject.SetActive(true); break; }
+		case CPlanete.ENamePlanet.e_K: { m_UIGroot.transform.FindChild("Calendrier").FindChild("Equipe2").FindChild("VertK").gameObject.SetActive(true); break; }
+		case CPlanete.ENamePlanet.e_Sentry: { m_UIGroot.transform.FindChild("Calendrier").FindChild("Equipe2").FindChild("JauneS").gameObject.SetActive(true); break; }
+		case CPlanete.ENamePlanet.e_Terra: { m_UIGroot.transform.FindChild("Calendrier").FindChild("Equipe2").FindChild("BleuT").gameObject.SetActive(true); break; }
+		case CPlanete.ENamePlanet.e_V: { m_UIGroot.transform.FindChild("Calendrier").FindChild("Equipe2").FindChild("RougeV").gameObject.SetActive(true); break; }
+		case CPlanete.ENamePlanet.e_X: { m_UIGroot.transform.FindChild("Calendrier").FindChild("Equipe2").FindChild("VioletX").gameObject.SetActive(true); break; }
+		case CPlanete.ENamePlanet.e_Yoranus: { m_UIGroot.transform.FindChild("Calendrier").FindChild("Equipe2").FindChild("RoseY").gameObject.SetActive(true); break; }
+		}
+
+	}
+
+
 
 	//-------------------------------------------------------------------------------
 	///
@@ -95,9 +192,39 @@ public class CMenuInGame : MonoBehaviour {
 		m_UIGroot.transform.FindChild("PlaneteInfo").FindChild("PlaneteInfo_TurquoiseC").gameObject.SetActive(false);
 		m_UIGroot.transform.FindChild("PlaneteInfo").FindChild("PlaneteInfo_VertK").gameObject.SetActive(false);
 		m_UIGroot.transform.FindChild("PlaneteInfo").FindChild("PlaneteInfo_VioletX").gameObject.SetActive(false);
-
-
+		m_UIGroot.transform.FindChild("PlaneteInfo").FindChild("PlaneteInfo_Satisfaction").gameObject.SetActive(false);
 	}
 
+	//-------------------------------------------------------------------------------
+	///
+	//-------------------------------------------------------------------------------
+	public void CalendrierDesactivation()
+	{
+		m_UIGroot.transform.FindChild("Calendrier").FindChild("Planete").FindChild("BleuT").gameObject.SetActive(false);
+		m_UIGroot.transform.FindChild("Calendrier").FindChild("Planete").FindChild("JauneS").gameObject.SetActive(false);
+		m_UIGroot.transform.FindChild("Calendrier").FindChild("Planete").FindChild("OrangeA").gameObject.SetActive(false);
+		m_UIGroot.transform.FindChild("Calendrier").FindChild("Planete").FindChild("RoseY").gameObject.SetActive(false);
+		m_UIGroot.transform.FindChild("Calendrier").FindChild("Planete").FindChild("RougeV").gameObject.SetActive(false);
+		m_UIGroot.transform.FindChild("Calendrier").FindChild("Planete").FindChild("TurquoiseC").gameObject.SetActive(false);
+		m_UIGroot.transform.FindChild("Calendrier").FindChild("Planete").FindChild("VertK").gameObject.SetActive(false);
+		m_UIGroot.transform.FindChild("Calendrier").FindChild("Planete").FindChild("VioletX").gameObject.SetActive(false);
 
+		m_UIGroot.transform.FindChild("Calendrier").FindChild("Equipe1").FindChild("BleuT").gameObject.SetActive(false);
+		m_UIGroot.transform.FindChild("Calendrier").FindChild("Equipe1").FindChild("JauneS").gameObject.SetActive(false);
+		m_UIGroot.transform.FindChild("Calendrier").FindChild("Equipe1").FindChild("OrangeA").gameObject.SetActive(false);
+		m_UIGroot.transform.FindChild("Calendrier").FindChild("Equipe1").FindChild("RoseY").gameObject.SetActive(false);
+		m_UIGroot.transform.FindChild("Calendrier").FindChild("Equipe1").FindChild("RougeV").gameObject.SetActive(false);
+		m_UIGroot.transform.FindChild("Calendrier").FindChild("Equipe1").FindChild("TurquoiseC").gameObject.SetActive(false);
+		m_UIGroot.transform.FindChild("Calendrier").FindChild("Equipe1").FindChild("VertK").gameObject.SetActive(false);
+		m_UIGroot.transform.FindChild("Calendrier").FindChild("Equipe1").FindChild("VioletX").gameObject.SetActive(false);
+		
+		m_UIGroot.transform.FindChild("Calendrier").FindChild("Equipe2").FindChild("BleuT").gameObject.SetActive(false);
+		m_UIGroot.transform.FindChild("Calendrier").FindChild("Equipe2").FindChild("JauneS").gameObject.SetActive(false);
+		m_UIGroot.transform.FindChild("Calendrier").FindChild("Equipe2").FindChild("OrangeA").gameObject.SetActive(false);
+		m_UIGroot.transform.FindChild("Calendrier").FindChild("Equipe2").FindChild("RoseY").gameObject.SetActive(false);
+		m_UIGroot.transform.FindChild("Calendrier").FindChild("Equipe2").FindChild("RougeV").gameObject.SetActive(false);
+		m_UIGroot.transform.FindChild("Calendrier").FindChild("Equipe2").FindChild("TurquoiseC").gameObject.SetActive(false);
+		m_UIGroot.transform.FindChild("Calendrier").FindChild("Equipe2").FindChild("VertK").gameObject.SetActive(false);
+		m_UIGroot.transform.FindChild("Calendrier").FindChild("Equipe2").FindChild("VioletX").gameObject.SetActive(false);
+	}
 }

@@ -14,10 +14,11 @@ public class CCamera : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
 	{
-		nMaxZoom = 35;
+		nMaxZoom = 55;
 		nMinZoom = 3;
 		m_Ambiance.loop = true;
 		m_Ambiance.Play();
+		GetComponent<Camera>().orthographicSize = nMaxZoom;
 	}
 	
 	// Update is called once per frame
