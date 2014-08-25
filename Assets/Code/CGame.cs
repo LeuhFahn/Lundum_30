@@ -193,7 +193,7 @@ public class CGame : MonoBehaviour {
 		gameObject.GetComponent<CMenuInGame>().CalendrierProchainMatch(P1,P2,P3);
 		print ("prochain match" +couleurPlanete [Quart [2 * currentMatch]] + " VS " + couleurPlanete [Quart [2 * currentMatch + 1]]);
 		timeOfStartup = 0.0f;
-		timeMultiplicator = 0.1f;
+		timeMultiplicator = 5f;
 		currentMatch = 0;
 		
 		timeOfMatch  = new float[] {5f, 10f, 15f, 20f,25f,30f,35f};
