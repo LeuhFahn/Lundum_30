@@ -124,6 +124,7 @@ public class CRoad : MonoBehaviour {
 	{
 		CConstantes.Game.removeRoad (m_PlanetOrigin.GetComponent<CPlanete> ().nID, m_PlanetDestination.GetComponent<CPlanete> ().nID);
 		m_RoadSound.Stop ();
+		CConstantes.ListRoad.Remove(this.gameObject);
 		GameObject.Destroy(this.gameObject);
 
 	}
