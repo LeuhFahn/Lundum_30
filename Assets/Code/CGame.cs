@@ -82,7 +82,7 @@ public class CGame : MonoBehaviour {
 
 
 		gameEnded = false;
-		Score = 500000;
+		Score = 50000;
 		couleurPlanete  = new Color[] {new Color( 248/255f,119/255f,151/255f,1f),Color.cyan ,Color.green ,new Color (243/255f, 195/255f, 10/255f,1f) ,Color.blue,Color.red,new Color(158/255f, 17/255f, 236/255f,1f),new Color(218/255f,81/255f,147/255f,1f)};
 		//initialise graphePlanete a 0
 		graphePlanete=new int[8,8];
