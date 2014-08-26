@@ -93,6 +93,11 @@ public class CMenu : MonoBehaviour {
 			Application.LoadLevel(Application.loadedLevel+1);
 		}
 	}
+
+	public static void LoadMenuLevel()
+	{
+		Application.LoadLevel(0);
+	}
 	
 	public void OpenMenuPrincipal()
 	{
