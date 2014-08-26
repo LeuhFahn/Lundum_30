@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -18,7 +18,7 @@ public class CGame : MonoBehaviour {
 	CPlanete m_PlaneteOverlap;
 	CPlanete m_PlaneteDestination;
 
-	string[]  couleurPlanete;
+	Color[]  couleurPlanete;
 
 	//Truc de score
 	int[,] graphePlanete;
@@ -83,7 +83,7 @@ public class CGame : MonoBehaviour {
 
 		gameEnded = false;
 		Score = 500000;
-		couleurPlanete  = new string[] {"Orange","bleue" ,"verte" ,"Beige" ,"Terre","Rouge","Violette","Rose"};
+		couleurPlanete  = new Color[] {new Color( 248/255f,119/255f,151/255f,1f),Color.cyan ,Color.green ,new Color (243/255f, 195/255f, 10/255f,1f) ,Color.blue,Color.red,new Color(158/255f, 17/255f, 236/255f,1f),new Color(218/255f,81/255f,147/255f,1f)};
 		//initialise graphePlanete a 0
 		graphePlanete=new int[8,8];
 		for(int i=0;i<8;i++)
@@ -198,6 +198,13 @@ public class CGame : MonoBehaviour {
 				}
 		
 		tirageAuSort ();
+		for (int i=0; i<8; i++) {
+			gameObject.GetComponent<CMenuInGame>().changeArbre(i,couleurPlanete[Quart[i]]);
+
+				}
+		//
+
+
 		currentMatch = 0;
 		//affichage prochain match graphique
 		int adv1 = Quart [2 * currentMatch];
@@ -552,6 +559,9 @@ public class CGame : MonoBehaviour {
 		//Aléa qui gagne
 		int gagnant=Random.Range(0,1);
 		Quart[match+8]=Quart[2*match+gagnant];
+		if (match < 6) {
+						gameObject.GetComponent<CMenuInGame> ().changeArbre (match + 8, couleurPlanete [Quart [2 * match + gagnant]]);
+				}
 		print ("MATCH "+(currentMatch+1)+" " +couleurPlanete [Quart [2 * currentMatch]] + " VS " + couleurPlanete [Quart [2 * currentMatch + 1]] + " Fini | Gagnant: "+couleurPlanete [Quart [2 * currentMatch+gagnant]]+" Perdant :"+couleurPlanete[Quart [2 * currentMatch+(1-gagnant)]]  );
 		//Si les deux planetes sonr relié ont augmente le score
 		print (CConstantes.Planetes [0].transform.position.x+" " +CConstantes.Planetes [0].transform.position.y);

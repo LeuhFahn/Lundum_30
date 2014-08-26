@@ -27,6 +27,13 @@ public class CMenuInGame : MonoBehaviour {
 
 	}
 
+	public void changeArbre(int position, Color couleur)
+	{
+		string[] caseArbre;
+		caseArbre=new string[]{"Q1","Q2","Q3","Q4","Q5","Q6","Q7","Q8","D1","D2","D3","D4","F1","F2"};
+
+		m_UIGroot.transform.FindChild("ArbreSprite").FindChild(caseArbre[position]).gameObject.GetComponent<UISprite>().color=couleur;
+		}
 	public int TrouveAnimosite(CPlanete planete, int posVoulue)
 	{
 		int[] hainesPlanete = new int[8];
