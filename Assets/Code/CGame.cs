@@ -10,6 +10,7 @@ public class CGame : MonoBehaviour {
 	public GameObject m_prefabExplosion;
 	public GameObject m_prefabArtifice;
 	public GameObject m_prefabSceneLight;
+	public Texture m_Texture_Credit;
 	//public GameObject m_prefab3DText;
 
 	public int m_EpaisseurRectangle;
@@ -32,6 +33,7 @@ public class CGame : MonoBehaviour {
 
 	//truc de temps
 	float m_fTime;
+	float m_fTimerEndGame;
 	int m_currentWeek;
 	int m_currentDay;
 	float timeOfStartup;
@@ -102,6 +104,8 @@ public class CGame : MonoBehaviour {
 		CConstantes.fTimerBeforeRoadDestruction = 10.0f;
 
 		GameObject light = GameObject.Instantiate(m_prefabSceneLight) as GameObject;
+
+		m_fTimerEndGame = 0.0f;
 
 		if(GameObject.Find("_Menu") != null)
 			m_bGoofy = GameObject.Find("_Menu").GetComponent<CMenu>().IsGoofy;
@@ -238,57 +242,74 @@ public class CGame : MonoBehaviour {
 	{
 
 		if (!gameEnded) {
-						m_fTime += Time.deltaTime;
-						//GESTION DES MATCHS
-						int m_currentWeek2 = Mathf.FloorToInt ((m_fTime - timeOfStartup) / (timeMultiplicator));
+				m_fTime += Time.deltaTime;
+				//GESTION DES MATCHS
+				int m_currentWeek2 = Mathf.FloorToInt ((m_fTime - timeOfStartup) / (timeMultiplicator));
 
-						if (m_currentWeek2 != m_currentWeek) {
-								notAlreadyLaunchedThisWeek = true;
-								m_currentWeek = m_currentWeek2;
-								print ("semaine actuelle " + m_currentWeek);
-						
-
-						}
-
-						if (currentMatch < 7) {
+				if (m_currentWeek2 != m_currentWeek) {
+						notAlreadyLaunchedThisWeek = true;
+						m_currentWeek = m_currentWeek2;
+						print ("semaine actuelle " + m_currentWeek);
 				
-								if (m_fTime - timeOfStartup > (timeOfMatch [currentMatch] * timeMultiplicator - 4f) & matchEnCours == false) {
-										startMatch (currentMatch);
-										matchEnCours = true;
-								}
-								if (m_fTime - timeOfStartup > timeOfMatch [currentMatch] * timeMultiplicator) {
-										endMatch (currentMatch);
-								}
-						}
-						//GESTION Du SCORES
-	
-						//GESTION DES EVENTS
-						//Un event peut commencer aléatoirement une fois par semaine
-						int m_currentDay2 = Mathf.FloorToInt ((7 * m_fTime - timeOfStartup) / (timeMultiplicator));
-						if (m_currentDay2 != m_currentDay) {
-						jourAvantProchainMatch=((jourAvantProchainMatch+1)%35);
-						print (jourAvantProchainMatch);
-								updateScore ();
-								Score -= deltascore;
-								if (Score< scoreLose){endGame(false);}
-								//print ("Score:"+Score);
-								m_currentDay = m_currentDay2;
-								//print (m_currentDay2);
-								if (notAlreadyLaunchedThisWeek & Random.Range (0, 6) == 0) {
-										print ("launch");
-										CEvent.LaunchEventOnARoad (); 
-										notAlreadyLaunchedThisWeek = false;
-								}
-				
-						}
 
-						CApoilInput.Process (Time.deltaTime);
-						//Quit on Escape
-						if (CApoilInput.QuitGame)
-								QuitGame ();
-
-						ClickFunction ();
 				}
+
+				if (currentMatch < 7) {
+		
+						if (m_fTime - timeOfStartup > (timeOfMatch [currentMatch] * timeMultiplicator - 4f) & matchEnCours == false) {
+								startMatch (currentMatch);
+								matchEnCours = true;
+						}
+						if (m_fTime - timeOfStartup > timeOfMatch [currentMatch] * timeMultiplicator) {
+								endMatch (currentMatch);
+						}
+				}
+				//GESTION Du SCORES
+
+				//GESTION DES EVENTS
+				//Un event peut commencer aléatoirement une fois par semaine
+				int m_currentDay2 = Mathf.FloorToInt ((7 * m_fTime - timeOfStartup) / (timeMultiplicator));
+				if (m_currentDay2 != m_currentDay) {
+				jourAvantProchainMatch=((jourAvantProchainMatch+1)%35);
+				print (jourAvantProchainMatch);
+						updateScore ();
+						Score -= deltascore;
+						if (Score< scoreLose){endGame(false);}
+						//print ("Score:"+Score);
+						m_currentDay = m_currentDay2;
+						//print (m_currentDay2);
+						if (notAlreadyLaunchedThisWeek & Random.Range (0, 6) == 0) {
+								print ("launch");
+								CEvent.LaunchEventOnARoad (); 
+								notAlreadyLaunchedThisWeek = false;
+						}
+		
+				}
+
+				CApoilInput.Process (Time.deltaTime);
+				//Quit on Escape
+				if (CApoilInput.QuitGame)
+						QuitGame ();
+
+				ClickFunction ();
+		}
+		else if (m_fTimerEndGame > 0.0f)
+		{
+			m_fTimerEndGame -= Time.deltaTime;
+
+		}
+		else {
+			CMenu.LoadMenuLevel();
+		}
+	}
+
+	void OnGUI()
+	{
+		if (m_fTimerEndGame > 0.0f)
+		{
+			GUI.DrawTexture(new Rect(0, 0, 960, 600), m_Texture_Credit);
+			
+		}
 
 	}
 
@@ -621,6 +642,8 @@ public class CGame : MonoBehaviour {
 		else {
 			print ("you lose");
 				}
+
+		m_fTimerEndGame = 4.0f;
 	}
 
 
